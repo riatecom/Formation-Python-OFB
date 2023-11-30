@@ -1,8 +1,11 @@
 # Rendered files
 dist/
 
-# Quarto cache
+# Quarto stuff
 .quarto/
+index_cache/
+index_files/
 
 # JetBrains IDEs
 .idea/
+

@@ -1,0 +1,501 @@
+---
+title: "Formation Python pour géomaticiens 🐍🌏"
+author: "Matthieu Viry"
+subtitle: "11 Décembre 2023"
+format:
+  revealjs:
+    embed-resources: false
+    slide-number: true
+    show-slide-number: all
+    chalkboard: true
+    logo: images/logos-footer.png
+title-slide-attributes:
+  data-background-image: images/logos-footer.png
+  data-background-size: 42%
+  data-background-position: 50% 90%
+css: ['static/style.css']
+prefer-html: true
+---
+
+# Introduction
+
+## Pourquoi programmer ?
+
+- **Automatiser** des tâches répétitives
+- **Prendre le contrôle** des analyses et des traitements que vous réalisez
+
+## Historique et présentation sur le papier...
+
+<img src="images/logo-python.png" style="position: absolute;top: 10px;right: 10px;width: 105px !important;height: auto;" />
+
+<br>
+
+- Langage créé à la toute fin des années 80 - première version publique sortie en 1991.
+
+- **Libre** (régit par la *Python Software Foundation License*, équivalent à BSD)
+
+- Langage **polyvalent**, **interprété**, **multi-paradigme** (impératif, fonctionnel, OO, ..)
+
+- **Typage dynamique fort** (et *duck typing*)
+
+- Toujours en développement actif (dernière version en avril 2023)
+
+::: {.notes}
+
+
+En 1989 aux Pays-Bas, Guido van Rossum invente le langage de programmation Python.
+C’est un fan de la série télévisée Monty Python’s Flying Circus, donc pour rendre un hommage à la série il donne le nom Python.
+Ce n’est qu’en 1991 que la première version de ce langage a été publiée.
+
+C’est la Python Software Foundation qui se charge de développer Python et de faire vivre la communauté de développeurs et utilisateurs.
+
+
+- Il est multiplateforme : fonctionne sur des nombreux systèmes d’exploitation ;
+- C'est un logiciel libre
+- C’est un langage interprété : le script python est directement exécuté, il n’a pas besoin d’être compilé avant d’être exécuté ;
+- C’est un langage orienté objet : on peut créer des programmes qui imite le comportement du monde réel ;
+- Enfin, il est notamment utilisé en bio-informatique, et plus couramment en analyse de données.
+
+
+Sur le site web, la description en une phrase du projet est "Python is a programming language that lets you work quickly and integrate systems more effectively"
+
+Pour sa part le projet **R** naît en 1993 comme un projet de recherche de Ross Ihaka et Robert Gentleman à l'université d'Auckland.
+
+- C'est une implémentation du langage **S** (développé au milieu des années 70 dans les laboratoires Bell)
+
+- **Libre** (licence *GNU GPL*)
+
+- Langage **interprété**, **multi-paradigme** (impératif, fonctionnel, OO, ..)
+
+- **Typage dynamique**
+
+- Toujours en développement actif (dernière version en avril 2023)
+
+
+Sur le site web, le titre est "The R Project for Statistical Computing" et la description en une phrase du projet est : "R is a free software environment for statistical computing and graphics".
+
+:::
+
+## Python / R
+
+<br>
+
+:::: {.columns}
+
+::: {.column .medium width="50%"}
+
+### Python
+
+- *General-purpose programming language*
+
+- *"Jack of all trades, master of none"* ?
+
+- Utilisé par Google, Facebook, Spotify, IBM, etc.
+
+:::
+
+::: {.column .medium width="50%"}
+
+
+### R
+
+- *For statistical computing and graphics*
+
+- *"By statisticians, for statisticians"*
+
+- Utilisé par Google, Facebook, Microsoft, etc.
+
+:::
+
+::::
+
+- Mais la question se pose car Python est de plus en plus compétent pour l'analyse de données...
+
+# Présentation de l'écosystème
+
+## Implémentation de référence et distributions
+
+- Une implémentation de référence du langage [**Python**](https://www.python.org/) : [**CPython**](https://github.com/python/cpython)
+  (mais d'autres implémentations : Jython, IronPython, PyPy, etc.)
+
+- Plusieurs *distributions* de Python (principalement [**Anaconda**](https://anaconda.org/), une distribution des langages de programmation Python et R dédiée à la science des données et à l'apprentissage automatique)
+
+<div class="center">
+<img src="images/logo-anaconda.png" />
+<p class="small">Source: <a href="https://anaconda.org">anaconda.org</a></p>
+</div>
+
+::: {.notes}
+
+- CPython est l'implémentation de référence de Python. C'est la version que la plupart des gens utilisent, notamment parce qu'elle est la plus facile à installer et à utiliser. Il est écrit en langage C et est maintenu par la Python Software Foundation.
+
+- Jython est une implémentation de Python écrite en Java. Il permet aux développeurs d'écrire des programmes Python qui peuvent être exécutés sur n'importe quelle machine virtuelle Java (JVM). Cela le rend particulièrement utile pour les développeurs qui travaillent dans un environnement Java.
+
+- IronPython est une implémentation de Python écrite en C# et destinée à être utilisée dans l'environnement .NET. Il permet aux développeurs d'écrire des programmes Python qui peuvent être exécutés sur la plate-forme .NET. Il est particulièrement utile pour les développeurs qui travaillent dans un environnement .NET.
+
+- PyPy est une implémentation alternative de Python qui est destinée à être plus rapide que CPython. Il est écrit en langage RPython et utilise une technique d'optimisation appelée compilation à la volée pour accélérer l'exécution des programmes.
+
+
+Anaconda est une distribution gratuite et open source de Python et R, qui a été développée pour simplifier le processus
+d'installation et de gestion des packages, ainsi que le processus
+de configuration et de gestion des environnements de développement scientifique de données.
+
+Il a été créé par Continuum Analytics, une entreprise qui a depuis été acquise par Anaconda, Inc.
+
+Anaconda est livré avec une gamme complète de bibliothèques scientifiques et de packages préinstallés,
+tels que NumPy, pandas, Matplotlib, SciPy, scikit-learn, TensorFlow et Jupyter Notebook, pour n'en citer que quelques-uns.
+Il est également facile à étendre avec des packages tiers, en utilisant le gestionnaire de packages conda, qui permet de télécharger et d'installer des packages à partir de sources externes.
+
+L'un des avantages les plus importants d'Anaconda est son système de gestion d'environnement,
+qui permet de créer des environnements Python isolés pour différents projets.
+
+:::
+
+## Environnements de développement
+
+- Plusieurs IDE appréciés par les utilisateurs de Python : [**Spyder**](https://www.spyder-ide.org/) (IDE "scientifique", interface comparable à RStudio),
+  [**PyCharm**](https://www.jetbrains.com/pycharm/) (logiciel propriétaire, plutôt pour développer des bibliothèques), [**Jupyter Lab**](https://jupyter.org/)
+  et plus récemment [**Visual Studio Code**](https://code.visualstudio.com/).
+
+
+<img src="images/spyder.png" style="float:left; width: 46%;" />
+
+<img src="https://www.jetbrains.com/pycharm/img/screenshots/complexLook@2x.jpg" style="float:right; width: 46%;"/>
+
+## Packages additionnels (bibliothèques)
+
+
+## Documentation / Python
+
+::: {.medium}
+Un point fort de Python est sa documentation officielle, qui contient tout le nécessaire pour utiliser le langage de manière proactive
+(tutoriel, référence de l'ensemble des fonctions / objets de tous les modules de la bibliothèque standard, etc.)
+et qui est mise à disposition dans plusieurs langues (Anglais, Français, Espagnol, Coréen, Japonais, Chinois, etc.).
+:::
+
+![](images/python-documentation.png)
+
+
+## Documentation / Python
+
+
+Il n'existe toutefois pas un seul standard pour consulter la documentation des différents modules additionnels Python
+(cf. [Documentation Matplotlib](https://matplotlib.org/stable/api/index), [Documentation pandas](https://pandas.pydata.org/docs/reference/index.html#api)).
+
+<img src="images/doc-geopandas.png" style="width: 40%; position: absolute; border: solid 1px black; left: 10px;" />
+
+<img src="images/doc-matplotlib.png" style="width: 40%; position: absolute; border: solid 1px black; bottom: -60px; left: 29%;" />
+
+<img src="images/doc-samgeo.png" style="width: 40%; position: absolute; border: solid 1px black; right: 10px;" />
+
+# En terme de syntaxe ça donne quoi ?
+
+## Premier pas avec la syntaxe Python
+
+<br><br>
+
+```{python}
+#| error: true
+#| echo: true
+#| message: true
+#| cache: true
+from statistics import mean, stdev
+
+def cv(x):
+    moy = mean(x)
+    s = stdev(x)
+    result = s / moy
+    return result
+
+print(cv([5, 6, 3, 8, 9, 12]))
+```
+
+## Python et l'indentation du code...
+
+<br>
+
+```{python}
+#| error: true
+#| echo: true
+#| message: true
+#| cache: true
+my_list = [1, 2, 3]
+
+for item in my_list:
+    if item % 2 == 0:
+        print('even')
+    else:
+    print('odd')
+```
+
+## Python et l'indentation du code...
+
+<br>
+
+```{python}
+#| error: true
+#| echo: true
+#| message: true
+#| cache: true
+my_list = [1, 2, 3]
+
+for item in my_list:
+    if item % 2 == 0:
+        print('even')
+    else:
+        print('odd')
+```
+
+## Python et l'indentation du code...
+
+<br>
+
+- Respecter les règles d’indentations est *obligatoire* en Python.
+
+- Ce n'est pas une *contrainte* lors d'une session de travail car les IDE guident la position du curseur.
+
+- Cette indentation a un rôle direct sur le contrôle du flux d'exécution.
+
+- Elle permet notamment d'éviter l'utilisation d'accolades (*curly brackets*) pour délimiter les blocs et de point-virgules pour délimiter les instructions.
+
+
+## Python et l'indentation du code...
+
+<br>
+
+Le code qui suit est volontairement incorrect mais ne génère pas d'erreur lors de l'exécution :
+
+```{python}
+#| echo: true
+li1 = [1, 2, 3, 4, 5, 6]
+li2 = [4, 20, 31, 87, 123, 621]
+
+# Additionnons les deux listes, éléments par éléments,
+# et stockons chaque résultat dans une nouvelle liste
+result = []
+
+for item1, item2 in zip(li1, li2):
+    new_item = item1 + item2
+result.append(new_item)
+
+print(result)
+```
+
+## Python et l'indentation du code...
+
+<br>
+
+Une fois l'indentation corrigée...
+
+```{python}
+#| echo: true
+li1 = [1, 2, 3, 4, 5, 6]
+li2 = [4, 20, 31, 87, 123, 621]
+
+# Additionnons les deux listes, éléments par éléments,
+# et stockons chaque résultat dans une nouvelle liste
+result = []
+
+for item1, item2 in zip(li1, li2):
+    new_item = item1 + item2
+    result.append(new_item)
+
+print(result)
+```
+
+
+# *Data structures* natives
+
+:::{.small}
+*Les structures de données sont les éléments fondamentaux autour desquels vous construisez vos programmes. Chaque structure de données fournit une manière particulière d'organiser les données afin d'y accéder efficacement.*
+:::
+
+## Python
+
+<br>
+
+:::{.medium}
+
+Python est livré avec un ensemble complet de structures de données dans sa bibliothèque standard :
+
+- `dict` (tableau associatif)
+
+```{python}
+#| echo: true
+my_dict = { 'john': 32, 'jane': 27, 'jack': 30 }
+print(my_dict['john'])
+```
+
+- `tuple` (un conteneur immuable),
+
+```{python}
+#| echo: true
+my_coordinates = (2.349014, 48.864716)
+```
+
+- `list` (tableau dynamique mutable),
+
+```{python}
+#| echo: true
+my_list = ['a', 12, (2.349014, 48.864716), { "foo": 42 }]
+```
+
+- `array` (tableau typé de base), `enum` (énumération), etc.
+
+:::
+
+## Python *(classes)*
+
+<br>
+
+Comme il s'agit d'un langage orienté-objet, il est également possible de définir des classes, permettant de facilement modéliser des catégories d'objets...
+
+```{python}
+#| echo: true
+class Point:
+    def __init__(self, x, y):
+      self.x = x
+      self.y = y
+
+    def distance(self, other):
+      return (
+        (other.x - self.x) ** 2 + (other.y - self.y) ** 2
+      ) ** 0.5
+```
+
+## Python *(classes)*
+
+<br>
+<br>
+
+Instanciation et utilisation :
+
+```{python}
+#| echo: true
+p1 = Point(2, 6)
+p2 = Point(9, 9)
+
+print('Distance = ', p1.distance(p2))
+```
+
+# Et côté sémantique ?
+
+## Python
+
+Sémantique *pass-by-assignment* et différence entre types muables et immuables :
+
+```{python}
+#| echo: true
+# le type list est muable
+a = [1, 3, 5]
+b = a # 'a' et 'b' pointent vers le même objet
+
+b[2] = 11 # Modifie l'objet vers lequel pointe 'b' qui est également celui vers lequel pointe 'a'
+```
+
+```{python}
+#| echo: true
+i = 5 # les entiers sont immuables
+j = i
+i = i + 1 # la valeur 5 ne peut pas être modifiée, un nouvel objet est créé ici
+
+print(i) # 6
+print(j) # 5
+```
+
+:::{.medium}
+Pour en savoir plus sur ce point : [Documentation officielle -  Questions fréquemment posées sur Python](https://docs.python.org/fr/3/faq/programming.html#why-did-changing-list-y-also-change-list-x)
+:::
+
+:::{.notes}
+
+Les instructions d'affectation en Python ne copient pas les objets, elles créent des liens entre une cible et un objet.
+Pour les collections qui sont mutables ou qui contiennent des éléments mutables, une copie est parfois nécessaire afin de pouvoir modifier une copie sans modifier l'autre.
+
+Copie superficielle (*Shallow copy*) vs. profonde (*deep copy*).
+
+:::
+
+## Indices
+
+<br>
+
+- En Python les indices de liste commencent à 0 :
+
+```{python}
+#| echo: true
+my_list = [1, 3, 5]
+print(my_list[0])
+```
+
+- En R ils commencent à 1 :
+
+```{r}
+#| echo: true
+my_list <- list(1, 3, 5)
+print(my_list[1])
+```
+
+## Maintenabilité du code
+
+<br>
+
+```{python}
+#| echo: true
+class Point:
+    def __init__(self, x, y):
+      self.x = x
+      self.y = y
+
+    def distance(self, other):
+      return (
+        (other.x - self.x) ** 2 + (other.y - self.y) ** 2
+      ) ** 0.5
+```
+
+## Maintenabilité du code
+
+<br>
+
+```{python}
+#| echo: true
+class Point:
+    def __init__(self, x: float, y: float) -> None:
+      self.x = x
+      self.y = y
+
+    def distance(self, other: Point) -> float:
+      return (
+        (other.x - self.x) ** 2 + (other.y - self.y) ** 2
+      ) ** 0.5
+```
+
+- [_**Type hint**_](https://docs.python.org/fr/3/library/typing.html) ...
+- \+ analyse statique du code ([*mypy*](https://www.mypy-lang.org/), IDE, etc.)
+
+# Mise en place d'un environnement de travail Python
+
+## Installation de Python
+
+:::{.very-small}
+
+1. Télécharger et installer [Anaconda](https://www.anaconda.com/products/individual) :
+   - Une fois le fichier téléchargé, double-cliquez dessus
+   - Accepter les termes de la licence
+   - Choisir d'installer Anaconda seulement pour l'utilisateur courant (*Just me*) et non pas pour tous les utilisateurs (*All users*)
+   - Sélectionner le chemin d'installation (ou laisser celui par défaut - attention à éviter les chemins avec des espaces et/ou des caractères unicodes)
+   - Accepter ensuite les options par défaut jusqu'à la fin de l'installation (sur la dernière fenêtre "Thanks for installing Anaconda", vous pouvez décocher les deux cases et cliquer sur "Finish")
+2. Télécharger l'IDE [VS Codium](https://vscodium.com/) (version libre de [Visual Studio Code](https://code.visualstudio.com/)) pour votre système d'exploitation :
+   - Vous pouvez utilisez le lien direct suivant : https://github.com/VSCodium/vscodium/releases/download/1.84.2.23319/VSCodiumUserSetup-x64-1.84.2.23319.exe
+   - Cliquer sur l'installeur et suivez les instructions en laissant les options par défaut
+   - Une fois l'installation terminée, ouvrez VS Codium
+3. Installer l'extension [Python](https://marketplace.visualstudio.com/items?itemName=ms-python.python) dans VS Codium :
+   - Dans VS Codium, appuyez sur Ctrl + P et saisissez le texte suivant dans le menu qui s'ouvre : "ext install ms-python.python".
+   - Validez avec "Entrée"
+4. Installer l'extension [Jupyter](https://marketplace.visualstudio.com/items?itemName=ms-toolsai.jupyter) dans VS Codium :
+   - Dans VS Codium, appuyez sur Ctrl + P et saisissez le texte suivant dans le menu qui s'ouvre : "ext install ms-toolsai.jupyter".
+   - Validez avec "Entrée"
+5. Sélectionner l'interpréteur Python dans VS Codium :
+   - Dans VS Codium, appuyez sur Ctrl + Shift + P et saisissez / sélectionnez "Python: Select Interpreter" dans le menu qui s'ouvre, appuyez sur "Entrée" puis choisissez l'interpréteur Python que nous venons d'installer avec Anaconda : `Python 3.9.7 64-bit ('base': conda)`.
+
+:::
