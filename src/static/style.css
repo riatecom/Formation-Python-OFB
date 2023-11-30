@@ -1,0 +1,30 @@
+@font-face {
+    font-family: 'Dosis';
+    src: url('./Dosis-ExtraBold.ttf') format('truetype');
+    font-weight: 800;
+    font-style: normal;
+}
+
+.slides {
+    width: 1200px !important;
+}
+
+.columns .cell {
+    font-size: 0.6em;
+}
+
+.small {
+    font-size: 0.6em;
+}
+
+.medium {
+    font-size: 0.8em;
+}
+
+h1 {
+    font-family: 'Dosis', sans-serif !important;
+    font-weight: 800 !important;
+}
+.center {
+    text-align: center;
+}
