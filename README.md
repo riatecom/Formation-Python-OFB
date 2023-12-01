@@ -15,13 +15,17 @@ Voir la présentation : [https://riatelab.github.io/Formation-Python-OFB](https:
 
 **Prérequis** :
 
+- [Python](https://www.python.org)
 - [Quarto](https://quarto.org)
 
 **Étapes** :
 
 1. Cloner le projet : `git clone https://github.com/riatelab/Formation-Python-OFB`
 2. Se placer dans le dossier du projet : `cd Formation-Python-OFB`
-3. Compiler la présentation et obtenir la sortie dans le dossier `dist` : `quarto render . --output-dir dist/` (si vous voulez recompiler à chaque modification,
+3. Créer un environnement virtuel : `python -m venv .venv`
+4. Activer l'environnement virtuel : `source .venv/bin/activate` (Linux) ou `source .venv/Scripts/activate` (Windows)
+5. Installer les dépendances : `pip install -r requirements.txt`
+6. Compiler la présentation et obtenir la sortie dans le dossier `dist` : `quarto render . --output-dir dist/` (si vous voulez recompiler à chaque modification,
    il est possible d'utiliser [watchexec](https://github.com/watchexec/watchexec) : `watchexec -w index.qmd -w images -w static -r quarto render . --output-dir dist/`).
 
 ## Licence :recycle:

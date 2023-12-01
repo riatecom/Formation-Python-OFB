@@ -9,3 +9,5 @@ index_files/
 # JetBrains IDEs
 .idea/
 
+
+/.quarto/

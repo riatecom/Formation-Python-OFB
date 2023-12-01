@@ -9,15 +9,19 @@ format:
     show-slide-number: all
     chalkboard: true
     logo: images/logos-footer.png
+jupyter: python3
 title-slide-attributes:
   data-background-image: images/logos-footer.png
   data-background-size: 42%
   data-background-position: 50% 90%
 css: ['static/style.css']
 prefer-html: true
+bibliography: references.bib
+csl: "universite-de-montreal-apa.csl"
+lang: fr
 ---
 
-# Introduction
+# Partie 1 - Introduction à Python
 
 ## Pourquoi programmer ?
 
@@ -76,6 +80,14 @@ Sur le site web, le titre est "The R Project for Statistical Computing" et la de
 
 :::
 
+## Python
+
+:::{.center}
+
+![](images/xkcd-python.png)
+
+:::
+   
 ## Python / R
 
 <br>
@@ -428,14 +440,6 @@ my_list = [1, 3, 5]
 print(my_list[0])
 ```
 
-- En R ils commencent à 1 :
-
-```{r}
-#| echo: true
-my_list <- list(1, 3, 5)
-print(my_list[1])
-```
-
 ## Maintenabilité du code
 
 <br>
@@ -496,6 +500,404 @@ class Point:
    - Dans VS Codium, appuyez sur Ctrl + P et saisissez le texte suivant dans le menu qui s'ouvre : "ext install ms-toolsai.jupyter".
    - Validez avec "Entrée"
 5. Sélectionner l'interpréteur Python dans VS Codium :
-   - Dans VS Codium, appuyez sur Ctrl + Shift + P et saisissez / sélectionnez "Python: Select Interpreter" dans le menu qui s'ouvre, appuyez sur "Entrée" puis choisissez l'interpréteur Python que nous venons d'installer avec Anaconda : `Python 3.9.7 64-bit ('base': conda)`.
+   - Dans VS Codium, appuyez sur Ctrl + Shift + P et saisissez / sélectionnez "Python: Select Interpreter" dans le menu qui s'ouvre, appuyez sur "Entrée" puis choisissez l'interpréteur Python que nous venons d'installer avec Anaconda : `Python 3.11.5 64-bit ('base': conda)`.
 
 :::
+
+
+
+# Écosystème pour le géospatial
+
+## Données vectorielles
+
+::::{.small}
+
+-   [**Bindings Python de GDAL/OGR**](https://gdal.org/api/python_bindings.html) [@GDAL]
+-   [**Fiona**](https://fiona.readthedocs.io/en/stable/) [@fiona] - I/O (*wrapper* de haut niveau autour d'OGR)
+-   [**Shapely**](https://shapely.readthedocs.io/)  [@sgillies_2023] - bindings Python de [GEOS](https://github.com/libgeos/geos) [@GEOS]
+-   [**Pyproj**](https://pyproj4.github.io/pyproj) [@pyproj] - bindings Python de [PROJ](https://proj.org/) [@PROJ]
+-   [**Geopandas**](https://geopandas.org/)  [@kelsey_jordahl_2020_3946761] - Étend les `DataFrame`s de [pandas](https://pandas.pydata.org/) [@pandas]
+
+::::
+
+::::{.columns}
+:::{.column width="50%"}
+
+![](./images/logo-pandas.svg){width=300}
+
+:::
+
+:::{.column width="50%"}
+
+![](./images/logo_geopandas.svg){width=340}
+
+:::
+::::
+
+## Le package *GeoPandas*
+
+:::{.medium}
+
+Un projet open source pour faciliter le travail avec des données géospatiales vectorielles en Python. GeoPandas étend Pandas pour permettre de disposer d'un type de colonne géométrique et pour permettre d'effectuer des opérations spatiales. Les opérations géométriques sont réalisées avec `shapely`, les accès en lecture / écriture aux fichiers utilisent `fiona` et la visualisation utilise `matplotlib`.
+
+![Format des GeoDataFrame](./images/geopandas-table.png)
+
+:::
+
+## Le package *GeoPandas* - Exemples
+
+::: {.panel-tabset .custom-tab .small}
+
+### Import et lecture
+
+```{python gpd-tuto-import-1}
+#| echo: false
+import geodatasets
+
+file_path = geodatasets.get_path("nybb")
+```
+
+Avec la fonction `read_file` :
+
+```{python gpd-tuto-import-2}
+#| echo: true
+import geopandas as gpd
+
+nybb = gpd.read_file(file_path)
+```
+
+### Affichage
+
+Avec la méthode `plot` des `GeoDataFrame` :
+
+```{python gpd-tuto-plot}
+#| echo: true
+nybb.plot()
+```
+
+### SCR
+
+Affichage :
+
+```{python gpd-tuto-crs}
+#| echo: true
+print(nybb.crs)
+```
+
+Transformation :
+
+```{python gpd-tuto-transformation}
+#| echo: true
+nybb_geo = nybb.to_crs('EPSG:4326')
+```
+
+### Affichage avec fond de carte
+
+En utilisant la bibliothèque `contextily` :
+
+```{python gpd-tuto-contextily}
+#| echo: true
+import contextily as cx
+
+ax = nybb.to_crs('EPSG:3857').plot()
+cx.add_basemap(ax, source='https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png')
+ax.set_axis_off()
+ax
+```
+
+### Centroide
+
+Simplement en utilisant l'attribut `centroid` des `GeoDataFrame` :
+
+```{python gpd-tuto-centroid}
+#| echo: true
+nybb.centroid.plot()
+```
+
+### Boundary
+
+Simplement en utilisant l'attribut `boundary` des `GeoDataFrame` :
+
+```{python gpd-tuto-boundary}
+#| echo: true
+nybb.boundary.plot()
+```
+
+### Zone tampon
+
+En utilisant la méthode `buffer` des `GeoDataFrame` :
+
+```{python gpd-tuto-buffer}
+#| echo: true
+buff_nybb = nybb.buffer(3000)
+```
+
+```{python gpd-tuto-buffer-2}
+#| echo: true
+ax = buff_nybb.plot(color="red")
+nybb.plot(ax=ax, color="aliceblue")
+```
+
+
+### Aggrégation
+
+En utilisant la méthode `dissolve` des `GeoDataFrame` :
+
+```{python gpd-tuto-agg}
+#| echo: true
+# On peut utiliser dissolve(by="nom_colonne") si on veut aggréger selon les valeurs d'une colonne
+agg = nybb.dissolve()
+agg.plot()
+```
+
+
+### Intersection
+
+En utilisant la méthode `intersection` des `GeoDataFrame` :
+
+```{python gpd-tuto-intersection}
+#| echo: true
+from shapely import wkt
+
+point = wkt.loads('Point(998769.1146889535 174169.7607268664)')
+
+intersecting = nybb.intersection(point.buffer(35000))
+```
+
+<br>
+
+```{python gpd-tuto-intersectiob-2}
+#| echo: true
+ax = nybb.plot()
+ax = intersecting.plot(ax=ax, color="red")
+ax
+```
+
+:::
+
+
+## Données raster
+
+::::{.columns .medium}
+
+:::{.column width="50%"}
+
+[**Rasterio**](https://rasterio.readthedocs.io/) [@gillies_2019] :
+
+:::{.small}
+
+* lecture / écriture de raster (*wrapper* de haut niveau autour de GDAL)
+* données représentées sous forme d'`array` NumPy
+* reprojection
+* _resampling_
+* _virtual files_
+* etc.
+
+:::
+
+:::
+
+:::{.column width="50%"}
+
+[**Rasterstats**](https://pythonhosted.org/rasterstats/) :
+
+:::{.small}
+
+* résumer des données raster sur la base de géométries vectorielles
+* extraction de valeurs à un point précis
+
+:::
+
+[**xarray**](https://docs.xarray.dev/en/stable/) [@xarray] et [**rioxarray**](https://corteva.github.io/rioxarray/) [@rioxarray]:
+
+:::{.small}
+
+* *xarray* pour travailler avec des tableaux multidimensionnels étiquetés
+* *rioxarray* pour ouvrir des jeux des données raster avec *rasterio*, les stocker dans le format de *xarray*, et avoir accès à différentes fonctionnalités de *rasterio*
+* moins "rustique" que d'utiliser rasterio seul / dépend de l'usage souhaité
+
+:::
+
+:::
+::::
+
+## Le package *Rasterio*
+
+:::{.small}
+
+Exemple d'utilisation :
+
+```{python example-rio-1}
+#| echo: true
+import rasterio as rio
+
+with rio.open('./data/MODIS_ARRAY.nc') as f:
+    # Métadonnées :
+    metadata = f.meta
+    # Lire toutes les bandes :
+    data = f.read()
+    # Ou f.read(1) pour lire seulement la première bande
+```
+
+- Un dictionnaire de métadonnées + un tableau NumPy contenant la (ou les) bande(s) :
+
+```{python example-rio-2}
+#| echo: true
+print(metadata)
+print(data)
+```
+
+:::
+
+## Les package *xarray* et *rioxarray*
+
+Exemple d'utilisation :
+
+::: {.panel-tabset .custom-tab}
+
+### Import et lecture
+
+```{python xarray-tuto-import-1}
+#| echo: true
+import rioxarray
+import xarray
+
+xds = xarray.open_dataarray("./data/MODIS_ARRAY.nc")
+```
+
+- Un objet de type `xarray.DataArray` ou `xarray.Dataset` qui contient les différentes méta-données et les données :
+
+```{python xarray-tuto-import-2}
+xds
+```
+
+### Complétion des valeurs manquantes
+
+```{python xarray-tuto-na}
+#| echo: true
+filled = xds.rio.interpolate_na()
+```
+
+### Affichage
+
+En utilisant la méthode `plot` des objets `xarray.DataArray` (ici après sélection d'un *subset* des données) :
+
+```{python xarray-tuto-plot}
+#| echo: true
+import matplotlib.pyplot as plt
+
+fig = plt.figure(figsize=(15, 5))
+ax1, ax2 = (fig.add_subplot(131), fig.add_subplot(133))
+
+xds.isel(x=slice(0, 20), y=slice(0, 20)).plot(ax=ax1)
+filled.isel(x=slice(0, 20), y=slice(0, 20)).plot(ax=ax2)
+```
+
+### SCR
+
+- Affichage :
+
+```{python xarray-tuto-crs-1}
+#| echo: true
+xds.rio.crs
+```
+
+- Transformation :
+
+```{python xarray-tuto-crs-2}
+#| echo: true
+xds = xds.rio.reproject("EPSG:6623")
+```
+
+### Découpage
+
+- Découpage selon l'emprise des données contenues dans un `GeoDataFrame` (ici `gdf`) :
+
+```{python xarray-tuto-clipping}
+#| echo: true
+#| eval: false
+clipped = xds.rio.clip(gdf.geometry.values, gdf.crs, drop=False, invert=True)
+```
+
+:::
+
+
+## Analyse spatiale
+
+<img src="./images/logo-pysal.png" style="position: absolute; top: 20px; right: 20px; width: 90px; height: auto;"/>
+
+<br />
+
+:::{.medium}
+
+Écosystème de bibliothèques pour l'analyse spatiale [PySAL](https://pysal.org/) (Python Spatial Analysis Library, @pysal2007) :
+
+:::
+
+:::: {.columns .small}
+
+::: {.column width="50%"}
+
+**Explorer**:
+
+- Analyse exploratoire des données spatiales (package [esda](https://pysal.org/esda/))
+- Analyse de la dynamique des données spatiales longitudinales (package [giddy](https://pysal.org/giddy/))
+- Mesure des inégalités dans l'espace et dans le temps (package [inequality](https://inequality.readthedocs.io/en/latest/))
+- Analyse statistique de motifs ponctuels planaires (package [pointpats](https://pysal.org/pointpats/))
+- Mesure de la ségrégation dans le temps et dans l'espace (package [segregation](https://pysal.org/segregation/))
+- Morphométrie urbaine (package [momepy](https://docs.momepy.org/en/stable/))
+
+:::
+
+::: {.column width="50%"}
+
+**Modéliser**:
+
+- Régression géographiquement pondérée à plusieurs échelles (package [mgwr](https://mgwr.readthedocs.io/en/latest/))
+- Modèles linéaires généralisés épars (package [spglm](https://spglm.readthedocs.io/en/latest/))
+- Modèles d'interaction spatiale (package [spint](https://spint.readthedocs.io/en/latest/))
+- Modèles de régression spatiale (package [spreg](https://spreg.readthedocs.io/en/latest/))
+- Modèles de composantes de variance à corrélation spatiale à plusieurs niveaux (package [spvcm](https://github.com/pysal/spvcm))
+- *Areal interpolation* et cartographie dasymétrique (package [tobler](https://pysal.org/tobler/))
+- Accessibilité spatiale (package [access](https://pysal.org/access/))
+- Optimisation spatiale (package [spopt](https://pysal.org/spopt/))
+
+:::
+
+::::
+
+
+## Autres packages utiles ...
+
+- Binding Python pour [GRASS](https://grass.osgeo.org/grass82/manuals/libpython/index.html) + Intégration dans les notebooks Jupyter
+
+![Source: <https://grass.osgeo.org/news/2022_06_05_results_student_grant_caitlin/>](./images/grass_jupyter_combo_vis.png)
+
+- [Iris](https://scitools-iris.readthedocs.io/en/stable/) - Analyse et visualisation de données des sciences de la Terre.
+
+- Pour la cartographie : [cartopy](https://scitools.org.uk/cartopy/docs/latest/) ; [geoviews](https://geoviews.org/) et [geoplot](https://residentmario.github.io/geoplot/) basés sur *cartopy* ; [PyGMT](https://www.pygmt.org/latest/) (selon les usages - pas de solution aussi aboutie que `mapsf` pour les cartes réalisées en SHS).
+
+![](./images/cartopy.png)
+
+- Un écosystème riche pour le géospatial (voir par exemple ici : [https://github.com/sacridini/Awesome-Geospatial#python](https://github.com/sacridini/Awesome-Geospatial#python)) et la visualisation de données (voir par exemple les outils listés par la plateforme [PyViz](https://pyviz.org/tools.html)).
+
+## Ressources Python Géospatial
+
+- [https://py.geocompx.org/](https://py.geocompx.org/) [@Dorman2022]
+
+- [https://geo-python-site.readthedocs.io/en/latest/](https://geo-python-site.readthedocs.io/en/latest/)
+
+- [https://automating-gis-processes.github.io](https://automating-gis-processes.github.io)
+
+- [https://www.earthdatascience.org/courses/use-data-open-source-python/](https://www.earthdatascience.org/courses/use-data-open-source-python/)
+
+- [https://geographicdata.science/book/intro.html](https://geographicdata.science/book/intro.html)
+
+# Partie 2 - Python et QGIS
+
+## Références
+
+<!-- Référence will be added here automatically from 'references.bib' -->
+
+
+

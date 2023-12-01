@@ -1,0 +1,10 @@
+numpy
+geopandas
+rasterio
+rasterstats
+matplotlib
+rioxarray
+netCDF4
+scipy
+geodatasets
+contextily
