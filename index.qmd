@@ -167,28 +167,66 @@ qui permet de créer des environnements Python isolés pour différents projets.
 
 - Plusieurs IDE appréciés par les utilisateurs de Python : [**Spyder**](https://www.spyder-ide.org/) (IDE "scientifique", interface comparable à RStudio),
   [**PyCharm**](https://www.jetbrains.com/pycharm/) (logiciel propriétaire, plutôt pour développer des bibliothèques), [**Jupyter Lab**](https://jupyter.org/)
-  et plus récemment [**Visual Studio Code**](https://code.visualstudio.com/).
+  et plus récemment [**Visual Studio Code**](https://code.visualstudio.com/) (VSCode, VSCodium).
 
 
 <img src="images/spyder.png" style="float:left; width: 46%;" />
 
 <img src="https://www.jetbrains.com/pycharm/img/screenshots/complexLook@2x.jpg" style="float:right; width: 46%;"/>
 
-## Packages additionnels (bibliothèques)
+## *Batteries included*
+
+:::{.medium}
+
+Le langage de programmation Python a une bibliothèque standard très complète, comportant de nombreux modules qui permettent de réaliser des tâches courantes sans avoir à réinventer la roue.
+
+:::
+
+:::{.small}
+
+Modules de la bibliothèque standard :
+
+- `math` (fonctions mathématiques de base)
+- `statistics` (statistiques descriptives)
+- `random` (génération de nombres aléatoires)
+- `datetime` (gestion des dates et heures)
+- `os` (fonctions d'interaction avec le système d'exploitation)
+- `sys` (fonctions et variables d'interaction avec l'interpréteur Python)
+- `re` (expressions régulières)
+- `csv` (lecture et écriture de fichiers CSV)
+- `json` (lecture et écriture de fichiers JSON)
+- `sqlite3` (interface avec la base de données SQLite)
+- etc.
+
+:::
+
+## Modules additionnels (bibliothèques)
 
 
-## Documentation / Python
+## Modules additionnels (bibliothèques)
 
-::: {.medium}
+<center>
+
+![](images/python-stack.png)
+
+</center>
+
+## Documentation
+
+::: {.small}
 Un point fort de Python est sa documentation officielle, qui contient tout le nécessaire pour utiliser le langage de manière proactive
-(tutoriel, référence de l'ensemble des fonctions / objets de tous les modules de la bibliothèque standard, etc.)
+(tutoriel, référence de l'ensemble des fonctions et des objets de tous les modules de la bibliothèque standard, etc.)
 et qui est mise à disposition dans plusieurs langues (Anglais, Français, Espagnol, Coréen, Japonais, Chinois, etc.).
 :::
 
+<center>
+
 ![](images/python-documentation.png)
 
+</center>
 
-## Documentation / Python
+
+## Documentation / Modules additionnels
 
 
 Il n'existe toutefois pas un seul standard pour consulter la documentation des différents modules additionnels Python
@@ -204,22 +242,30 @@ Il n'existe toutefois pas un seul standard pour consulter la documentation des d
 
 ## Premier pas avec la syntaxe Python
 
-<br><br>
+<br>
 
 ```{python}
 #| error: true
 #| echo: true
 #| message: true
 #| cache: true
-from statistics import mean, stdev
+import math # On importe le module math
+from statistics import mean, stdev # Et deux fonctions du module statistics
 
+# Définition d'une fonction
 def cv(x):
     moy = mean(x)
     s = stdev(x)
     result = s / moy
-    return result
+    # Retourne le résultat
+    return result 
 
-print(cv([5, 6, 3, 8, 9, 12]))
+# La fonction est appelée avec une liste de valeurs,
+# et le résultat est stocké dans une variable 
+res = cv([5, 6, 3, 8, 9, 12])
+
+# Affichage du résultat
+print(res)
 ```
 
 ## Python et l'indentation du code...
@@ -315,20 +361,167 @@ for item1, item2 in zip(li1, li2):
 print(result)
 ```
 
+# Premières commandes dans l'interpréteur Python
 
-# *Data structures* natives
-
-:::{.small}
-*Les structures de données sont les éléments fondamentaux autour desquels vous construisez vos programmes. Chaque structure de données fournit une manière particulière d'organiser les données afin d'y accéder efficacement.*
-:::
-
-## Python
+## L'interpréteur Python
 
 <br>
 
 :::{.medium}
 
+- L'interpréteur Python est un programme qui lit et exécute du code Python.
+- Il est possible d'interagir avec l'interpréteur Python en utilisant un terminal (ou une console) ou en utilisant un IDE.
+- L'interpréteur Python est lancé en tapant `python` dans un terminal.
+- Il est possible de quitter l'interpréteur Python en tapant `exit()` ou en appuyant sur `Ctrl + D`.
+- L'interpréteur Python peut être utilisé pour exécuter des scripts Python (fichiers `.py`) en utilisant la commande `python mon_script.py`.
+
+:::
+
+## Calculs simples et variables
+
+<br />
+
+:::{.medium}
+
+Une des premières fonctionnalités que l'on souhaite tester dans un langage de programmation est la possibilité d'effectuer des calculs simples.
+
+```
+>>> 1 + 2
+3
+>>> 3 * 4
+12
+```
+
+Vous pouvez ou non utiliser des espaces autour des opérateurs (`+`, `-`, `*`, `/`, etc.) :
+
+```
+>>> 1+2
+3
+```
+
+La double étoile représente l'exposant.
+
+```
+>>> 2 ** 3
+8
+```
+
+:::
+
+## Calculs simples et variables
+
+<br />
+
+:::{.medium}
+
+Il est possible de stocker des valeurs dans des variables :
+
+```
+>>> a = 1
+>>> b = 2
+>>> result = a + b
+```
+
+Le résultat n'est donc plus affiché directement dans l'interpréteur Python mais stocké dans la variable `result`.
+On peut ensuite afficher le contenu de la variable `result` :
+
+```
+>>> result
+3
+```
+
+Ou en utilisant la fonction `print` :
+
+```
+>>> print(result)
+```
+
+:::
+
+## Calculs simples et variables
+
+:::{.medium}
+
+En Python le typage est dynamique, il n'est pas nécessaire de déclarer le type d'une variable avant de l'utiliser et il est possible de changer le type d'une variable
+au cours de son existence :
+
+```
+>>> a = 1
+>>> type(a)
+<class 'int'>
+>>> a = 'Hello world!'
+>>> type(a)
+<class 'str'>
+```
+
+:::
+
+
+# Types natifs <br />et *data structures* natives
+
+:::{.small}
+*Les structures de données sont les éléments fondamentaux autour desquels vous construisez vos programmes. Chaque structure de données fournit une manière particulière d'organiser les données afin d'y accéder efficacement.*
+:::
+
+## Types de base
+
+Les types de base sont les types de données les plus simples disponibles dans Python. Ils sont utilisés pour représenter des valeurs simples.
+
+::::{.columns .medium}
+:::{.column width="50%"}
+
+- `int` (entier)
+
+```{python}
+#| echo: true
+my_int = 42
+```
+
+- `float` (nombre à virgule flottante)
+
+```{python}
+#| echo: true
+my_float = 3.14
+```
+
+- `bool` (booléen)
+
+```{python}
+#| echo: true
+my_bool = True # ou False
+```
+
+:::
+
+:::{.column width="50%"}
+
+- `str` (chaîne de caractères)
+
+```{python}
+#| echo: true
+my_str = 'Hello world!'
+```
+
+- `NoneType` (type spécial pour la valeur `None`)
+
+```{python}
+#| echo: true
+my_none = None
+```
+
+:::
+::::
+
+## Structures de données
+
+:::{.medium}
+
 Python est livré avec un ensemble complet de structures de données dans sa bibliothèque standard :
+
+:::
+
+::::{.columns .medium}
+:::{.column width="50%"}
 
 - `dict` (tableau associatif)
 
@@ -345,6 +538,10 @@ print(my_dict['john'])
 my_coordinates = (2.349014, 48.864716)
 ```
 
+:::
+
+:::{.column width="50%"}
+
 - `list` (tableau dynamique mutable),
 
 ```{python}
@@ -355,12 +552,316 @@ my_list = ['a', 12, (2.349014, 48.864716), { "foo": 42 }]
 - `array` (tableau typé de base), `enum` (énumération), etc.
 
 :::
+::::
 
-## Python *(classes)*
+:::{.notes}
+
+En informatique, une structure de données est une manière d'organiser les données pour les traiter plus facilement. Une structure de données est une mise en œuvre concrète d'un type abstrait.
+
+Pour prendre un exemple de la vie quotidienne, on peut présenter des numéros de téléphone par département, par nom, par profession (comme les Pages jaunes), par numéro téléphonique (comme les annuaires destinés au télémarketing), par rue et/ou une combinaison quelconque de ces classements. À chaque usage correspondra une structure d'annuaire appropriée.
+
+En organisant d'une certaine manière les données, on permet un traitement automatique de ces dernières plus efficace et rapide.
+
+Souvent (en tout cas pour les cas qui nous concernent ici) il s'agira de collections d'objets, par exemple un tableau de nombre, 
+un tableau associatif (dictionnaire) permettant de faire correspondre des clés (noms par ex) à des valeurs (numéro de téléphone par ex), etc.
+
+:::
+
+## Structures de données - `list` (1)
+
+[Les listes sont des tableaux dynamiques, elles peuvent contenir des éléments de différents types et sont mutables.]{.medium}
+
+::::{.columns .medium}
+
+:::{.column width="50%"}
+
+- **Création** :
+
+Liste vide :
+
+```{python}
+#| echo: true
+ma_liste = []
+```
+
+Ou création d'une liste avec des éléments :
+
+```{python}
+#| echo: true
+ma_liste = [12, 34, 2, 1, 21, 43]
+```
+
+<br />
+
+- **Connaitre la taille d'une liste** :
+
+```{python}
+#| echo: true
+len(ma_liste)
+```
+
+:::
+
+:::{.column width="50%"}
+
+- **Accès aux éléments** :
+
+
+```{python}
+#| echo: true
+ma_liste[0] # Premier élément
+```
+
+```{python}
+#| echo: true
+ma_liste[-1] # Dernier élément
+```
+
+```{python}
+#| echo: true
+ma_liste[1] = 42 # Modification d'un élément
+```
+
+<br />
+
+- **Accès à un sous-ensemble d'éléments** (*slicing*) :
+
+```{python}
+#| echo: true
+my_slice = ma_liste[1:3]
+my_slice
+```
+
+:::
+::::
+
+## Structures de données - `list` (2)
+
+:::{.medium}
+
+Mais aussi de nombreuses *méthodes* permettant de manipuler les listes :
+
+:::
+
+::::{.columns .medium}
+:::{.column width="50%"}
+
+- **Ajouter des éléments à une liste existante** :
+
+```{python}
+#| echo: true
+ma_liste.append(322)
+```
+
+<br />
+
+
+:::
+
+:::{.column width="50%"}
+
+- **Supprimer un élément d'une liste** :
+
+```{python}
+#| echo: true
+ # Supprime la première occurrence de l'élément 322
+ma_liste.remove(322)
+```
+
+```{python}
+#| echo: true
+ # Supprime l'élément à l'indice 0 (et le retourne)
+ma_liste.pop(0)
+```
+
+:::
+
+::::
+
+<br />
+
+:::{.medium}
+Il existe également des méthodes permettant de trier une liste, d'ajouter un élément à une position précise, etc. etc.
+:::
+
+## Structures de données - `tuple`
+
+:::{.medium}
+
+Puisqu'il s'agit d'un type immuable, il n'est pas possible de modifier un tuple une fois qu'il a été créé :
+
+- **Création** :
+
+```{python}
+#| echo: true
+my_tuple = (1, 2, 3)
+```
+
+- **Accès aux éléments** :
+
+```{python}
+#| echo: true
+my_tuple[0] # Comme pour une liste
+```
+
+- **Pas de modification possible** :
+
+```{python}
+#| error: true
+#| echo: true
+my_tuple[0] = 42
+```
+
+:::
+
+
+## Structures de données - `dict` (1)
+
+:::{.medium}
+
+Il s'agit d'un tableau associatif, les éléments sont stockés sous forme de clé / valeur.
+
+:::
+
+::::{.columns .medium}
+
+:::{.column width="50%"}
+
+- **Création** d'un dictionnaire **vide** :
+
+```{python}
+#| echo: true
+my_dict = {}
+```
+
+<br />
+
+- **Création** d'un dictionnaire **avec des éléments** :
+
+```{python}
+#| echo: true
+my_dict = { 'john': 32, 'jane': 27, 'jack': 30 }
+```
+
+<br />
+
+- **Accès aux éléments** :
+
+```{python}
+#| echo: true
+my_dict['john']
+```
+
+:::
+
+:::{.column width="50%"}
+
+- **Modification d'un élément** :
+
+```{python}
+#| echo: true
+my_dict['john'] = 33
+```
+
+<br />
+
+- **Ajout d'un élément** :
+
+```{python}
+#| echo: true
+my_dict['jill'] = 29
+```
+
+<br />
+
+- **Suppression d'un élément** :
+
+```{python}
+#| echo: true
+del my_dict['john']
+```
+
+:::
+
+::::
+
+## Structures de données - `dict` (2)
+
+::::{.columns .medium}
+
+:::{.column width="50%"}
+
+- **Accès aux éléments** :
+
+```{python}
+#| echo: true
+my_dict['jill']
+```
+
+<br />
+
+*Une erreur est renvoyée si la clé n'existe pas* :
+
+```{python}
+#| error: true
+#| echo: true
+my_dict['johana']
+```
+
+<br />
+
+*Il est possible de tester l'existence d'une clé dans un dictionnaire* :
+
+```{python}
+#| echo: true
+'johana' in my_dict
+```
+
+:::
+
+:::{.column width="50%"}
+
+*Il est possible demander la valeur associée à une clé en utilisant la méthode `get` (et de spécifier une valeur par défaut si la clé n'existe pas)* :
+
+```{python}
+#| echo: true
+my_dict.get('johana')
+```
+
+```{python}
+#| echo: true
+my_dict.get('johana', -1)
+```
+
+
+<br />
+
+- **Récupérer l'ensemble des clés** :
+
+```{python}
+#| echo: true
+my_dict.keys()
+```
+
+<br />
+
+- **Récupérer l'ensemble des valeurs** :
+
+```{python}
+#| echo: true
+my_dict.values()
+```
+
+:::
+
+::::
+
+
+## Classes
 
 <br>
 
-Comme il s'agit d'un langage orienté-objet, il est également possible de définir des classes, permettant de facilement modéliser des catégories d'objets...
+Comme Python est un langage orienté-objet, il est également possible de définir des classes, permettant de facilement modéliser des catégories d'objets...
 
 ```{python}
 #| echo: true
@@ -375,9 +876,23 @@ class Point:
       ) ** 0.5
 ```
 
-## Python *(classes)*
+:::{.notes}
 
-<br>
+La programmation orientée objet (ou programmation par objet) est un paradigme de programmation qui consiste à modéliser des objets du
+monde réel sous forme de briques logicielles appelées *objet*. Un objet représente un concept, une idée ou toute entité du monde physique (telle qu'une voiture,
+une personne, un point dans le plan, etc.).
+
+- `class` est un mot-clé permettant de définir une classe.
+- `__init__` est une méthode spéciale appelée constructeur, elle est appelée lors de la création d'un objet de la classe `Point`.
+- `self` est une référence à l'objet lui-même.
+- `self.x` et `self.y` sont des attributs de l'objet.
+- `distance` est une méthode de l'objet.
+- `other` est un autre objet de la classe `Point`.
+
+:::
+
+## Classes
+
 <br>
 
 Instanciation et utilisation :
@@ -389,93 +904,6 @@ p2 = Point(9, 9)
 
 print('Distance = ', p1.distance(p2))
 ```
-
-# Et côté sémantique ?
-
-## Python
-
-Sémantique *pass-by-assignment* et différence entre types muables et immuables :
-
-```{python}
-#| echo: true
-# le type list est muable
-a = [1, 3, 5]
-b = a # 'a' et 'b' pointent vers le même objet
-
-b[2] = 11 # Modifie l'objet vers lequel pointe 'b' qui est également celui vers lequel pointe 'a'
-```
-
-```{python}
-#| echo: true
-i = 5 # les entiers sont immuables
-j = i
-i = i + 1 # la valeur 5 ne peut pas être modifiée, un nouvel objet est créé ici
-
-print(i) # 6
-print(j) # 5
-```
-
-:::{.medium}
-Pour en savoir plus sur ce point : [Documentation officielle -  Questions fréquemment posées sur Python](https://docs.python.org/fr/3/faq/programming.html#why-did-changing-list-y-also-change-list-x)
-:::
-
-:::{.notes}
-
-Les instructions d'affectation en Python ne copient pas les objets, elles créent des liens entre une cible et un objet.
-Pour les collections qui sont mutables ou qui contiennent des éléments mutables, une copie est parfois nécessaire afin de pouvoir modifier une copie sans modifier l'autre.
-
-Copie superficielle (*Shallow copy*) vs. profonde (*deep copy*).
-
-:::
-
-## Indices
-
-<br>
-
-- En Python les indices de liste commencent à 0 :
-
-```{python}
-#| echo: true
-my_list = [1, 3, 5]
-print(my_list[0])
-```
-
-## Maintenabilité du code
-
-<br>
-
-```{python}
-#| echo: true
-class Point:
-    def __init__(self, x, y):
-      self.x = x
-      self.y = y
-
-    def distance(self, other):
-      return (
-        (other.x - self.x) ** 2 + (other.y - self.y) ** 2
-      ) ** 0.5
-```
-
-## Maintenabilité du code
-
-<br>
-
-```{python}
-#| echo: true
-class Point:
-    def __init__(self, x: float, y: float) -> None:
-      self.x = x
-      self.y = y
-
-    def distance(self, other: Point) -> float:
-      return (
-        (other.x - self.x) ** 2 + (other.y - self.y) ** 2
-      ) ** 0.5
-```
-
-- [_**Type hint**_](https://docs.python.org/fr/3/library/typing.html) ...
-- \+ analyse statique du code ([*mypy*](https://www.mypy-lang.org/), IDE, etc.)
 
 # Mise en place d'un environnement de travail Python
 
@@ -660,11 +1088,10 @@ En utilisant la méthode `intersection` des `GeoDataFrame` :
 from shapely import wkt
 
 point = wkt.loads('Point(998769.1146889535 174169.7607268664)')
-
 intersecting = nybb.intersection(point.buffer(35000))
 ```
 
-<br>
+<br />
 
 ```{python gpd-tuto-intersectiob-2}
 #| echo: true
@@ -753,7 +1180,7 @@ print(data)
 
 Exemple d'utilisation :
 
-::: {.panel-tabset .custom-tab}
+::: {.panel-tabset .custom-tab .small}
 
 ### Import et lecture
 
@@ -838,7 +1265,7 @@ clipped = xds.rio.clip(gdf.geometry.values, gdf.crs, drop=False, invert=True)
 
 ::: {.column width="50%"}
 
-**Explorer**:
+**Explorer** :
 
 - Analyse exploratoire des données spatiales (package [esda](https://pysal.org/esda/))
 - Analyse de la dynamique des données spatiales longitudinales (package [giddy](https://pysal.org/giddy/))
@@ -851,7 +1278,7 @@ clipped = xds.rio.clip(gdf.geometry.values, gdf.crs, drop=False, invert=True)
 
 ::: {.column width="50%"}
 
-**Modéliser**:
+**Modéliser** :
 
 - Régression géographiquement pondérée à plusieurs échelles (package [mgwr](https://mgwr.readthedocs.io/en/latest/))
 - Modèles linéaires généralisés épars (package [spglm](https://spglm.readthedocs.io/en/latest/))

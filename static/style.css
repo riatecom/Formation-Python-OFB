@@ -21,8 +21,16 @@
     font-size: 0.6em;
 }
 
+.reveal .small pre {
+    font-size: 0.9em;
+}
+
 .medium {
     font-size: 0.8em;
+}
+
+.reveal .medium pre {
+    font-size: 0.9em;
 }
 
 h1 {
@@ -31,4 +39,9 @@ h1 {
 }
 .center {
     text-align: center;
+}
+
+div:not(.cell-output-stdout):not(.cell-output-error):not(.cell-output-display) > pre > code:not(.sourceCode) {
+    background-color: lightgray;
+    border-radius: 4px;
 }
