@@ -174,7 +174,7 @@ qui permet de créer des environnements Python isolés pour différents projets.
 
 <img src="https://www.jetbrains.com/pycharm/img/screenshots/complexLook@2x.jpg" style="float:right; width: 46%;"/>
 
-## *Batteries included*
+## *Batteries included* 🔋
 
 :::{.medium}
 
@@ -184,7 +184,7 @@ Le langage de programmation Python a une bibliothèque standard très complète,
 
 :::{.small}
 
-Modules de la bibliothèque standard :
+[Modules de la bibliothèque standard](https://docs.python.org/3/library/index.html) :
 
 - `math` (fonctions mathématiques de base)
 - `statistics` (statistiques descriptives)
@@ -250,7 +250,8 @@ Il n'existe toutefois pas un seul standard pour consulter la documentation des d
 #| message: true
 #| cache: true
 import math # On importe le module math
-from statistics import mean, stdev # Et deux fonctions du module statistics
+# Et deux fonctions du module statistics
+from statistics import mean, stdev
 
 # Définition d'une fonction
 def cv(x):
@@ -719,7 +720,7 @@ my_tuple[0] = 42
 
 :::{.medium}
 
-Il s'agit d'un tableau associatif, les éléments sont stockés sous forme de clé / valeur.
+Il s'agit d'un tableau associatif, les éléments sont stockés sous forme de clé / valeur. Il ne s’agit donc pas d’objets séquentiels comme les listes, mais plutôt d’objets dits de correspondance (*mapping objects* en anglais).
 
 :::
 
@@ -855,6 +856,23 @@ my_dict.values()
 :::
 
 ::::
+
+## Structures de données - Des listes de dictionnaires ?
+
+:::{.medium}
+
+Il est classique de combiner des listes et des dictionnaires pour représenter, par exemple, des données tabulaires :
+
+```{python}
+#| echo: true
+data = [
+    { 'name': 'Jill', 'age': 32,  'height': 1.65 },
+    { 'name': 'Jack', 'age': 27,  'height': 1.73 },
+    { 'name': 'Jane', 'age': 30,  'height': 1.80 }
+]
+```
+
+:::
 
 
 ## Classes
@@ -1251,13 +1269,12 @@ clipped = xds.rio.clip(gdf.geometry.values, gdf.crs, drop=False, invert=True)
 
 ## Analyse spatiale
 
-<img src="./images/logo-pysal.png" style="position: absolute; top: 20px; right: 20px; width: 90px; height: auto;"/>
+<img src="./images/logo-pysal.png" style="position: absolute; top: 5px; right: 20px; width: 120px; height: auto;"/>
 
-<br />
 
 :::{.medium}
 
-Écosystème de bibliothèques pour l'analyse spatiale [PySAL](https://pysal.org/) (Python Spatial Analysis Library, @pysal2007) :
+Écosystème de bibliothèques pour l'analyse spatiale [PySAL](https://pysal.org/) <br />(Python Spatial Analysis Library, @pysal2007) :
 
 :::
 
@@ -1296,9 +1313,16 @@ clipped = xds.rio.clip(gdf.geometry.values, gdf.crs, drop=False, invert=True)
 
 ## Autres packages utiles ...
 
+::::{.columns .medium}
+:::{.column width="50%"}
+
 - Binding Python pour [GRASS](https://grass.osgeo.org/grass82/manuals/libpython/index.html) + Intégration dans les notebooks Jupyter
 
 ![Source: <https://grass.osgeo.org/news/2022_06_05_results_student_grant_caitlin/>](./images/grass_jupyter_combo_vis.png)
+
+:::
+
+:::{.column width="50%"}
 
 - [Iris](https://scitools-iris.readthedocs.io/en/stable/) - Analyse et visualisation de données des sciences de la Terre.
 
@@ -1308,7 +1332,12 @@ clipped = xds.rio.clip(gdf.geometry.values, gdf.crs, drop=False, invert=True)
 
 - Un écosystème riche pour le géospatial (voir par exemple ici : [https://github.com/sacridini/Awesome-Geospatial#python](https://github.com/sacridini/Awesome-Geospatial#python)) et la visualisation de données (voir par exemple les outils listés par la plateforme [PyViz](https://pyviz.org/tools.html)).
 
+:::
+::::
+
 ## Ressources Python Géospatial
+
+:::{.medium}
 
 - [https://py.geocompx.org/](https://py.geocompx.org/) [@Dorman2022]
 
@@ -1320,7 +1349,45 @@ clipped = xds.rio.clip(gdf.geometry.values, gdf.crs, drop=False, invert=True)
 
 - [https://geographicdata.science/book/intro.html](https://geographicdata.science/book/intro.html)
 
+:::
+
 # Partie 2 - Python et QGIS
+
+## Pourquoi Python-QGIS ?
+
+- Lancer des commandes dans la console Python de QGIS
+
+- Créer et utiliser des extensions
+
+- Exécuter automatiquement un programme Python quand QGIS démarre
+
+- Créer des algorithmes de traitement
+
+- Créer des fonctions pour des expressions dans QGIS
+
+- Créer des applications personnalisées basées sur l’API QGIS
+
+## L'interface de programmation PyQgis
+
+## Console Python dans QGIS
+
+:::{.medium}
+
+QGIS fournit une console interactive Python.
+
+Elle peut être ouverte de plusieurs manières : 
+
+- depuis le menu `Extensions > Console Python`
+- en utilisant le raccourci clavier <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>P</kbd>`
+- en utilisant le bouton <img src="./images/python-console.png" style="display: inline-block; width: 0.8em; height: auto;"/> dans la barre d'outils
+
+Lors de l'utilisation de la console Python dans QGIS, une variable `iface` est déjà existante. Cette variable est une instance de la classe `QgisInterface` et permet d'accéder à la majorité des fonctions de QGIS (accès au canevas de la carte, aux couches, aux menus, barres d'outils, etc. etc.).
+
+:::
+
+## Étendre les expressions QGIS avec Python
+
+
 
 ## Références
 
