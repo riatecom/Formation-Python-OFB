@@ -21,6 +21,24 @@ csl: "universite-de-montreal-apa.csl"
 lang: fr
 ---
 
+## Programme de la demi-journée
+
+<br />
+
+:::{.medium}
+
+- **Partie 1** : Introduction à Python
+- **Partie 2** : Mise en pratique / Exercices
+- **Partie 3** : Python et QGIS
+- **Partie 4** : Mise en pratique / Exercices
+- **Conclusion**
+
+**Objectifs** : Découvrir le langage de programmation Python et son écosystème, et apprendre à l'utiliser pour réaliser des traitements géomatiques dans QGIS.
+
+Rappels des instructions pour installer l'environnement Python : [Installation d'un environnement Python pour Windows avec Anaconda et VSCodium](installation.html)
+
+:::
+
 # Partie 1 - Introduction à Python
 
 ## Pourquoi programmer ?
@@ -30,9 +48,9 @@ lang: fr
 
 ## Historique et présentation sur le papier...
 
-<img src="images/logo-python.png" style="position: absolute;top: 10px;right: 10px;width: 105px !important;height: auto;" />
+<img src="images/logo-python.png" style="position: absolute;top: 40px;right: 10px;width: 105px !important;height: auto;" />
 
-<br>
+<br /><br />
 
 - Langage créé à la toute fin des années 80 - première version publique sortie en 1991.
 
@@ -42,7 +60,7 @@ lang: fr
 
 - **Typage dynamique fort** (et *duck typing*)
 
-- Toujours en développement actif (dernière version en avril 2023)
+- Toujours en développement actif (dernière version stable en octobre 2023)
 
 ::: {.notes}
 
@@ -205,6 +223,7 @@ Le langage de programmation Python a une bibliothèque standard très complète,
 
 ## Modules additionnels (bibliothèques)
 
+<br />
 <center>
 
 ![](images/python-stack.png)
@@ -519,17 +538,12 @@ my_none = None
 
 Python est livré avec un ensemble complet de structures de données dans sa bibliothèque standard :
 
-:::
-
-::::{.columns .medium}
-:::{.column width="50%"}
 
 - `dict` (tableau associatif)
 
 ```{python}
 #| echo: true
 my_dict = { 'john': 32, 'jane': 27, 'jack': 30 }
-print(my_dict['john'])
 ```
 
 - `tuple` (un conteneur immuable),
@@ -539,21 +553,17 @@ print(my_dict['john'])
 my_coordinates = (2.349014, 48.864716)
 ```
 
-:::
-
-:::{.column width="50%"}
-
 - `list` (tableau dynamique mutable),
 
 ```{python}
 #| echo: true
-my_list = ['a', 12, (2.349014, 48.864716), { "foo": 42 }]
+my_list = [12, 34, 2, 1, 21, 4]
+other_list = ['a', 12, (2.349014, 48.864716), { "foo": 42 }]
 ```
 
 - `array` (tableau typé de base), `enum` (énumération), etc.
 
 :::
-::::
 
 :::{.notes}
 
@@ -640,12 +650,7 @@ my_slice
 
 :::{.medium}
 
-Mais aussi de nombreuses *méthodes* permettant de manipuler les listes :
-
-:::
-
-::::{.columns .medium}
-:::{.column width="50%"}
+De nombreuses *méthodes* permettant de manipuler les listes.
 
 - **Ajouter des éléments à une liste existante** :
 
@@ -656,10 +661,6 @@ ma_liste.append(322)
 
 <br />
 
-
-:::
-
-:::{.column width="50%"}
 
 - **Supprimer un élément d'une liste** :
 
@@ -675,14 +676,8 @@ ma_liste.remove(322)
 ma_liste.pop(0)
 ```
 
-:::
+Il existe également des méthodes permettant de trier une liste (`sort`), d'ajouter un élément à une position précise (`insert`), etc. etc.
 
-::::
-
-<br />
-
-:::{.medium}
-Il existe également des méthodes permettant de trier une liste, d'ajouter un élément à une position précise, etc. etc.
 :::
 
 ## Structures de données - `tuple`
@@ -874,6 +869,204 @@ data = [
 
 :::
 
+## Contrôle du flux d'exécution - `if`
+
+:::{.medium}
+
+Le contrôle du flux d'exécution permet de contrôler l'ordre dans lequel les instructions sont exécutées.
+
+:::
+
+::::{.columns .medium}
+
+:::{.column width="50%"}
+
+- **`if`** :
+
+```{python}
+#| echo: true
+altitude = 2500
+
+if altitude >= 2000:
+    print('Haute altitude')
+```
+
+<br />
+
+- **`if` / `else`** :
+
+```{python}
+#| echo: true
+altitude = 2500
+
+if altitude >= 2000:
+    print('Haute altitude')
+else:
+    print('Basse altitude')
+```
+
+:::
+
+:::{.column width="50%"}
+
+- **`if` / `elif` / `else`** :
+
+```{python}
+#| echo: true
+altitude = 2500
+
+if altitude >= 6000:
+    print('Altitude extrêmement élevée')
+elif altitude >= 4000:
+    print('Très haute altitude')
+elif altitude >= 2000:
+    print('Haute altitude')
+else:
+    print('Basse altitude')
+```
+
+[Les seuils proviennent de [Wikipedia:Altitude#Adaptations_physiologiques_et_réponses_physiopathologiques_du_corps_humain](https://fr.wikipedia.org/wiki/Altitude#Adaptations_physiologiques_et_r%C3%A9ponses_physiopathologiques_du_corps_humain)]{.very-small}
+:::
+
+::::
+
+## Contrôle du flux d'exécution - `for` (1)
+
+:::{.medium}
+
+La boucle `for` permet d'itérer sur une séquence (une liste, un tuple, un dictionnaire, etc.) :
+
+:::
+
+::::{.columns .medium}
+
+:::{.column width="50%"}
+
+- **`for`** :
+
+```{python}
+#| echo: true
+for i in range(5):
+    print(i)
+```
+
+<br />
+
+Ici, `range()` est une fonction native qui retourne une séquence d'entiers :
+
+- `range(5)` retourne la séquence `0, 1, 2, 3, 4`.
+
+- `range(2, 7)` retourne la séquence `2, 3, 4, 5, 6`.
+
+:::
+
+:::{.column width="50%"}
+
+- **`for`** sur une liste :
+
+```{python}
+#| echo: true
+my_list = [12, 34, 2, 1, 3]
+
+for item in my_list:
+    print(item)
+```
+
+<br />
+
+- **`for`** sur une liste, en utilisant `enumerate` :
+
+```{python}
+#| echo: true
+for index, item in enumerate(my_list):
+    print(f'Index: {index}, item: {item}')
+```
+
+:::
+
+::::
+
+## Contrôle du flux d'exécution - `for` (2)
+
+:::{.columns .medium}
+
+:::{.column width="50%"}
+
+- **`for`** sur un dictionnaire :
+
+```{python}
+#| echo: true
+my_dict = { 'john': 32, 'jane': 27, 'jack': 30 }
+
+for key in my_dict:
+    print(key)
+```
+
+```{python}
+#| echo: true
+for key, value in my_dict.items():
+    print(f'{key} a {value} ans')
+```
+
+:::
+
+:::{.column width="50%"}
+
+- **`for`** sur une chaîne de caractères :
+
+```{python}
+#| echo: true
+
+for letter in 'Hello !':
+    print(letter)
+```
+
+:::
+
+
+## Contrôle du flux d'exécution - `while`
+
+:::{.medium}
+
+La boucle `while` permet d'exécuter un bloc d'instructions tant qu'une condition est vraie :
+
+:::
+
+::::{.columns .medium}
+
+:::{.column width="50%"}
+
+- **`while`** :
+
+```{python}
+#| echo: true
+i = 0
+
+while i < 5:
+    print(i)
+    i += 1
+```
+
+:::
+
+:::{.column width="50%"}
+
+- **`while`** avec `break` :
+
+```{python}
+#| echo: true
+i = 0
+
+while True:
+    print(i)
+    i += 1
+    if i >= 5:
+        break
+```
+
+:::
+
+::::
 
 ## Classes
 
@@ -923,36 +1116,46 @@ p2 = Point(9, 9)
 print('Distance = ', p1.distance(p2))
 ```
 
-# Mise en place d'un environnement de travail Python
+## Classes, méthodes et attributs
 
-## Installation de Python
+::::{.columns .medium}
 
-:::{.very-small}
+:::{.column .fragment width="50%"}
+**Méthodes** :
 
-1. Télécharger et installer [Anaconda](https://www.anaconda.com/products/individual) :
-   - Une fois le fichier téléchargé, double-cliquez dessus
-   - Accepter les termes de la licence
-   - Choisir d'installer Anaconda seulement pour l'utilisateur courant (*Just me*) et non pas pour tous les utilisateurs (*All users*)
-   - Sélectionner le chemin d'installation (ou laisser celui par défaut - attention à éviter les chemins avec des espaces et/ou des caractères unicodes)
-   - Accepter ensuite les options par défaut jusqu'à la fin de l'installation (sur la dernière fenêtre "Thanks for installing Anaconda", vous pouvez décocher les deux cases et cliquer sur "Finish")
-2. Télécharger l'IDE [VS Codium](https://vscodium.com/) (version libre de [Visual Studio Code](https://code.visualstudio.com/)) pour votre système d'exploitation :
-   - Vous pouvez utilisez le lien direct suivant : https://github.com/VSCodium/vscodium/releases/download/1.84.2.23319/VSCodiumUserSetup-x64-1.84.2.23319.exe
-   - Cliquer sur l'installeur et suivez les instructions en laissant les options par défaut
-   - Une fois l'installation terminée, ouvrez VS Codium
-3. Installer l'extension [Python](https://marketplace.visualstudio.com/items?itemName=ms-python.python) dans VS Codium :
-   - Dans VS Codium, appuyez sur Ctrl + P et saisissez le texte suivant dans le menu qui s'ouvre : "ext install ms-python.python".
-   - Validez avec "Entrée"
-4. Installer l'extension [Jupyter](https://marketplace.visualstudio.com/items?itemName=ms-toolsai.jupyter) dans VS Codium :
-   - Dans VS Codium, appuyez sur Ctrl + P et saisissez le texte suivant dans le menu qui s'ouvre : "ext install ms-toolsai.jupyter".
-   - Validez avec "Entrée"
-5. Sélectionner l'interpréteur Python dans VS Codium :
-   - Dans VS Codium, appuyez sur Ctrl + Shift + P et saisissez / sélectionnez "Python: Select Interpreter" dans le menu qui s'ouvre, appuyez sur "Entrée" puis choisissez l'interpréteur Python que nous venons d'installer avec Anaconda : `Python 3.11.5 64-bit ('base': conda)`.
+Une méthode est une fonction qui appartient à une classe. Elle s'applique donc à l'instance de la classe sur laquelle elle est appelée.
+
+Dans les exemples précédents, nous avons déjà utilisé des méthodes :
+
+- `append`, `remove` et `pop` sont des méthodes de la classe `list`
+- `keys`, `get` et `values` sont des méthodes de la classe `dict`
+- etc.
 
 :::
 
+:::{.column .fragment width="50%"}
+**Attributs** :
+
+Un attribut est une variable qui appartient à une classe. Elle est donc accessible depuis toutes les instances de la classe.
+
+```{python}
+#| echo: true
+p = Point(2, 6)
+print(p.x)
+```
+
+:::
+
+::::
 
 
-# Écosystème pour le géospatial
+## Écosystème pour le géospatial
+
+:::{.medium}
+
+L'écosystème Python est très riche et il existe de nombreuses bibliothèques pour le traitement de données géospatiales.
+
+:::
 
 ## Données vectorielles
 
@@ -1335,23 +1538,50 @@ clipped = xds.rio.clip(gdf.geometry.values, gdf.crs, drop=False, invert=True)
 :::
 ::::
 
-## Ressources Python Géospatial
+## Ressources pour l'apprentissage de Python
 
 :::{.medium}
 
-- [https://py.geocompx.org/](https://py.geocompx.org/) [@Dorman2022]
+- [Le tutoriel de la documentation officielle](https://docs.python.org/fr/3/tutorial/)
 
-- [https://geo-python-site.readthedocs.io/en/latest/](https://geo-python-site.readthedocs.io/en/latest/)
+- [Le MOOC "Python : des fondamentaux aux concepts avancés du langage" de l'Université Côte d'Azur (6 semaines + semaines optionnelles, dont une semaine "écosystème data-science")](https://www.fun-mooc.fr/fr/cours/python-3-des-fondamentaux-aux-concepts-avances-du-langage/)
+  (selon vos centres d'intérêt, d'autres MOOC comme ["Recherche reproductible : principes méthodologiques pour une science transparente"](https://www.fun-mooc.fr/fr/cours/recherche-reproductible-principes-methodologiques-pour-une-science-transparente/) de l'INRIA
+  font appel à Python ainsi qu'à des compétences transverses comme l'utilisation de Git, du Markdown, etc.)
 
-- [https://automating-gis-processes.github.io](https://automating-gis-processes.github.io)
+- [Openclassrooms - Apprenez les bases du langage Python](https://openclassrooms.com/fr/courses/7168871-apprenez-les-bases-du-langage-python) 
 
-- [https://www.earthdatascience.org/courses/use-data-open-source-python/](https://www.earthdatascience.org/courses/use-data-open-source-python/)
+- [Cours "Geo-Python" (en anglais - présente les bases de la programmation en Python pour l'analyse de données, avec une coloration géospatiale et sans nécessiter de connaissances préalables)](https://geo-python-site.readthedocs.io/en/latest/)
 
-- [https://geographicdata.science/book/intro.html](https://geographicdata.science/book/intro.html)
+- [Tutoriel "Python pour les SHS" (en français)](https://python.sdv.univ-paris-diderot.fr/)
 
 :::
 
-# Partie 2 - Python et QGIS
+:::{.notes}
+
+Introduction à la programmation Python pour la biologie : https://python.sdv.univ-paris-diderot.fr/
+
+:::
+
+## Ressources Python Géospatial
+
+Les ressources qui suivent supposent pour la plupart une connaissance de base du langage Python (boucles, conditions, fonctions, types de base, etc.).
+Elles mobilisent les bibliothèques Python le plus souvent utilisées pour l'analyse de données et le traitement de données géospatiales (pandas, geopandas, rasterio, scipy, etc.).
+
+:::{.medium}
+
+- [Livre gratuit "Geocomputation with Python" (en anglais)](https://py.geocompx.org/) [@Dorman2022]
+
+- [Cours "Automating GIS processes" (en anglais)](https://autogis-site.readthedocs.io/en/latest/)
+
+- [Cours "Use Data for Earth and Environmental Science in Open Source Python" (en anglais)](https://www.earthdatascience.org/courses/use-data-open-source-python/)
+
+- [Livre gratuit "Geographic Data Science with Python"](https://geographicdata.science/book/intro.html)
+
+:::
+
+# Partie 2 - Mise en pratique / Exercices
+
+# Partie 3 - Python et QGIS
 
 ## Pourquoi Python-QGIS ?
 
@@ -1367,7 +1597,30 @@ clipped = xds.rio.clip(gdf.geometry.values, gdf.crs, drop=False, invert=True)
 
 - Créer des applications personnalisées basées sur l’API QGIS
 
-## L'interface de programmation PyQgis
+## L'interface de programmation PyQGIS
+
+## Étendre les expressions QGIS avec Python
+
+:::{.medium}
+
+Dans QGIS, les *expressions* peuvent être utilisées dans différents mécanismes de base :
+sélection par expression, calcul des valeurs d'un champ (calculatrice de champ), règles de style, étiquettes, etc.
+
+QGIS prend également en charge les expressions définies par l'utilisateur. Grâce à Python, vous pouvez définir vos propres fonctions qui peuvent être utilisées dans le moteur d'expression.
+
+:::
+
+## Étendre les expressions QGIS avec Python
+
+![](./images/expression-custom-function.png)
+
+## Étendre les expressions QGIS avec Python
+
+![](./images/expression-selection.png)
+
+## Étendre les expressions QGIS avec Python
+
+![](./images/expression-new-field.png)
 
 ## Console Python dans QGIS
 
@@ -1385,9 +1638,38 @@ Lors de l'utilisation de la console Python dans QGIS, une variable `iface` est d
 
 :::
 
-## Étendre les expressions QGIS avec Python
+## Exécuter des commandes dans la console Python
+
+:::{.medium}
 
 
+:::
+
+## Utiliser les algorithmes de traitement existants
+
+:::{.medium}
+
+QGIS fournit un ensemble d'algorithmes de traitement qui peuvent être utilisés dans la console Python, en utilisant le module Python `processing`.
+
+:::
+
+## Créer des algorithmes de traitement
+
+:::{.medium}
+
+:::
+
+## Références sur l'API Python de QGIS
+
+- [PyQGIS developer cookbook (documentation officielle)](https://docs.qgis.org/latest/en/docs/pyqgis_developer_cookbook/index.html)
+- [PyQGIS API documentation (documentation officielle)](https://qgis.org/pyqgis/master/)
+
+- [TP Python pour QGIS (TP de 12h donné en Licence Pro.)](https://mthh.github.io/TP_PythonQGIS/)
+- [QGIS tutorials - Rubrique "Python Scripting (PyQGIS)"](https://www.qgistutorials.com/)
+
+# Partie 4 - Mise en pratique / Exercices
+
+# Outro
 
 ## Références
 

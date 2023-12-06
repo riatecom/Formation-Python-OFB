@@ -1,0 +1,32 @@
+---
+title: Installation d'un environnement Python pour Windows avec Anaconda et VSCodium
+author:
+   - name: "Matthieu Viry"
+     email: "matthieu.viry@cnrs.fr"
+date: 2023-12-06
+lang: fr
+format:
+   html:
+      theme: sandstone
+      fontsize: 0.9em
+---
+
+
+1. Télécharger et installer [Anaconda](https://www.anaconda.com/products/individual) :
+    - Une fois le fichier téléchargé, double-cliquer dessus
+    - Accepter les termes de la licence
+    - Choisir d'installer Anaconda seulement pour l'utilisateur courant (*Just me*) et non pas pour tous les utilisateurs (*All users*)
+    - Sélectionner le chemin d'installation (ou laisser celui par défaut - attention à éviter les chemins avec des espaces et/ou des caractères unicodes)
+    - Accepter ensuite les options par défaut jusqu'à la fin de l'installation (sur la dernière fenêtre "Thanks for installing Anaconda", vous pouvez décocher les deux cases et cliquer sur "Finish")
+2. Télécharger l'IDE [VS Codium](https://vscodium.com/) (version libre de [Visual Studio Code](https://code.visualstudio.com/)) pour votre système d'exploitation :
+    - Vous pouvez utiliser le lien direct suivant : [https://github.com/VSCodium/vscodium/releases/download/1.84.2.23319/VSCodiumUserSetup-x64-1.84.2.23319.exe](https://github.com/VSCodium/vscodium/releases/download/1.84.2.23319/VSCodiumUserSetup-x64-1.84.2.23319.exe)
+    - Cliquer sur l'installeur et suivre les instructions en laissant les options par défaut
+    - Une fois l'installation terminée, ouvrer VS Codium
+3. Installer l'extension [Python](https://marketplace.visualstudio.com/items?itemName=ms-python.python) dans VS Codium :
+    - Dans VS Codium, appuyer sur Ctrl + P et saisir le texte suivant dans le menu qui s'ouvre : "ext install ms-python.python".
+    - Valider avec "Entrée"
+4. Installer l'extension [Jupyter](https://marketplace.visualstudio.com/items?itemName=ms-toolsai.jupyter) dans VS Codium :
+    - Dans VS Codium, appuyer sur Ctrl + P et saisir le texte suivant dans le menu qui s'ouvre : "ext install ms-toolsai.jupyter".
+    - Valider avec "Entrée"
+5. Sélectionner l'interpréteur Python dans VS Codium :
+    - Dans VS Codium, appuyer sur Ctrl + Shift + P et saisir / sélectionner "Python: Select Interpreter" dans le menu qui s'ouvre, appuyer sur "Entrée" puis choisir l'interpréteur Python que nous venons d'installer avec Anaconda : `Python 3.11.5 64-bit ('base': conda)`.

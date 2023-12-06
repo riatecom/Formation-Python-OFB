@@ -1,3 +1,11 @@
+:root {
+    --r-main-font-size: 36px;
+}
+
+body {
+    --slide-width: 1100px !important;
+}
+
 @font-face {
     font-family: 'Dosis';
     src: url('./Dosis-ExtraBold.ttf') format('truetype');
