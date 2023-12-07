@@ -35,6 +35,8 @@ lang: fr
 
 **Objectifs** : Découvrir le langage de programmation Python et son écosystème, et apprendre à l'utiliser pour réaliser des traitements géomatiques dans QGIS.
 
+<br />
+
 Rappels des instructions pour installer l'environnement Python : [Installation d'un environnement Python pour Windows avec Anaconda et VSCodium](installation.html)
 
 :::
@@ -45,10 +47,21 @@ Rappels des instructions pour installer l'environnement Python : [Installation d
 
 - **Automatiser** des tâches répétitives
 - **Prendre le contrôle** des analyses et des traitements que vous réalisez
+- **Réaliser des analyses reproductibles**
+- Pour le fun ! 🎉
+
+:::{.fragment}
+
+**Et pourquoi en Python ?**
+
+- C'est un des langages de programmation les plus populaires et les plus utilisés dans le monde
+- C'est un langage relativement simple à apprendre
+
+:::
 
 ## Historique et présentation sur le papier...
 
-<img src="images/logo-python.png" style="position: absolute;top: 40px;right: 10px;width: 105px !important;height: auto;" />
+<img src="images/logo-python.png" style="position: absolute;top: 60px;right: 10px;width: 105px !important;height: auto;" />
 
 <br /><br />
 
@@ -106,7 +119,7 @@ Sur le site web, le titre est "The R Project for Statistical Computing" et la de
 
 :::
    
-## Python / R
+## Python vs. R 🥊
 
 <br>
 
@@ -120,12 +133,11 @@ Sur le site web, le titre est "The R Project for Statistical Computing" et la de
 
 - *"Jack of all trades, master of none"* ?
 
-- Utilisé par Google, Facebook, Spotify, IBM, etc.
+- Utilisé par Google, Facebook, Microsoft, etc.
 
 :::
 
 ::: {.column .medium width="50%"}
-
 
 ### R
 
@@ -139,7 +151,15 @@ Sur le site web, le titre est "The R Project for Statistical Computing" et la de
 
 ::::
 
-- Mais la question se pose car Python est de plus en plus compétent pour l'analyse de données...
+<br />
+
+:::{.small}
+
+- Les deux langages sont souvent comparés, notamment dans le domaine de l'analyse de données.
+
+- La question se pose car Python est de plus en plus compétent pour l'analyse de données...
+
+:::
 
 # Présentation de l'écosystème
 
@@ -192,7 +212,7 @@ qui permet de créer des environnements Python isolés pour différents projets.
 
 <img src="https://www.jetbrains.com/pycharm/img/screenshots/complexLook@2x.jpg" style="float:right; width: 46%;"/>
 
-## *Batteries included* 🔋
+## *Batteries included 🔋*
 
 :::{.medium}
 
@@ -220,8 +240,32 @@ Le langage de programmation Python a une bibliothèque standard très complète,
 
 ## Modules additionnels (bibliothèques)
 
+<br />
+
+:::{.medium}
+
+Une des forces du langage de programmation Python est son écosystème, qui est très riche et très actif.
+
+Les packages sont des bibliothèques Python qui peuvent être installées à l'aide du gestionnaire de packages `pip` (ou `conda` dans le cas d'Anaconda).
+
+Ces packages sont généralement hébergés sur [PyPI](https://pypi.org/) (Python Package Index) (et [conda-forge](https://conda-forge.org/) pour les utilisateurs d'Anaconda).
+
+**Avant de se lancer dans une tâche de programmation, il est donc important de vérifier si un package spécialisé existe déjà pour réaliser cette tâche**.
+
+:::
+
+:::{.notes}
+
+Il est fréquent de se dire "je vais écrire un programme pour faire ça" et de se lancer dans le développement d'un programme Python.
+Mais avant de se lancer dans une tâche de programmation, il est important de vérifier si un package spécialisé existe déjà pour réaliser cette tâche.
+Si c'est le cas, ces auteurs ont déjà fait le travail de développement et de test, et il est probable que leur package soit plus robuste et plus performant que ce que vous pourriez écrire vous-même
+(il n'est pas rare de sous-estimer les difficultés qui pourraient être rencontrées lors du développement d'un programme, là où un package existant gère peut-être déjà ces difficultés).
+
+:::
 
 ## Modules additionnels (bibliothèques)
+
+**Écosystème Python scientifique**
 
 <br />
 <center>
@@ -381,7 +425,7 @@ for item1, item2 in zip(li1, li2):
 print(result)
 ```
 
-# Premières commandes dans l'interpréteur Python
+<!-- # Premières commandes dans l'interpréteur Python -->
 
 ## L'interpréteur Python
 
@@ -396,6 +440,26 @@ print(result)
 - L'interpréteur Python peut être utilisé pour exécuter des scripts Python (fichiers `.py`) en utilisant la commande `python mon_script.py`.
 
 :::
+
+## Ouvrir l'interpréteur Python (installé par Anaconda)
+
+<br />
+
+:::{.small}
+
+- Dans le menu Démarrer, chercher "Anaconda Prompt" et cliquer dessus. Une fenêtre de terminal s'ouvre. Celle-ci est prête à exécuter des commandes Python (dans l'environnement de base d'Anaconda).
+
+- Il est possible d'installer des packages Python supplémentaires dans l'environnement de base d'Anaconda en utilisant des commandes telles que :
+  - `conda install mon_package` (pour installer un package depuis le dépôt Anaconda)
+  - `pip install mon_package` (pour installer un package depuis le dépôt PyPI)
+  - `conda install --channel conda-forge mon_package` (pour installer un package depuis le dépôt conda-forge)
+
+- Il est possible de lancer un interpréteur Python en tapant `python` dans le terminal.
+
+🚀 **Ouvrez un terminal et lancez l'interpréteur Python ! Lors des démonstrations qui suivent, vous pourrez tester les commandes dans l'interpréteur Python.** 🚀
+
+:::
+
 
 ## Calculs simples et variables
 
@@ -530,6 +594,119 @@ my_none = None
 ```
 
 :::
+::::
+
+## Types de base - `str`
+
+::::{.columns .medium}
+
+:::{.column width="50%"}
+
+- **Création**, avec des guillemets simples ou doubles :
+
+```{python}
+
+#| echo: true
+my_str = 'Hello world!'
+```
+
+```{python}
+#| echo: true
+my_str = "Hello world!"
+```
+
+<br />
+
+- **Concaténation** :
+
+```{python}
+
+#| echo: true
+my_str = 'Hello' + ' ' + 'world!'
+```
+
+:::
+
+:::{.column width="50%"}
+
+- **Accès aux caractères** :
+
+```{python}
+
+#| echo: true
+print(my_str[0]) # Premier caractère
+```
+
+```{python}
+#| echo: true
+print(my_str[-1]) # Dernier caractère
+```
+
+```{python}
+#| echo: true
+print(my_str[0:5]) # Sous-chaîne
+```
+
+:::
+
+::::
+
+## Types de base - `str`
+
+::::{.columns .medium}
+
+:::{.column width="50%"}
+
+- **Formatage** :
+
+```{python}
+#| echo: true
+a = 'world'
+
+my_str = 'Hello {}!'.format(a)
+print(my_str)
+```
+
+```{python}
+#| echo: true
+a = 'world'
+
+my_str = f'Hello {a}!'
+print(my_str)
+```
+
+:::
+
+:::{.column width="50%"}
+
+- **Remplacement** :
+
+```{python}
+#| echo: true
+my_str = 'Hello world!'
+my_str = my_str.replace('world', 'Python')
+print(my_str)
+```
+
+:::{.medium}
+
+La méthode `replace` retourne une nouvelle chaîne de caractères, la chaîne de caractères initiale n'est pas modifiée.
+Cette méthode remplace toutes les occurrences de la sous-chaîne par la nouvelle sous-chaîne.
+
+Elle peut aussi être utilisée pour supprimer une sous-chaîne :
+
+:::
+
+```{python}
+#| echo: true
+my_str = 'Hello world!'
+
+my_str = my_str.replace(' world', '')
+print(my_str)
+```
+
+:::
+
 ::::
 
 ## Structures de données
@@ -806,7 +983,7 @@ my_dict['johana']
 
 <br />
 
-*Il est possible de tester l'existence d'une clé dans un dictionnaire* :
+*Tester l'existence d'une clé dans un dictionnaire* :
 
 ```{python}
 #| echo: true
@@ -817,7 +994,7 @@ my_dict['johana']
 
 :::{.column width="50%"}
 
-*Il est possible demander la valeur associée à une clé en utilisant la méthode `get` (et de spécifier une valeur par défaut si la clé n'existe pas)* :
+*Demander la valeur associée à une clé en utilisant la méthode `get` (et de spécifier une valeur par défaut si la clé n'existe pas)* :
 
 ```{python}
 #| echo: true
@@ -852,11 +1029,41 @@ my_dict.values()
 
 ::::
 
-## Structures de données - Des listes de dictionnaires ?
+## Des listes de listes ?
 
 :::{.medium}
 
-Il est classique de combiner des listes et des dictionnaires pour représenter, par exemple, des données tabulaires :
+Il est possible et fréquent de combiner des listes (ou des listes et des tuples) pour représenter des données tabulaires :
+
+```{python}
+#| echo: true
+data = [
+    ['Jill', 32, 1.65],
+    ['Jack', 27, 1.73],
+    ['Jane', 30, 1.80]
+]
+
+print(data[0][1])
+```
+
+```{python}
+#| echo: true
+data = [
+    ('Jill', 32, 1.65),
+    ('Jack', 27, 1.73),
+    ('Jane', 30, 1.80)
+]
+
+print(data[0][1])
+```
+
+:::
+
+## Des listes de dictionnaires ?
+
+:::{.medium}
+
+Il est également classique de combiner des listes et des dictionnaires pour représenter, par exemple, des données tabulaires :
 
 ```{python}
 #| echo: true
@@ -865,6 +1072,8 @@ data = [
     { 'name': 'Jack', 'age': 27,  'height': 1.73 },
     { 'name': 'Jane', 'age': 30,  'height': 1.80 }
 ]
+
+print(data[0]['age'])
 ```
 
 :::
@@ -926,6 +1135,7 @@ else:
 ```
 
 [Les seuils proviennent de [Wikipedia:Altitude#Adaptations_physiologiques_et_réponses_physiopathologiques_du_corps_humain](https://fr.wikipedia.org/wiki/Altitude#Adaptations_physiologiques_et_r%C3%A9ponses_physiopathologiques_du_corps_humain)]{.very-small}
+
 :::
 
 ::::
@@ -988,7 +1198,7 @@ for index, item in enumerate(my_list):
 
 ## Contrôle du flux d'exécution - `for` (2)
 
-:::{.columns .medium}
+::::{.columns .medium}
 
 :::{.column width="50%"}
 
@@ -1001,6 +1211,8 @@ my_dict = { 'john': 32, 'jane': 27, 'jack': 30 }
 for key in my_dict:
     print(key)
 ```
+
+<br />
 
 ```{python}
 #| echo: true
@@ -1021,8 +1233,19 @@ for letter in 'Hello !':
     print(letter)
 ```
 
+<br />
+
+```{python}
+#| echo: true
+
+for letter in 'Hello !':
+    if letter.lower() in 'aeiouy':
+        print(letter)
+```
+
 :::
 
+::::
 
 ## Contrôle du flux d'exécution - `while`
 
@@ -1068,11 +1291,66 @@ while True:
 
 ::::
 
+## Fonctions
+
+:::{.medium}
+
+Les fonctions permettent de regrouper des instructions et de les exécuter plusieurs fois, en leur passant des paramètres différents.
+
+:::
+
+::::{.columns .medium}
+
+:::{.column width="50%"}
+
+- **Définition d'une fonction** :
+
+```{python}
+#| echo: true
+def my_function():
+    print('Hello world!')
+```
+
+<br />
+
+- **Appel d'une fonction** :
+
+```{python}
+#| echo: true
+my_function()
+```
+
+:::
+
+:::{.column width="50%"}
+
+- **Fonction avec paramètres et valeur de retour** :
+
+```{python}
+#| echo: true
+def compute_NDVI(red, nir):
+    ndvi = (nir - red) / (nir + red)
+    return ndvi
+```
+
+<br />
+
+```{python}
+#| echo: true
+ndvi = compute_NDVI(0.2, 0.8)
+print(ndvi)
+```
+
+:::
+
+::::
+
 ## Classes
 
 <br>
 
-Comme Python est un langage orienté-objet, il est également possible de définir des classes, permettant de facilement modéliser des catégories d'objets...
+[Comme Python est un langage *orienté-objet*, il est également possible de définir des classes, permettant de facilement modéliser des catégories d'objets...]{.medium}
+
 
 ```{python}
 #| echo: true
@@ -1148,6 +1426,375 @@ print(p.x)
 
 ::::
 
+## Actions courantes : lire et écrire des fichiers
+
+:::{.medium}
+
+- `open` permet d'ouvrir un fichier en lecture ou en écriture.
+- `read` permet de lire le contenu d'un fichier.
+- `write` permet d'écrire dans un fichier.
+- `close` permet de fermer un fichier.
+- `with` (il s'agit d'un *context manager*) permet d'ouvrir un fichier et de s'assurer que ce dernier sera bien fermé à la fin du bloc d'instructions.
+
+:::
+
+## Actions courantes : lire et écrire des fichiers
+
+::::{.columns .medium}
+:::{.column width="50%"}
+
+- **Lire le contenu d'un fichier** :
+
+```{python}
+#| echo: true
+with open('data/data.txt', 'r') as f:
+    content = f.read()
+    
+print(content)
+```
+
+- **Écrire dans un fichier** :
+
+```{python}
+#| echo: true
+with open('data/test.txt', 'w') as f:
+    f.write('Hello world!')
+```
+
+:::
+
+:::{.column width="50%"}
+
+- **Lire le contenu d'un fichier ligne par ligne** :
+
+```{python}
+#| echo: true
+with open('data/data.txt', 'r') as f:
+    for line in f:
+        print(line)
+```
+
+- **Écrire dans un fichier ligne par ligne** :
+
+```{python}
+#| echo: true
+with open('data/test.txt', 'w') as f:
+    f.write('Hello world!\n')
+    f.write('Hello world!\n')
+    f.write('Hello world!\n')
+```
+
+:::
+
+::::
+
+## Actions courantes : lire et écrire des fichiers
+
+:::{.small}
+
+Une action très courante est de lire le contenu d'un fichier pour remplacer une sous-chaîne par une autre sous-chaîne (ex: changer un chemin d'accès dans un fichier de configuration, etc.).
+
+```{python}
+#| echo: true
+
+with open('data/data.txt', 'r') as f:
+    content = f.read()
+
+# Si on veut replacer plusieurs sous-chaîne
+# il suffit d'utiliser la méthode `replace` plusieurs fois
+content = content.replace('world', 'Python')
+content = content.replace('Hello', 'Hi')
+
+with open('data/test.txt', 'w') as f:
+    f.write(content)
+```
+
+:::
+
+## Actions courantes : lire et écrire des fichiers
+
+:::{.small}
+
+Il est également possible d'utiliser la bibliothèque `re` (pour *regular expressions*) pour remplacer une sous-chaîne par une autre sous-chaîne à l'aide d'une expression régulière.
+
+```{python}
+#| echo: true
+import re
+
+with open('data/data.txt', 'r') as f:
+    content = f.read()
+
+content = re.sub(r'Python', 'world', content)
+content = re.sub(r'H[a-z]+', 'Hello', content)
+
+with open('data/test.txt', 'w') as f:
+    f.write(content)
+```
+
+:::
+
+## Actions courantes : lire et écrire des fichiers
+
+::::{.columns .medium}
+
+:::{.column width="50%"}
+
+- **Lire le contenu d'un fichier JSON** :
+
+```{python}
+#| echo: true
+import json
+
+with open('data/data.json', 'r') as f:
+    data = json.load(f)
+
+print(data.keys()) # Affiche les clés du dictionnaire
+print(data['width']) # Affiche la valeur associée à la clé 'width'
+print(data['height']) # Affiche la valeur associée à la clé 'height'
+print(data['values']) # Affiche la valeur associée à la clé 'values'
+```
+
+:::
+
+:::{.column width="50%"}
+
+- **Écrire dans un fichier JSON** :
+
+```{python}
+#| echo: true
+import json
+
+data = { 'name': 'John', 'age': 32 }
+
+with open('data/test.json', 'w') as f:
+    json.dump(data, f)
+```
+
+:::
+
+::::
+
+## Actions courantes : lire et écrire des fichiers
+
+::::{.columns .medium}
+
+:::{.column width="50%"}
+
+- **Lire le contenu d'un fichier CSV** :
+
+```{python}
+#| echo: true
+import csv
+
+with open('data/data.csv', 'r') as f:
+    reader = csv.reader(f)
+    for row in reader:
+        print(row)
+```
+
+:::
+
+:::{.column width="50%"}
+
+- **Écrire dans un fichier CSV** :
+
+```{python}
+#| echo: true
+import csv
+
+data = [
+    ['name', 'age'],
+    ['John', 32],
+    ['Jane', 27],
+    ['Jack', 30]
+]
+
+with open('data/test.csv', 'w') as f:
+    writer = csv.writer(f)
+    writer.writerows(data)
+```
+
+:::
+
+::::
+
+## Python pour l'analyse de données
+
+<br />
+
+:::{.medium}
+
+- Python est un **langage de programmation généraliste**, sa bibliothèque standard n'est pas dédiée à l'analyse de données.
+
+- Il existe de **nombreuses bibliothèques additionnelles** pour l'analyse de données (et il s'agit d'un écossystème très riche et vivant).
+
+- La bibliothèque la plus utilisée pour l'analyse de données est [**pandas**](https://pandas.pydata.org/). Cette bibliothèque permet de manipuler des données tabulaires (des tableaux de données).
+
+- Une autre composante de base de l'écosystème Python pour l'analyse de données est [**NumPy**](https://numpy.org/). Cette bibliothèque permet de manipuler des tableaux de données typés de manière efficace (la bibliothèque pandas est basée sur NumPy).
+
+:::
+
+:::{.notes}
+
+La bibliothèque NumPy est écrite en C et en Fortran, elle est donc très performante. Elle est utilisée par de nombreuses autres bibliothèques Python pour l'analyse de données et pour le calcul scientifique.
+
+C'est également le cas pour de nombreuses bibliothèques Python pour le géospatial (les rasters seront par exemple représentés sous forme de tableaux NumPy).
+
+:::
+
+## Analyse de données - `pandas`
+
+:::{.medium}
+
+Pandas permet d'ouvrir des fichiers CSV, JSON, Excel, etc. et de les manipuler facilement grâce à des `DataFrame`s (comparables aux `data.frame`s de R).
+
+:::
+
+::::{.columns .medium}
+
+:::{.column width="50%"}
+
+- Ouverture :
+
+```{python}
+#| echo: true
+import pandas as pd
+
+df = pd.read_csv('data/data.csv')
+```
+
+- Affichage :
+
+```{python}
+#| echo: true
+df.head()
+```
+
+:::
+
+:::{.column width="50%"}
+
+- Sélection d'une colonne :
+
+```{python}
+#| echo: true
+df['name']
+```
+
+- Sélection selon une condition :
+
+```{python}
+#| echo: true
+df[df['age'] > 30]
+```
+
+```{python}
+#| echo: true
+df.query('age > 30')
+```
+
+:::
+
+::::
+
+## Analyse de données - `pandas`
+
+::::{.columns .medium}
+
+:::{.column width="50%"}
+
+- Ajout d'une colonne :
+
+```{python}
+#| echo: true
+df['weight'] = [80, 65, 75, 54, 90]
+
+df['BMI'] = df['weight'] / df['height'] ** 2
+
+df.head()
+```
+
+- Suppression d'une (ou plusieurs) colonne(s) :
+
+```{python}
+#| echo: true
+df.drop(
+  columns=['weight', 'height'],
+  inplace=True,
+)
+```
+
+:::
+
+:::{.column width="50%"}
+
+- Tri :
+
+```{python}
+#| echo: true
+df.sort_values(by='BMI', inplace=True)
+
+df.head()
+```
+
+- Export :
+
+```{python}
+#| echo: true
+df.to_csv('data/test.csv', index=False)
+```
+
+:::
+
+::::
+
+## Analyse de données - `pandas`
+
+::::{.columns .medium}
+
+La bibliothèque pandas permet également de faire des statistiques descriptives, de réaliser simplement des graphiques, etc.
+
+:::{.column width="50%"}
+
+- Visualisation :
+
+```{python}
+#| echo: true
+df.plot.bar(x='name', y='BMI')
+```
+
+:::
+
+:::{.column width="50%"}
+
+- Statistiques descriptives :
+
+```{python}
+#| echo: true
+
+df.describe()
+```
+
+:::
+
+::::
+
+
+## Analyse de données - Autres bibliothèques
+
+<br />
+
+:::{.medium}
+
+- [**NumPy**](https://numpy.org/) - Manipulation de tableaux de données typés
+- [**SciPy**](https://www.scipy.org/) - Bibliothèque d'algorithmes scientifiques
+- [**Matplotlib**](https://matplotlib.org/) - Visualisation de données
+- [**Scikit-learn**](https://scikit-learn.org/) - Apprentissage automatique
+- [**Statsmodels**](https://www.statsmodels.org/) - Modèles statistiques
+- [**Seaborn**](https://seaborn.pydata.org/) - Visualisation de données
+- [**Plotly**](https://plotly.com/python/) - Visualisation de données
+
+:::
 
 ## Écosystème pour le géospatial
 
@@ -1552,7 +2199,7 @@ clipped = xds.rio.clip(gdf.geometry.values, gdf.crs, drop=False, invert=True)
 
 - [Cours "Geo-Python" (en anglais - présente les bases de la programmation en Python pour l'analyse de données, avec une coloration géospatiale et sans nécessiter de connaissances préalables)](https://geo-python-site.readthedocs.io/en/latest/)
 
-- [Tutoriel "Python pour les SHS" (en français)](https://python.sdv.univ-paris-diderot.fr/)
+- [Cours "Introduction à la programmation Python pour la biologie" (en français)](https://python.sdv.univ-paris-diderot.fr/)
 
 :::
 
@@ -1564,8 +2211,16 @@ Introduction à la programmation Python pour la biologie : https://python.sdv.un
 
 ## Ressources Python Géospatial
 
+<br />
+
+:::{.small}
+
 Les ressources qui suivent supposent pour la plupart une connaissance de base du langage Python (boucles, conditions, fonctions, types de base, etc.).
-Elles mobilisent les bibliothèques Python le plus souvent utilisées pour l'analyse de données et le traitement de données géospatiales (pandas, geopandas, rasterio, scipy, etc.).
+Elles mobilisent les bibliothèques Python le plus souvent utilisées pour l'analyse de données et le traitement de données géospatiales (*pandas*, *geopandas*, *rasterio*, *scipy*, etc.).
+
+:::
+
+<br />
 
 :::{.medium}
 
@@ -1580,6 +2235,147 @@ Elles mobilisent les bibliothèques Python le plus souvent utilisées pour l'ana
 :::
 
 # Partie 2 - Mise en pratique / Exercices
+
+## Utiliser Python depuis VSCodium
+
+<br>
+
+:::{.medium}
+
+- L'extension [Python](https://marketplace.visualstudio.com/items?itemName=ms-python.python) permet d'utiliser Python depuis VSCodium et l'extension [Jupyter](https://marketplace.visualstudio.com/items?itemName=ms-toolsai.jupyter) permet d'utiliser des notebooks Jupyter depuis VSCodium.
+
+- Il est possible d'ouvrir un terminal depuis VSCodium en utilisant la commande <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> puis en tapant `Terminal: Create New Integrated Terminal`.
+
+- Il est possible d'exécuter un script Python depuis VSCodium en utilisant la commande <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> puis en tapant `Python: Run Python File in Terminal`.
+
+- Il est possible d'exécuter seulement une partie d'un script Python depuis VSCodium en sélectionnant le code à exécuter puis en utilisant la commande <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> puis en tapant `Python: Run Selection/Line in Python Terminal`.
+
+:::
+
+## Utiliser des notebooks Jupyter depuis VSCodium
+
+<br>
+
+:::{.medium}
+
+
+- Ouvrir un notebook Jupyter depuis VSCodium : <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> puis en tapant `Jupyter: Create New Blank Notebook`.
+
+- Exécuter une cellule de code dans un notebook Jupyter : <kbd>Ctrl</kbd> + <kbd>Enter</kbd>.
+
+- Exécuter une cellule de code dans un notebook Jupyter et passer à la cellule suivante : <kbd>Shift</kbd> + <kbd>Enter</kbd>.
+
+- Exécuter une cellule de code dans un notebook Jupyter et créer une nouvelle cellule en dessous : <kbd>Alt</kbd> + <kbd>Enter</kbd>.
+
+:::
+
+## Utiliser Python depuis Spyder
+
+:::{.medium}
+
+- L'IDE [Spyder](https://www.spyder-ide.org/) permet d'utiliser Python depuis un environnement de développement dédié à la science des données.
+
+- Cet IDE a été installé avec la distribution Anaconda, sur Windows, vous pouvez le lancer depuis le menu Démarrer.
+
+:::
+
+## Exercice 1 - Modifier un fichier texte existant
+
+::::{.columns .small}
+
+:::{.column width="70%"}
+
+**Objectif** : Créez un programme en Python qui permet de modifier un fichier texte existant.
+
+**Instructions** :
+
+1) Créez un fichier texte nommé `cities.csv` contenant le texte présent dans l'encart situé à droite.
+
+2) Créez un programme Python qui permet de modifier l'entête du fichier `cities.csv` en remplaçant les valeurs `coord1` et `coord2` par `latitude` et `longitude`.
+   Nous traitons ici ce fichier comme un fichier texte, il n'est donc pas nécessaire d'utiliser la bibliothèque `csv`.
+   Le nouveau contenu doit être écrit dans un nouveau fichier nommé `cities-new.csv`.
+
+3) Exécutez le programme et vérifiez que le fichier `cities-new.csv` a bien été créé et qu'il contient le nouveau contenu.
+
+:::
+
+:::{.column width="30%"}
+
+**Contenu du fichier `data.csv`** :
+
+<textarea style="width: 100%; font-size: 0.8em;" rows="5">
+nom,coord1,coord2,value
+Paris,48.8566,2.3522,10
+Lyon,45.7640,4.8357,20
+Marseille,43.2964,5.3700,30
+Grenoble,45.1885,5.7245,40
+</textarea>
+
+:::
+
+::::
+
+## Exercice 2 - Conversion de Température
+
+::::{.columns .small}
+
+:::{.column width="67%"}
+**Objectif** : Créez un programme en Python qui permet de convertir la température de Celsius en Fahrenheit et vice versa.
+
+**Instructions** :
+
+- 1) Demandez à l'utilisateur de choisir le type de conversion qu'il souhaite effectuer : de Celsius à Fahrenheit ou de Fahrenheit à Celsius.
+
+- 2) En fonction du choix de l'utilisateur, demandez-lui d'entrer la température à convertir.
+
+- 3) Implémentez les formules de conversion appropriées :
+
+    - De Celsius à Fahrenheit : $F = \frac{9}{5} \times C + 32$
+    - De Fahrenheit à Celsius : $C = \frac{5}{9} \times (F - 32)$
+
+- 4) Affichez le résultat de la conversion.
+
+**Récupération d'une valeur entrée par l'utilisateur** :
+
+```python
+choice = int(input('Entrez votre choix (1 ou 2) : '))
+```
+:::
+
+:::{.column width="33%"}
+
+**Exemple d'exécution** :
+
+```
+Choisissez le type de conversion :
+1. De Celsius à Fahrenheit
+2. De Fahrenheit à Celsius
+
+Entrez votre choix (1 ou 2) : 1
+
+Entrez la température en Celsius : 25
+
+Résultat : 77.0°F
+```
+
+:::
+::::
+
+## Exercice 3 - Lister les couches d'un flux WMS ou WFS
+
+:::{.medium}
+
+Dans cet exercice, vous utiliserez un notebook Jupyter existant et contenant déjà des instructions Python pour lister les couches d'un flux WMS ou WFS et les sauvegarder dans un fichier CSV.
+
+L'utilisation d'un notebook Jupyter permet de tester facilement des instructions Python et de les exécuter pas à pas.
+
+<br />
+
+Instructions :
+
+- **Récupérez le notebook Jupyter [`wms-layers.ipynb`]() et ouvrez-le dans VSCodium.**
+
+:::
 
 # Partie 3 - Python et QGIS
 
@@ -1612,15 +2408,15 @@ QGIS prend également en charge les expressions définies par l'utilisateur. Gr�
 
 ## Étendre les expressions QGIS avec Python
 
-![](./images/expression-custom-function.png)
+![](./images/expression-custom-function.png){.bordered}
 
 ## Étendre les expressions QGIS avec Python
 
-![](./images/expression-selection.png)
+![](./images/expression-selection.png){.bordered}
 
 ## Étendre les expressions QGIS avec Python
 
-![](./images/expression-new-field.png)
+![](./images/expression-new-field.png){.bordered}
 
 ## Console Python dans QGIS
 
@@ -1661,13 +2457,44 @@ QGIS fournit un ensemble d'algorithmes de traitement qui peuvent être utilisés
 
 ## Références sur l'API Python de QGIS
 
+<br />
+
 - [PyQGIS developer cookbook (documentation officielle)](https://docs.qgis.org/latest/en/docs/pyqgis_developer_cookbook/index.html)
 - [PyQGIS API documentation (documentation officielle)](https://qgis.org/pyqgis/master/)
+
+<br />
 
 - [TP Python pour QGIS (TP de 12h donné en Licence Pro.)](https://mthh.github.io/TP_PythonQGIS/)
 - [QGIS tutorials - Rubrique "Python Scripting (PyQGIS)"](https://www.qgistutorials.com/)
 
+
 # Partie 4 - Mise en pratique / Exercices
+
+## Exercice 1 - Étendre les expressions QGIS avec Python
+
+:::{.medium}
+
+Dans cet exercice, vous créerez une fonction Python qui permet de calculer la distance entre deux points (un point fixe et un point mobile).
+
+Cette fonction sera utilisée depuis la calculatrice de champ afin de créer un nouveau champ contenant la distance entre chaque point et un point fixe.
+
+:::
+
+## Exercice 2 - Manipuler des données vectorielles
+
+:::{.medium}
+
+Dans cet exercice, vous adapterez un script existant pour modifier un fichier vectoriel.
+
+:::
+
+## Exercice 3 - Ajouter un algorithme de traitement
+
+:::{.medium}
+
+Dans cet exercice, vous créerez un algorithme de traitement qui permet ...
+
+:::
 
 # Outro
 

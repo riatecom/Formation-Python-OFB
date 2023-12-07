@@ -5,11 +5,11 @@ dist/
 .quarto/
 index_cache/
 index_files/
+/.quarto/
+*_files/
 
 # JetBrains IDEs
 .idea/
 
-
-/.quarto/
-
-*_files/
+# Stuff written by Python examples while rendering the slides
+data/test.*
