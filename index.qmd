@@ -2373,7 +2373,7 @@ L'utilisation d'un notebook Jupyter permet de tester facilement des instructions
 
 Instructions :
 
-- **Récupérez le notebook Jupyter [`wms-layers.ipynb`]() et ouvrez-le dans VSCodium.**
+- **Récupérez le notebook Jupyter [`ogc-web-services.ipynb`](notebooks/ogc-web-services.ipynb) et ouvrez-le dans VSCodium.**
 
 :::
 
@@ -2394,6 +2394,16 @@ Instructions :
 - Créer des applications personnalisées basées sur l’API QGIS
 
 ## L'interface de programmation PyQGIS
+
+:::{.medium}
+
+L'interface de programmation PyQGIS permet d'accéder à la majorité des fonctionnalités de QGIS depuis Python. Elle est générée automatiquement à partir du code C++ de QGIS
+et comporte plus de 2000 classes décrivant les différents aspects de l'application (`QgsProject`, `QgsProcessingAlgorithm`, `QgsDialog`, etc.),
+des données qui y figurent (`QgsVectorLayer`, `QgsRasterLayer`, `QgsFeature`, `QgsGeometry`, etc.) et des fonctionnalités disponibles (`QgsVectorFileWriter`, etc.).
+
+Il est donc nécessaire de consulter la [documentation](https://qgis.org/pyqgis/master/) pour connaitre les méthodes et les attributs disponibles pour chaque classe.
+
+:::
 
 ## Étendre les expressions QGIS avec Python
 
@@ -2432,12 +2442,102 @@ Elle peut être ouverte de plusieurs manières :
 
 Lors de l'utilisation de la console Python dans QGIS, une variable `iface` est déjà existante. Cette variable est une instance de la classe `QgisInterface` et permet d'accéder à la majorité des fonctions de QGIS (accès au canevas de la carte, aux couches, aux menus, barres d'outils, etc. etc.).
 
+**Créez un nouveau projet QGIS, ajoutez les [données d'exemples]() et ouvrez la console Python.**
+
 :::
 
 ## Exécuter des commandes dans la console Python
 
 :::{.medium}
 
+**Testez les commandes suivantes dans la console Python :**
+
+**Exemple 1** : Afficher le nom des couches vecteur ou raster chargées dans QGIS et le nombre d'entités pour les couches vecteur
+
+```python
+for layer in iface.mapCanvas().layers():
+    if layer.type() == QgsMapLayer.VectorLayer:
+        print(f"Vecteur : {layer.name()} ({layer.featureCount()} entités) - {layer.crs().authid()}")
+    elif layer.type() == QgsMapLayer.RasterLayer:
+        print(f"Raster : {layer.name()} - {layer.crs().authid()}")
+```
+
+**Exemple 2** : Accéder à la projection du projet
+
+```python
+print(iface.mapCanvas().mapSettings().destinationCrs().authid())
+```
+
+:::
+
+## Exécuter des commandes dans la console Python
+
+:::{.medium}
+
+**Exemple 3** : Obtenir une référence vers une couche vecteur à partir de son nom et itérer sur ses entités
+
+```python
+layer = QgsProject.instance().mapLayersByName('cities')[0]
+
+# Une expression peut être utilisée pour filtrer les entités
+expression = "$id < 5"
+
+# On peut utiliser la méthode getFeatures() de la couche pour obtenir un itérateur sur les entités
+# si on ne lui donne pas d'argument, on obtient toutes les entités de la couche
+# si on lui donne une expression, on obtient seulement les entités qui vérifient l'expression
+for feature in layer.getFeatures(expression):
+    # Ici 'feature' est donc un objet de type QgsFeature
+    # Nous pouvons consulter la documentation pour connaitre les méthodes et les attributs disponibles
+    print(feature['name'])
+    # On peut aussi accéder à la géométrie de l'entité
+    geom = feature.geometry()
+    print(geom.asWkt())
+```
+
+:::
+
+## Exécuter des commandes dans la console Python
+
+:::{.small}
+
+**Exemple 4** : Créer une couche vecteur à partir d'une couche existante et l'ajouter au projet
+
+```python
+import random
+
+layer = QgsProject.instance().mapLayersByName('cities')[0]
+
+# On crée une couche mémoire vide
+mem_layer = QgsVectorLayer('Polygon?crs=EPSG:4326', 'cities-buffer', 'memory')
+pr = mem_layer.dataProvider()
+
+# Spécification de deux champs
+pr.addAttributes([
+    QgsField("Buffer_value", QVariant.Double),
+])
+mem_layer.updateFields()
+
+for feature in layer.getFeatures():
+    ft = QgsFeature()
+    # On calcule le buffer
+    geom = QgsGeometry(feature.geometry())
+    # On converti la géométrie dans un système de coordonnées permettant de calculer des distances
+    geom.transform(QgsCoordinateTransform(layer.crs(), QgsCoordinateReferenceSystem("ESRI:53030"), QgsProject.instance()))
+    buffer_value = random.randint(10000, 200000)
+    buffer = geom.buffer(buffer_value, 5)
+    # On remet la géométrie dans le système de coordonnées de la couche
+    buffer.transform(QgsCoordinateTransform(QgsCoordinateReferenceSystem("ESRI:53030"), layer.crs(), QgsProject.instance()))
+    # On ajoute la géométrie à l'entité
+    ft.setGeometry(buffer)
+    ft.setAttributes([buffer_value])
+    # On ajoute l'entité à la couche mémoire
+    pr.addFeatures([ft])
+
+mem_layer.updateExtents()
+    
+# On ajoute la couche mémoire au projet
+QgsProject.instance().addMapLayer(mem_layer)
+```
 
 :::
 
@@ -2447,11 +2547,55 @@ Lors de l'utilisation de la console Python dans QGIS, une variable `iface` est d
 
 QGIS fournit un ensemble d'algorithmes de traitement qui peuvent être utilisés dans la console Python, en utilisant le module Python `processing`.
 
+```python
+# On peut lister les algorithmes disponibles
+for alg in QgsApplication.processingRegistry().algorithms():
+    print("{}:{} --> {}".format(
+        alg.provider().name(), alg.name(), alg.displayName()))
+```
+
+Il est possible de consulter la documentation de chaque algorithme en utilisant la méthode `help()`.
+
+```python
+processing.algorithmHelp("qgis:voronoipolygons")
+```
+
+Ou de consulter la documentation en ligne : [https://docs.qgis.org/latest/en/docs/user_manual/processing_algs/qgis/vectorgeometry.html#voronoi-polygons](https://docs.qgis.org/latest/en/docs/user_manual/processing_algs/qgis/vectorgeometry.html#voronoi-polygons)
+
+C'est grâce à ces informations que vous aurez connaissance des paramètres nécessaires pour utiliser un algorithme.
+
+*Notez que les paramètres sont les mêmes que ceux utilisés dans l'interface graphique (et qui peuvent être consultés dans la boite de dialogue de l'algorithme).*
+
+:::
+
+## Utiliser les algorithmes de traitement existants
+
+:::{.medium}
+
+```python
+import processing
+
+# Pour utiliser un algorithme, il faut connaitre son nom complet
+# Généralement, deux arguments sont nécessaires : son nom et les paramètres
+result = processing.run("qgis:voronoipolygons", {
+    'INPUT': 'cities',
+    'BUFFER': 0,
+    'OUTPUT': 'TEMPORARY_OUTPUT'
+})
+
+# On peut ensuite ajouter le résultat au projet
+# (l'objet retourné par la méthode run() est un dictionnaire,
+# on peut donc accéder à la couche résultat avec la clé 'OUTPUT')
+QgsProject.instance().addMapLayer(result['OUTPUT'])
+```
+
 :::
 
 ## Créer des algorithmes de traitement
 
 :::{.medium}
+
+Il est possible de créer des algorithmes de traitement personnalisés en utilisant le module Python `processing`.
 
 :::
 
@@ -2484,7 +2628,7 @@ Cette fonction sera utilisée depuis la calculatrice de champ afin de créer un 
 
 :::{.medium}
 
-Dans cet exercice, vous adapterez un script existant pour modifier un fichier vectoriel.
+Dans cet exercice, vous adapterez un script existant pour modifier une couche vectorielle.
 
 :::
 
@@ -2498,7 +2642,7 @@ Dans cet exercice, vous créerez un algorithme de traitement qui permet ...
 
 # Outro
 
-## Références
+## Références bibliographiques
 
 <!-- Référence will be added here automatically from 'references.bib' -->
 
