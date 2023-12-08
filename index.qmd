@@ -28,9 +28,9 @@ lang: fr
 :::{.medium}
 
 - **Partie 1** : Introduction à Python
-- **Partie 2** : Mise en pratique / Exercices
+- **Partie 2** : Mise en pratique
 - **Partie 3** : Python et QGIS
-- **Partie 4** : Mise en pratique / Exercices
+- **Partie 4** : Mise en pratique
 - **Conclusion**
 
 **Objectifs** : Découvrir le langage de programmation Python et son écosystème, et apprendre à l'utiliser pour réaliser des traitements géomatiques dans QGIS.
@@ -159,7 +159,7 @@ Sur le site web, le titre est "The R Project for Statistical Computing" et la de
 
 - La question se pose car Python est de plus en plus compétent pour l'analyse de données...
 
-<img src="images/google-hits.png">
+<img src="images/google-hits.png" class="bordered">
 
 :::
 
@@ -1861,7 +1861,7 @@ La bibliothèque pandas permet également de faire des statistiques descriptives
 
 :::{.column width="50%"}
 
-- Visualisation :
+- **Visualisation** :
 
 ```{python}
 #| echo: true
@@ -1872,7 +1872,7 @@ df.plot.bar(x='name', y='BMI')
 
 :::{.column width="50%"}
 
-- Statistiques descriptives :
+- **Statistiques descriptives** :
 
 ```{python}
 #| echo: true
@@ -1891,7 +1891,7 @@ df.describe()
 
 :::{.medium}
 
-- [**NumPy**](https://numpy.org/) - Manipulation de tableaux de données typés
+- [**NumPy**](https://numpy.org/) - Manipulation de tableaux de données typés (voir le [notebook sur NumPy](notebooks/ExempleNumpy.html) pour découvrir les fonctionnalités de base)
 - [**SciPy**](https://www.scipy.org/) - Bibliothèque d'algorithmes scientifiques
 - [**Matplotlib**](https://matplotlib.org/) - Visualisation de données
 - [**Scikit-learn**](https://scikit-learn.org/) - Apprentissage automatique
@@ -1899,13 +1899,19 @@ df.describe()
 - [**Seaborn**](https://seaborn.pydata.org/) - Visualisation de données
 - [**Plotly**](https://plotly.com/python/) - Visualisation de données
 
+<center>
+![](images/logos-sm-scikit-scipy.png)
+</center>
+
 :::
 
 # Écosystème pour le géospatial
 
 ## Données vectorielles
 
-::::{.small}
+<br />
+
+::::{.medium}
 
 -   [**Bindings Python de GDAL/OGR**](https://gdal.org/api/python_bindings.html) [@GDAL]
 -   [**Fiona**](https://fiona.readthedocs.io/en/stable/) [@fiona] - I/O (*wrapper* de haut niveau autour d'OGR)
@@ -1931,9 +1937,14 @@ df.describe()
 
 ## Le package *GeoPandas*
 
+<br />
+
 :::{.medium}
 
-Un projet open source pour faciliter le travail avec des données géospatiales vectorielles en Python. GeoPandas étend Pandas pour permettre de disposer d'un type de colonne géométrique et pour permettre d'effectuer des opérations spatiales. Les opérations géométriques sont réalisées avec `shapely`, les accès en lecture / écriture aux fichiers utilisent `fiona` et la visualisation utilise `matplotlib`.
+Un projet open source pour faciliter le travail avec des données géospatiales vectorielles en Python.
+**GeoPandas étend Pandas** pour permettre de disposer d'un **type de colonne géométrique** (*comme `sf` en R*) et pour permettre d'effectuer des opérations spatiales.
+
+Les opérations géométriques sont réalisées avec `shapely` (bindings de GEOS) les accès en lecture / écriture aux fichiers utilisent `fiona` (bindings de OGR) et la visualisation utilise `matplotlib`.
 
 ![Format des GeoDataFrame](./images/geopandas-table.png)
 
@@ -2073,7 +2084,6 @@ ax
 ## Données raster
 
 ::::{.columns .medium}
-
 :::{.column width="50%"}
 
 [**Rasterio**](https://rasterio.readthedocs.io/) [@gillies_2019] :
@@ -2089,10 +2099,6 @@ ax
 
 :::
 
-:::
-
-:::{.column width="50%"}
-
 [**Rasterstats**](https://pythonhosted.org/rasterstats/) :
 
 :::{.small}
@@ -2101,6 +2107,12 @@ ax
 * extraction de valeurs à un point précis
 
 :::
+
+![](https://raw.githubusercontent.com/perrygeo/python-rasterstats/master/docs/img/zones_elevation.png)
+
+:::
+
+:::{.column width="50%"}
 
 [**xarray**](https://docs.xarray.dev/en/stable/) [@xarray] et [**rioxarray**](https://corteva.github.io/rioxarray/) [@rioxarray]:
 
@@ -2111,6 +2123,8 @@ ax
 * moins "rustique" que d'utiliser rasterio seul / dépend de l'usage souhaité
 
 :::
+
+![](images/xarray-datastructure.png)
 
 :::
 ::::
@@ -2228,7 +2242,6 @@ clipped = xds.rio.clip(gdf.geometry.values, gdf.crs, drop=False, invert=True)
 :::
 
 :::: {.columns .small}
-
 ::: {.column width="50%"}
 
 **Explorer** :
@@ -2263,11 +2276,11 @@ clipped = xds.rio.clip(gdf.geometry.values, gdf.crs, drop=False, invert=True)
 ## Autres packages utiles ...
 
 ::::{.columns .medium}
-:::{.column width="50%"}
+:::{.column width="48%"}
 
 - Binding Python pour [GRASS](https://grass.osgeo.org/grass82/manuals/libpython/index.html) + Intégration dans les notebooks Jupyter
 
-![Source: <https://grass.osgeo.org/news/2022_06_05_results_student_grant_caitlin/>](./images/grass_jupyter_combo_vis.png)
+![[Source](https://grass.osgeo.org/news/2022_06_05_results_student_grant_caitlin/)](./images/grass_jupyter_combo_vis.png)
 
 :::
 
@@ -2275,13 +2288,138 @@ clipped = xds.rio.clip(gdf.geometry.values, gdf.crs, drop=False, invert=True)
 
 - [Iris](https://scitools-iris.readthedocs.io/en/stable/) - Analyse et visualisation de données des sciences de la Terre.
 
-- Pour la cartographie : [cartopy](https://scitools.org.uk/cartopy/docs/latest/) ; [geoviews](https://geoviews.org/) et [geoplot](https://residentmario.github.io/geoplot/) basés sur *cartopy* ; [PyGMT](https://www.pygmt.org/latest/) (selon les usages - pas de solution aussi aboutie que `mapsf` pour les cartes réalisées en SHS).
+- Pour la cartographie : [cartopy](https://scitools.org.uk/cartopy/docs/latest/) et [geoplot](https://residentmario.github.io/geoplot/) basés sur *cartopy* ; [PyGMT](https://www.pygmt.org/latest/) ; [geoviews](https://geoviews.org/) (selon les usages).
 
 ![](./images/cartopy.png)
 
-- Un écosystème riche pour le géospatial (voir par exemple ici : [https://github.com/sacridini/Awesome-Geospatial#python](https://github.com/sacridini/Awesome-Geospatial#python)) et la visualisation de données (voir par exemple les outils listés par la plateforme [PyViz](https://pyviz.org/tools.html)).
+- Voir aussi [https://github.com/sacridini/Awesome-Geospatial#python](https://github.com/sacridini/Awesome-Geospatial#python).
 
 :::
+::::
+
+## Python pour quoi d'autre ?
+
+:::{.medium}
+
+Un écossystème riche pour de nombreux d'autres usages.
+
+**_Machine learning_ et _Deep learning_** :
+
+- [Scikit-learn](https://scikit-learn.org/) (apprentissage automatique, developpé par des membres de l'INRIA - dispose d'une [documentation très détaillée](https://scikit-learn.org/stable/tutorial/basic/tutorial.html))
+- [TensorFlow](https://www.tensorflow.org/) et [PyTorch](https://pytorch.org/) (voir par exemple [ce tutoriel](https://www.tensorflow.org/tutorials/quickstart/beginner)).
+- [Keras](https://keras.io/) (API de haut niveau pour TensorFlow, Theano et CNTK).
+
+<center>
+
+![](images/logos-ML.png)
+
+</center>
+
+:::
+
+## Python pour quoi d'autre ?
+
+:::{.medium}
+
+<br />
+
+**_Web scraping_** :
+
+- [Beautiful Soup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/) (pour extraire des données de pages web)
+- [Selenium](https://www.selenium.dev/) (pour automatiser des actions dans un navigateur web)
+- [Scrapy](https://scrapy.org/) (pour créer des robots d'indexation de sites web)
+
+**_Web development_** :
+
+- [Django](https://www.djangoproject.com/) (pour créer des sites web)
+- [Flask](https://flask.palletsprojects.com/) (pour créer des sites web)
+- [FastAPI](https://fastapi.tiangolo.com/) (pour créer des API web)
+- [Dash](https://dash.plotly.com/) (pour créer des applications web interactives)
+- [Streamlit](https://streamlit.io/) (pour créer des applications web interactives)
+
+:::
+
+## Python pour quoi d'autre ?
+
+:::{.medium}
+
+- [**Gradio**](https://www.gradio.app/) - Créer des interfaces graphiques pour des modèles d'apprentissage automatique en quelques lignes de code
+
+```python
+import gradio as gr
+
+def greet(name, is_morning, temperature):
+    salutation = "Good morning" if is_morning else "Good evening"
+    greeting = f"{salutation} {name}. It is {temperature} degrees today"
+    celsius = (temperature - 32) * 5 / 9
+    return greeting, round(celsius, 2)
+
+demo = gr.Interface(
+    fn=greet,
+    inputs=["text", "checkbox", gr.Slider(0, 100)],
+    outputs=["text", "number"],
+)
+
+if __name__ == "__main__":
+    demo.launch()
+```
+
+:::
+
+## Python pour quoi d'autre ?
+
+:::{.medium}
+
+- [**Gradio**](https://www.gradio.app/) - Créer des interfaces graphiques pour des modèles d'apprentissage automatique en quelques lignes de code
+
+<iframe src="https://gradio-hello-world-3.hf.space" width="850" height="450" style="border: solid 1px black;"></iframe>
+
+:::
+
+## Python pour quoi d'autre ?
+
+:::{.medium}
+
+**Développement d'applications** :
+
+- [PyQt](https://riverbankcomputing.com/software/pyqt/) / [PySide](https://wiki.qt.io/PySide) (pour créer des applications de bureau)
+- [Kivy](https://kivy.org/) (pour créer des applications de bureau et des applications mobiles)
+- [PySimpleGUI](https://pysimplegui.readthedocs.io/) (pour créer des interfaces graphiques - [Exemple en ligne](https://pysimplegui.trinket.io/demo-programs#/demo-programs/intro-to-this-page))
+
+<iframe src="https://trinket.io/embed/pygame/e51fa16b0b" width="100%" height="460" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen="" class="embedded-content"></iframe>
+
+:::
+
+## Python dans des logiciels
+
+:::{.columns .medium}
+
+:::{.column width="50%"}
+
+Python dans **Inkscape**
+
+La majorité des extensions de Inkscape sont des scripts Python
+(d’après [la documentation](https://inkscape.org/fr/developper/extensions/)),
+et il existe des ressources pour faciliter l’écriture de scripts Python pour Inkscape.
+
+![](images/inkscape_scripting.png)
+
+[_Et bien sûr dans **QGIS** ! Mais aussi dans **ArcGIS**, dans **Autodesk Maya**, etc._]{.fragment}
+
+:::
+
+:::{.column width="50%"}
+
+Python dans **Blender**
+
+- Logiciel libre de modélisation, d’animation et de rendu en 3D
+
+- Intègre une console Python, permet d’interagir avec de nombreux aspects de Blender dont notamment l’animation, le rendu, l’import et l’export, la création d’objet et l’éxécution automatisée de tâches répétitives
+
+![](https://tabreturn.github.io/img/aqitbcc01/getting-started-blender.png)
+
+:::
+
 ::::
 
 ## Ressources pour l'apprentissage de Python
@@ -2292,13 +2430,10 @@ clipped = xds.rio.clip(gdf.geometry.values, gdf.crs, drop=False, invert=True)
 
 - [Le tutoriel de la documentation officielle](https://docs.python.org/fr/3/tutorial/)
 
-<br />
-
 - [Le MOOC "Python : des fondamentaux aux concepts avancés du langage" de l'Université Côte d'Azur (6 semaines + semaines optionnelles, dont une semaine "écosystème data-science")](https://www.fun-mooc.fr/fr/cours/python-3-des-fondamentaux-aux-concepts-avances-du-langage/)
   (selon vos centres d'intérêt, d'autres MOOC comme ["Recherche reproductible : principes méthodologiques pour une science transparente"](https://www.fun-mooc.fr/fr/cours/recherche-reproductible-principes-methodologiques-pour-une-science-transparente/) de l'INRIA
   font appel à Python ainsi qu'à des compétences transverses comme l'utilisation de Git, du Markdown, etc.)
 
-<br />
 
 - [Openclassrooms - Apprenez les bases du langage Python](https://openclassrooms.com/fr/courses/7168871-apprenez-les-bases-du-langage-python) 
 
@@ -2334,7 +2469,7 @@ Elles mobilisent les bibliothèques Python le plus souvent utilisées pour l'ana
 
 :::
 
-# Partie 2 - Mise en pratique / Exercices
+# Partie 2 - Mise en pratique
 
 ## Utiliser Python depuis VSCodium
 
@@ -2369,6 +2504,8 @@ Elles mobilisent les bibliothèques Python le plus souvent utilisées pour l'ana
 
 :::
 
+<!--
+
 ## Utiliser Python depuis Spyder
 
 :::{.medium}
@@ -2378,6 +2515,8 @@ Elles mobilisent les bibliothèques Python le plus souvent utilisées pour l'ana
 - Cet IDE a été installé avec la distribution Anaconda, sur Windows, vous pouvez le lancer depuis le menu Démarrer.
 
 :::
+
+-->
 
 ## Exercice 1 - Modifier un fichier texte existant
 
@@ -2415,53 +2554,7 @@ Grenoble,45.1885,5.7245,40
 
 ::::
 
-## Exercice 2 - Conversion de Température
-
-::::{.columns .small}
-
-:::{.column width="64%"}
-**Objectif** : Créez un programme en Python qui permet de convertir la température de Celsius en Fahrenheit et vice versa.
-
-**Instructions** :
-
-- 1) Demandez à l'utilisateur de choisir le type de conversion qu'il souhaite effectuer : de Celsius à Fahrenheit ou de Fahrenheit à Celsius.
-
-- 2) En fonction du choix de l'utilisateur, demandez-lui d'entrer la température à convertir.
-
-- 3) Implémentez les formules de conversion appropriées :
-
-    - De Celsius à Fahrenheit : $F = \frac{9}{5} \times C + 32$
-    - De Fahrenheit à Celsius : $C = \frac{5}{9} \times (F - 32)$
-
-- 4) Affichez le résultat de la conversion.
-
-**Récupération d'une valeur entrée par l'utilisateur** :
-
-```python
-choice = int(input('Entrez votre choix (1 ou 2) : '))
-```
-:::
-
-:::{.column width="36%"}
-
-**Exemple d'exécution** :
-
-```
-Choisissez le type de conversion :
-1. De Celsius à Fahrenheit
-2. De Fahrenheit à Celsius
-
-Entrez votre choix (1 ou 2) : 1
-
-Entrez la température en Celsius : 25
-
-Résultat : 77.0°F
-```
-
-:::
-::::
-
-## Exercice 3 - Lister les couches d'un flux WMS ou WFS
+## Exercice 2 - Lister les couches d'un flux WMS ou WFS
 
 <br />
 
@@ -2475,13 +2568,29 @@ L'utilisation d'un notebook Jupyter permet de tester facilement des instructions
 
 Instructions :
 
-- **Récupérez le notebook Jupyter [`ogc-web-services.ipynb`](notebooks/ogc-web-services.ipynb) et ouvrez-le dans VSCodium.**
+- **Récupérez le notebook Jupyter [`ogc-web-services.ipynb`](notebooks/ogc-web-services.ipynb) et ouvrez-le dans VSCodium. Modifiez le selon les consignes que vous y trouverez.**
 
 :::
 
-# Partie 3 - Python et QGIS
+## Exercice 3 - Effectuer des géotraitements simples avec GeoPandas et Rasterio
 
-<img src="images/QGIS_logo_2017.svg">
+<br />
+
+:::{.medium}
+
+Dans cet exercice, vous utiliserez un notebook Jupyter existant et contenant déjà des instructions Python pour **effectuer des géotraitements simples avec GeoPandas et Rasterio**.
+
+L'utilisation d'un notebook Jupyter permet de tester facilement des instructions Python et de les exécuter pas à pas.
+
+<br />
+
+Instructions :
+
+- **Récupérez le notebook Jupyter [`geopandas-rasterio.ipynb`](notebooks/geopandas-rasterio.ipynb) et ouvrez-le dans VSCodium. Modifiez le selon les consignes que vous y trouverez.**
+
+:::
+
+# Partie 3 - Python et <img src="images/QGIS_logo_2017.svg" class="w300">
 
 ## Pourquoi Python-QGIS ?
 
@@ -2508,8 +2617,8 @@ Instructions :
 L'interface de programmation PyQGIS permet d'accéder à la majorité des fonctionnalités de QGIS depuis Python.
 
 Elle est générée automatiquement à partir du code C++ de QGIS
-et comporte plus de 2000 classes décrivant les différents aspects de l'application (`QgsProject`, `QgsProcessingAlgorithm`, `QgsDialog`, etc.),
-des données qui y figurent (`QgsVectorLayer`, `QgsRasterLayer`, `QgsFeature`, `QgsGeometry`, etc.) et des fonctionnalités disponibles (`QgsVectorFileWriter`, etc.).
+et comporte **plus de 2000 classes décrivant les différents aspects de l'application** (`QgsProject`, `QgsProcessingAlgorithm`, `QgsDialog`, etc.),
+**des données qui y figurent** (`QgsVectorLayer`, `QgsRasterLayer`, `QgsFeature`, `QgsGeometry`, etc.) **et des fonctionnalités disponibles** (`QgsVectorFileWriter`, etc.).
 
 Il est nécessaire de consulter la [documentation](https://qgis.org/pyqgis/master/) pour connaitre les méthodes et les attributs disponibles pour chaque classe.
 
@@ -2558,17 +2667,11 @@ Elle peut être ouverte de plusieurs manières :
 
 Lors de l'utilisation de la console Python dans QGIS, une variable `iface` est déjà existante. Cette variable est une instance de la classe `QgisInterface` et permet d'accéder à la majorité des fonctions de QGIS (accès au canevas de la carte, aux couches, aux menus, barres d'outils, etc. etc.).
 
-🚀 **Créez un nouveau projet QGIS, ajoutez les [données d'exemples]() et ouvrez la console Python.**
-
 :::
 
 ## Exécuter des commandes dans la console Python
 
 ::::{.medium}
-
-<br />
-
-🚀 **Testez les commandes suivantes dans la console Python :**
 
 <br />
 
@@ -2765,35 +2868,119 @@ Il est possible de créer des algorithmes de traitement personnalisés en utilis
 - [QGIS tutorials - Rubrique "Python Scripting (PyQGIS)"](https://www.qgistutorials.com/)
 
 
-# Partie 4 - Mise en pratique / Exercices
+# Partie 4 - Mise en pratique
 
-## Exercice 1 - Étendre les expressions QGIS avec Python
+__*Choisir une des 3 mise en situation ci-dessous proposées dans ce qui suit.*__
+
+## Mise en situation 1
 
 :::{.medium}
 
-Dans cet exercice, vous créerez une fonction Python qui permet de calculer la distance entre deux points (un point fixe et un point mobile).
-
-Cette fonction sera utilisée depuis la calculatrice de champ afin de créer un nouveau champ contenant la distance entre chaque point et un point fixe.
+**Objectif** : **Étendre les expressions QGIS avec Python**
 
 :::
 
-## Exercice 2 - Manipuler des données vectorielles
+::::{.columns}
 
-:::{.medium}
+:::{.column .small width="57%"}
 
-Dans cet exercice, vous adapterez un script existant pour modifier une couche vectorielle.
+**Instructions** :
+
+- **Ouvrez un nouveau projet QGIS et ajoutez les [données d'exemple]()**
+- **Copiez-collez le code de la fonction** (présentée précédemment et rappelé ci-contre) **dans la fenêtre permettant de définir une nouvelle fonction dans QGIS.**
+- **Testez la fonction dans la fenêtre de sélection par expression pour la couche de points.**
+- Que manque-t-il à cette fonction pour qu'elle soit utilisable pour une couche de lignes ou de polygones ? **Modifiez la fonction pour qu'elle puisse être utilisée pour des couches de lignes ou de polygones.**
+- **Testez la fonction dans la fenêtre de sélection par expression pour la couche de polygones.**
 
 :::
 
-## Exercice 3 - Ajouter un algorithme de traitement
+:::{.column .very-small width="43%"}
+
+<br />
+
+```python
+from qgis.core import *
+from qgis.gui import *
+import math
+
+@qgsfunction(args='auto', group='Custom', usesgeometry=True)
+def get_utm_zone(feature, parent):
+    """
+    Return the UTM Zone of the
+    feature's geometry as a String
+    """
+    pt = feature.geometry().asPoint()
+    longitude = pt.x()
+    latitude = pt.y()
+    zone_number = math.floor(((longitude + 180) / 6) % 60) + 1
+
+    if latitude >= 0:
+        zone_letter = 'N'
+    else:
+        zone_letter = 'S'
+
+    return f"{int(zone_number)}{zone_letter}"
+```
+
+:::
+::::
+
+## Mise en situation 2
 
 :::{.medium}
 
-Dans cet exercice, vous créerez un algorithme de traitement qui permet ...
+**Objectif** : **Se familiariser avec la console Python de QGIS et manipuler les données du projet actuel**.
+
+**Instructions** :
+
+- **Ouvrez la console Python de QGIS.**
+- **Testez l'ensemble des commandes présentées précédemment dans la console Python**. Vous pouvez d'abord copier ces morceaux de code
+  dans l'éditeur de texte de la console Python puis les exécuter en utilisant le bouton <img src="./images/python-console-run.png" style="display: inline-block; width: 0.8em; height: auto;"/> ou le raccourci clavier <kbd>Ctrl</kbd> + <kbd>Enter</kbd>.
+
+- **Testez de nouveaux géotraitements**, au choix :
+  * un ou plusieurs algorithmes de traitement existants (voir la liste des algorithmes disponibles dans la console Python),
+  * en itérant sur les entités d'une couche vecteur et en choisissant une méthode de traitement (par exemple : calcul de la distance entre deux entités, calcul de la longueur d'une ligne, etc.),
+
+:::
+
+## Mise en situation 3
+
+:::{.small}
+
+**Objectif** : **Comprendre le fonctionnement d'un plugin QGIS existant** (*pas de code à écrire dans cette mise en situation*).
+
+**Instructions** :
+
+- **Consultez le code source du plugin `Semi-Automatic Classification`** sur [GitHub](https://github.com/semiautomaticgit/SemiAutomaticClassificationPlugin/).
+- Sur la base des indications, présentes dans la documentation officielle et affichées ci-dessous, **identifiez les différents fichiers Python** responsables de :
+  - définir de la classe principale (permettant d'enregistrer le plugin dans QGIS),
+  - définir des interfaces graphiques,
+  - définir les fonctionnalités centrales du plugin (calcul du profil altimétrique, etc.).
+
+![](./images/qgis-plugin-structure.png){.bordered}
 
 :::
 
 # Outro
+
+## Corrections des exercices
+
+:::{.medium}
+
+### Partie 2
+
+- **Exercice 1** : [Correction](corrections/ex1.py)
+- **Exercice 2** : [Correction](corrections/ogc-web-services-correction.ipynb)
+- **Exercice 3** : [Correction](corrections/geopandas-rasterio-correction.ipynb)
+
+<br />
+
+### Partie 4
+
+- **Mise en situation 1** : [Correction](corrections/qgis-ex1.py)
+- **Mise en situation 2** : [Correction](corrections/qgis-ex2.py)
+
+:::
 
 ## Références bibliographiques
 
