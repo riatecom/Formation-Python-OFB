@@ -2339,6 +2339,8 @@ Un écossystème riche pour de nombreux d'autres usages.
 
 :::
 
+<a href="https://heranow.reionization.org/" target="_blank"><img src="images/heranow.png" class="w400" style="position: absolute; right: -10px; top: 50%;" /></a>
+
 ## Python pour quoi d'autre ?
 
 :::{.medium}
@@ -2886,7 +2888,7 @@ __*Choisir une des 3 mise en situation ci-dessous proposées dans ce qui suit.*_
 
 **Instructions** :
 
-- **Ouvrez un nouveau projet QGIS et ajoutez les [données d'exemple]()**
+- **Ouvrez un nouveau projet QGIS et ajoutez les [données d'exemple](data/data-qgis.zip)** _(vous pouvez utiliser un projet QGIS personnel si vous le souhaitez)_.
 - **Copiez-collez le code de la fonction** (présentée précédemment et rappelé ci-contre) **dans la fenêtre permettant de définir une nouvelle fonction dans QGIS.**
 - **Testez la fonction dans la fenêtre de sélection par expression pour la couche de points.**
 - Que manque-t-il à cette fonction pour qu'elle soit utilisable pour une couche de lignes ou de polygones ? **Modifiez la fonction pour qu'elle puisse être utilisée pour des couches de lignes ou de polygones.**
@@ -2927,12 +2929,13 @@ def get_utm_zone(feature, parent):
 
 ## Mise en situation 2
 
-:::{.medium}
+:::{.midly-small}
 
 **Objectif** : **Se familiariser avec la console Python de QGIS et manipuler les données du projet actuel**.
 
 **Instructions** :
 
+- **Ouvrez un nouveau projet QGIS et ajoutez les [données d'exemple](data/data-qgis.zip)** _(vous pouvez utiliser un projet QGIS personnel si vous le souhaitez)_.
 - **Ouvrez la console Python de QGIS.**
 - **Testez l'ensemble des commandes présentées précédemment dans la console Python**. Vous pouvez d'abord copier ces morceaux de code
   dans l'éditeur de texte de la console Python puis les exécuter en utilisant le bouton <img src="./images/python-console-run.png" style="display: inline-block; width: 0.8em; height: auto;"/> ou le raccourci clavier <kbd>Ctrl</kbd> + <kbd>Enter</kbd>.

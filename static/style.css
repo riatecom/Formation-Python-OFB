@@ -96,4 +96,11 @@ kbd {
 .w300 {
     display: inline-block !important;
     width: 300px !important;
+    height: auto !important;
+}
+
+.w400 {
+    display: inline-block !important;
+    width: 400px !important;
+    height: auto !important;
 }
