@@ -33,6 +33,14 @@ body {
     font-size: 0.8em;
 }
 
+.midly-small {
+    font-size: 0.7em;
+}
+
+.reveal .midly-small pre {
+    font-size: 0.8em;
+}
+
 .medium {
     font-size: 0.8em;
 }
@@ -63,6 +71,11 @@ div.cell-output-error > pre > code:not(.sourceCode) {
 div.cell-output-stdout > pre > code:not(.sourceCode) {
     background-color: #ccffcc;
     color: black;
+    border-radius: 4px;
+}
+
+div.cell-output-display > pre > code:not(.sourceCode) {
+    background-color: rgba(219, 245, 213, 0.58);
     border-radius: 4px;
 }
 

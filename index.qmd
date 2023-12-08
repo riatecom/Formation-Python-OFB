@@ -21,7 +21,7 @@ csl: "universite-de-montreal-apa.csl"
 lang: fr
 ---
 
-## Programme de la demi-journée
+## Programme de la demi-journée 📝
 
 <br />
 
@@ -45,7 +45,7 @@ Rappels des instructions pour installer l'environnement Python : [Installation d
 
 ## Pourquoi programmer ?
 
-- **Automatiser** des tâches répétitives
+- **Automatiser** des tâches répétitives (et ainsi gagner en productivité)
 - **Prendre le contrôle** des analyses et des traitements que vous réalisez
 - **Réaliser des analyses reproductibles**
 - Pour le fun ! 🎉
@@ -159,6 +159,8 @@ Sur le site web, le titre est "The R Project for Statistical Computing" et la de
 
 - La question se pose car Python est de plus en plus compétent pour l'analyse de données...
 
+<img src="images/google-hits.png">
+
 :::
 
 # Présentation de l'écosystème
@@ -249,6 +251,8 @@ Une des forces du langage de programmation Python est son écosystème, qui est 
 Les packages sont des bibliothèques Python qui peuvent être installées à l'aide du gestionnaire de packages `pip` (ou `conda` dans le cas d'Anaconda).
 
 Ces packages sont généralement hébergés sur [PyPI](https://pypi.org/) (Python Package Index) (et [conda-forge](https://conda-forge.org/) pour les utilisateurs d'Anaconda).
+
+<br />
 
 **Avant de se lancer dans une tâche de programmation, il est donc important de vérifier si un package spécialisé existe déjà pour réaliser cette tâche**.
 
@@ -561,12 +565,16 @@ Les types de base sont les types de données les plus simples disponibles dans P
 my_int = 42
 ```
 
+<br />
+
 - `float` (nombre à virgule flottante)
 
 ```{python}
 #| echo: true
 my_float = 3.14
 ```
+
+<br />
 
 - `bool` (booléen)
 
@@ -584,6 +592,13 @@ my_bool = True # ou False
 ```{python}
 #| echo: true
 my_str = 'Hello world!'
+```
+
+<br />
+
+```{python}
+#| echo: true
+my_str = "Hello world!"
 ```
 
 - `NoneType` (type spécial pour la valeur `None`)
@@ -615,6 +630,13 @@ my_str = 'Hello world!'
 my_str = "Hello world!"
 ```
 
+```{python}
+#| echo: true
+my_long_str = '''Hello
+world
+and Python!'''
+```
+  
 <br />
 
 - **Concaténation** :
@@ -650,6 +672,12 @@ print(my_str[0:5]) # Sous-chaîne
 :::
 
 ::::
+
+:::{.small}
+
+Pour en savoir plus : [Documentation officielle : `string` — Opérations usuelles sur des chaînes](https://docs.python.org/fr/3/library/string.html)
+
+:::
 
 ## Types de base - `str`
 
@@ -1078,6 +1106,50 @@ print(data[0]['age'])
 
 :::
 
+## Des dictionnaires de dictionnaires ?
+
+:::{.medium}
+
+Il est très fréquent de rencontrer des dictionnaires emboîtés dans des dictionnaires :
+
+```{python}
+#| echo: true
+data = {
+    'jill': { 'age': 32,  'height': 1.65 },
+    'jack': { 'age': 27,  'height': 1.73 },
+    'jane': { 'age': 30,  'height': 1.80 }
+}
+
+print(data['jill']['age'])
+```
+
+:::
+
+## Des dictionnaires de dictionnaires ?
+
+:::{.medium}
+
+Il est très fréquent de rencontrer des dictionnaires emboîtés dans des dictionnaires :
+
+```{python}
+#| echo: true
+geojson_pt = {
+    'type': 'Feature',
+    'geometry': {
+        'type': 'Point',
+        'coordinates': [2.349014, 48.864716]
+    },
+    'properties': {
+        'name': 'Paris'
+    }
+}
+
+print(geojson_pt['geometry']['coordinates'])
+print(geojson_pt['properties']['name'])
+```
+
+:::
+
 ## Contrôle du flux d'exécution - `if`
 
 :::{.medium}
@@ -1162,11 +1234,15 @@ for i in range(5):
 
 <br />
 
+:::{.medium}
+
 Ici, `range()` est une fonction native qui retourne une séquence d'entiers :
 
 - `range(5)` retourne la séquence `0, 1, 2, 3, 4`.
 
 - `range(2, 7)` retourne la séquence `2, 3, 4, 5, 6`.
+
+:::
 
 :::
 
@@ -1391,35 +1467,42 @@ Instanciation et utilisation :
 p1 = Point(2, 6)
 p2 = Point(9, 9)
 
-print('Distance = ', p1.distance(p2))
+print('Distance =', p1.distance(p2))
 ```
 
 ## Classes, méthodes et attributs
 
 ::::{.columns .medium}
 
-:::{.column .fragment width="50%"}
+:::{.column .fragment width="60%"}
 **Méthodes** :
 
 Une méthode est une fonction qui appartient à une classe. Elle s'applique donc à l'instance de la classe sur laquelle elle est appelée.
 
-Dans les exemples précédents, nous avons déjà utilisé des méthodes :
+Dans les exemples précédents :
 
 - `append`, `remove` et `pop` sont des méthodes de la classe `list`
 - `keys`, `get` et `values` sont des méthodes de la classe `dict`
+- `format` et `replace` sont des méthodes de la classe `str`
+- `distance` est une méthode de notre classe `Point`
 - etc.
 
 :::
 
-:::{.column .fragment width="50%"}
+:::{.column .fragment width="40%"}
 **Attributs** :
 
-Un attribut est une variable qui appartient à une classe. Elle est donc accessible depuis toutes les instances de la classe.
+Un attribut est une variable qui appartient à une classe.
+
+Elle est donc accessible depuis toutes les instances de la classe.
 
 ```{python}
 #| echo: true
-p = Point(2, 6)
-print(p.x)
+p1 = Point(2, 6)
+print(p1.x)
+
+p2 = Point(9, 9)
+print(p2.x)
 ```
 
 :::
@@ -1444,6 +1527,17 @@ print(p.x)
 :::{.column width="50%"}
 
 - **Lire le contenu d'un fichier** :
+
+```{python}
+#| echo: true
+f = open('data/data.txt', 'r')
+content = f.read()
+f.close()
+
+print(content)
+```
+
+<br />
 
 ```{python}
 #| echo: true
@@ -1478,10 +1572,11 @@ with open('data/data.txt', 'r') as f:
 
 ```{python}
 #| echo: true
+content = ['Hello', 'world', '!']
+
 with open('data/test.txt', 'w') as f:
-    f.write('Hello world!\n')
-    f.write('Hello world!\n')
-    f.write('Hello world!\n')
+    for line in content:
+        f.write(line + '\n')
 ```
 
 :::
@@ -1489,6 +1584,8 @@ with open('data/test.txt', 'w') as f:
 ::::
 
 ## Actions courantes : lire et écrire des fichiers
+
+<br />
 
 :::{.small}
 
@@ -1512,6 +1609,8 @@ with open('data/test.txt', 'w') as f:
 :::
 
 ## Actions courantes : lire et écrire des fichiers
+
+<br />
 
 :::{.small}
 
@@ -1654,7 +1753,7 @@ Pandas permet d'ouvrir des fichiers CSV, JSON, Excel, etc. et de les manipuler f
 
 :::{.column width="50%"}
 
-- Ouverture :
+- **Ouverture** :
 
 ```{python}
 #| echo: true
@@ -1663,7 +1762,9 @@ import pandas as pd
 df = pd.read_csv('data/data.csv')
 ```
 
-- Affichage :
+<br />
+
+- **Affichage** :
 
 ```{python}
 #| echo: true
@@ -1674,14 +1775,14 @@ df.head()
 
 :::{.column width="50%"}
 
-- Sélection d'une colonne :
+- **Sélection d'une colonne** :
 
 ```{python}
 #| echo: true
 df['name']
 ```
 
-- Sélection selon une condition :
+- **Sélection selon une condition** :
 
 ```{python}
 #| echo: true
@@ -1690,7 +1791,7 @@ df[df['age'] > 30]
 
 ```{python}
 #| echo: true
-df.query('age > 30')
+df.query('height > 1.70').query('age > 30')
 ```
 
 :::
@@ -1703,7 +1804,7 @@ df.query('age > 30')
 
 :::{.column width="50%"}
 
-- Ajout d'une colonne :
+- **Ajout d'une colonne** :
 
 ```{python}
 #| echo: true
@@ -1714,7 +1815,9 @@ df['BMI'] = df['weight'] / df['height'] ** 2
 df.head()
 ```
 
-- Suppression d'une (ou plusieurs) colonne(s) :
+<br />
+
+- **Suppression d'une (ou plusieurs) colonne(s)** :
 
 ```{python}
 #| echo: true
@@ -1728,7 +1831,7 @@ df.drop(
 
 :::{.column width="50%"}
 
-- Tri :
+- **Tri** :
 
 ```{python}
 #| echo: true
@@ -1737,7 +1840,9 @@ df.sort_values(by='BMI', inplace=True)
 df.head()
 ```
 
-- Export :
+<br />
+
+- **Export** :
 
 ```{python}
 #| echo: true
@@ -1796,13 +1901,7 @@ df.describe()
 
 :::
 
-## Écosystème pour le géospatial
-
-:::{.medium}
-
-L'écosystème Python est très riche et il existe de nombreuses bibliothèques pour le traitement de données géospatiales.
-
-:::
+# Écosystème pour le géospatial
 
 ## Données vectorielles
 
@@ -1896,7 +1995,7 @@ En utilisant la bibliothèque `contextily` :
 import contextily as cx
 
 ax = nybb.to_crs('EPSG:3857').plot()
-cx.add_basemap(ax, source='https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png')
+cx.add_basemap(ax, source='https://tile.openstreetmap.org/{z}/{x}/{y}.png')
 ax.set_axis_off()
 ax
 ```
@@ -2187,13 +2286,19 @@ clipped = xds.rio.clip(gdf.geometry.values, gdf.crs, drop=False, invert=True)
 
 ## Ressources pour l'apprentissage de Python
 
-:::{.medium}
+<br />
+
+:::{.midly-small}
 
 - [Le tutoriel de la documentation officielle](https://docs.python.org/fr/3/tutorial/)
+
+<br />
 
 - [Le MOOC "Python : des fondamentaux aux concepts avancés du langage" de l'Université Côte d'Azur (6 semaines + semaines optionnelles, dont une semaine "écosystème data-science")](https://www.fun-mooc.fr/fr/cours/python-3-des-fondamentaux-aux-concepts-avances-du-langage/)
   (selon vos centres d'intérêt, d'autres MOOC comme ["Recherche reproductible : principes méthodologiques pour une science transparente"](https://www.fun-mooc.fr/fr/cours/recherche-reproductible-principes-methodologiques-pour-une-science-transparente/) de l'INRIA
   font appel à Python ainsi qu'à des compétences transverses comme l'utilisation de Git, du Markdown, etc.)
+
+<br />
 
 - [Openclassrooms - Apprenez les bases du langage Python](https://openclassrooms.com/fr/courses/7168871-apprenez-les-bases-du-langage-python) 
 
@@ -2203,11 +2308,6 @@ clipped = xds.rio.clip(gdf.geometry.values, gdf.crs, drop=False, invert=True)
 
 :::
 
-:::{.notes}
-
-Introduction à la programmation Python pour la biologie : https://python.sdv.univ-paris-diderot.fr/
-
-:::
 
 ## Ressources Python Géospatial
 
@@ -2319,7 +2419,7 @@ Grenoble,45.1885,5.7245,40
 
 ::::{.columns .small}
 
-:::{.column width="67%"}
+:::{.column width="64%"}
 **Objectif** : Créez un programme en Python qui permet de convertir la température de Celsius en Fahrenheit et vice versa.
 
 **Instructions** :
@@ -2342,7 +2442,7 @@ choice = int(input('Entrez votre choix (1 ou 2) : '))
 ```
 :::
 
-:::{.column width="33%"}
+:::{.column width="36%"}
 
 **Exemple d'exécution** :
 
@@ -2363,9 +2463,11 @@ Résultat : 77.0°F
 
 ## Exercice 3 - Lister les couches d'un flux WMS ou WFS
 
+<br />
+
 :::{.medium}
 
-Dans cet exercice, vous utiliserez un notebook Jupyter existant et contenant déjà des instructions Python pour lister les couches d'un flux WMS ou WFS et les sauvegarder dans un fichier CSV.
+Dans cet exercice, vous utiliserez un notebook Jupyter existant et contenant déjà des instructions Python pour **lister les couches d'un flux WMS ou WFS et les sauvegarder dans un fichier CSV**.
 
 L'utilisation d'un notebook Jupyter permet de tester facilement des instructions Python et de les exécuter pas à pas.
 
@@ -2379,40 +2481,52 @@ Instructions :
 
 # Partie 3 - Python et QGIS
 
+<img src="images/QGIS_logo_2017.svg">
+
 ## Pourquoi Python-QGIS ?
 
-- Lancer des commandes dans la console Python de QGIS
+<br />
 
-- Créer et utiliser des extensions
+- Lancer des commandes dans la **console Python de QGIS**
 
-- Exécuter automatiquement un programme Python quand QGIS démarre
+- Créer et utiliser des **extensions**
 
-- Créer des algorithmes de traitement
+- **Exécuter automatiquement un programme Python quand QGIS démarre**
 
-- Créer des fonctions pour des expressions dans QGIS
+- Créer des **algorithmes de traitement**
 
-- Créer des applications personnalisées basées sur l’API QGIS
+- Créer des **fonctions pour des expressions** dans QGIS
+
+- Créer des **applications personnalisées basées sur l’API QGIS**
 
 ## L'interface de programmation PyQGIS
 
+<br />
+
 :::{.medium}
 
-L'interface de programmation PyQGIS permet d'accéder à la majorité des fonctionnalités de QGIS depuis Python. Elle est générée automatiquement à partir du code C++ de QGIS
+L'interface de programmation PyQGIS permet d'accéder à la majorité des fonctionnalités de QGIS depuis Python.
+
+Elle est générée automatiquement à partir du code C++ de QGIS
 et comporte plus de 2000 classes décrivant les différents aspects de l'application (`QgsProject`, `QgsProcessingAlgorithm`, `QgsDialog`, etc.),
 des données qui y figurent (`QgsVectorLayer`, `QgsRasterLayer`, `QgsFeature`, `QgsGeometry`, etc.) et des fonctionnalités disponibles (`QgsVectorFileWriter`, etc.).
 
-Il est donc nécessaire de consulter la [documentation](https://qgis.org/pyqgis/master/) pour connaitre les méthodes et les attributs disponibles pour chaque classe.
+Il est nécessaire de consulter la [documentation](https://qgis.org/pyqgis/master/) pour connaitre les méthodes et les attributs disponibles pour chaque classe.
 
 :::
 
 ## Étendre les expressions QGIS avec Python
+
+<br />
 
 :::{.medium}
 
 Dans QGIS, les *expressions* peuvent être utilisées dans différents mécanismes de base :
 sélection par expression, calcul des valeurs d'un champ (calculatrice de champ), règles de style, étiquettes, etc.
 
-QGIS prend également en charge les expressions définies par l'utilisateur. Grâce à Python, vous pouvez définir vos propres fonctions qui peuvent être utilisées dans le moteur d'expression.
+<br />
+
+QGIS prend également en charge les expressions définies par l'utilisateur. **Grâce à Python, vous pouvez définir vos propres fonctions qui peuvent être utilisées dans le moteur d'expression**.
 
 :::
 
@@ -2430,6 +2544,8 @@ QGIS prend également en charge les expressions définies par l'utilisateur. Gr�
 
 ## Console Python dans QGIS
 
+<br />
+
 :::{.medium}
 
 QGIS fournit une console interactive Python.
@@ -2442,17 +2558,23 @@ Elle peut être ouverte de plusieurs manières :
 
 Lors de l'utilisation de la console Python dans QGIS, une variable `iface` est déjà existante. Cette variable est une instance de la classe `QgisInterface` et permet d'accéder à la majorité des fonctions de QGIS (accès au canevas de la carte, aux couches, aux menus, barres d'outils, etc. etc.).
 
-**Créez un nouveau projet QGIS, ajoutez les [données d'exemples]() et ouvrez la console Python.**
+🚀 **Créez un nouveau projet QGIS, ajoutez les [données d'exemples]() et ouvrez la console Python.**
 
 :::
 
 ## Exécuter des commandes dans la console Python
 
-:::{.medium}
+::::{.medium}
 
-**Testez les commandes suivantes dans la console Python :**
+<br />
+
+🚀 **Testez les commandes suivantes dans la console Python :**
+
+<br />
 
 **Exemple 1** : Afficher le nom des couches vecteur ou raster chargées dans QGIS et le nombre d'entités pour les couches vecteur
+
+:::{.small}
 
 ```python
 for layer in iface.mapCanvas().layers():
@@ -2462,7 +2584,13 @@ for layer in iface.mapCanvas().layers():
         print(f"Raster : {layer.name()} - {layer.crs().authid()}")
 ```
 
+:::
+
+<br />
+
 **Exemple 2** : Accéder à la projection du projet
+
+:::{.small}
 
 ```python
 print(iface.mapCanvas().mapSettings().destinationCrs().authid())
@@ -2470,11 +2598,15 @@ print(iface.mapCanvas().mapSettings().destinationCrs().authid())
 
 :::
 
+::::
+
 ## Exécuter des commandes dans la console Python
 
-:::{.medium}
+::::{.medium}
 
 **Exemple 3** : Obtenir une référence vers une couche vecteur à partir de son nom et itérer sur ses entités
+
+:::{.small}
 
 ```python
 layer = QgsProject.instance().mapLayersByName('cities')[0]
@@ -2482,9 +2614,12 @@ layer = QgsProject.instance().mapLayersByName('cities')[0]
 # Une expression peut être utilisée pour filtrer les entités
 expression = "$id < 5"
 
-# On peut utiliser la méthode getFeatures() de la couche pour obtenir un itérateur sur les entités
-# si on ne lui donne pas d'argument, on obtient toutes les entités de la couche
-# si on lui donne une expression, on obtient seulement les entités qui vérifient l'expression
+# On peut utiliser la méthode getFeatures() de la couche
+# pour obtenir un itérateur sur les entités :
+# - si on ne lui donne pas d'argument,
+#   on obtient toutes les entités de la couche
+# - si on lui donne une expression,
+#   on obtient seulement les entités qui vérifient l'expression
 for feature in layer.getFeatures(expression):
     # Ici 'feature' est donc un objet de type QgsFeature
     # Nous pouvons consulter la documentation pour connaitre les méthodes et les attributs disponibles
@@ -2495,6 +2630,7 @@ for feature in layer.getFeatures(expression):
 ```
 
 :::
+::::
 
 ## Exécuter des commandes dans la console Python
 
@@ -2543,7 +2679,9 @@ QgsProject.instance().addMapLayer(mem_layer)
 
 ## Utiliser les algorithmes de traitement existants
 
-:::{.medium}
+:::{.small}
+
+<br />
 
 QGIS fournit un ensemble d'algorithmes de traitement qui peuvent être utilisés dans la console Python, en utilisant le module Python `processing`.
 
@@ -2553,6 +2691,8 @@ for alg in QgsApplication.processingRegistry().algorithms():
     print("{}:{} --> {}".format(
         alg.provider().name(), alg.name(), alg.displayName()))
 ```
+
+<br />
 
 Il est possible de consulter la documentation de chaque algorithme en utilisant la méthode `help()`.
 
@@ -2569,6 +2709,8 @@ C'est grâce à ces informations que vous aurez connaissance des paramètres né
 :::
 
 ## Utiliser les algorithmes de traitement existants
+
+<br />
 
 :::{.medium}
 
@@ -2588,6 +2730,17 @@ result = processing.run("qgis:voronoipolygons", {
 # on peut donc accéder à la couche résultat avec la clé 'OUTPUT')
 QgsProject.instance().addMapLayer(result['OUTPUT'])
 ```
+
+
+:::
+
+## Utiliser les algorithmes de traitement existants
+
+:::{.medium}
+
+*Notez que les paramètres sont les mêmes que ceux utilisés dans l'interface graphique (et qui peuvent être consultés dans la boite de dialogue de l'algorithme).*
+
+<img src="images/processing-screenshot.png">
 
 :::
 
