@@ -423,6 +423,9 @@
 <div class="quarto-title-author-name">
 Matthieu Viry 
 </div>
+<div class="quarto-title-author-email">
+<a href="mailto:matthieu.viry@cnrs.fr">matthieu.viry@cnrs.fr</a>
+</div>
 </div>
 </div>
 
@@ -669,24 +672,23 @@ Source: <a href="https://anaconda.org">anaconda.org</a>
 <h2>Premier pas avec la syntaxe Python</h2>
 <p><br></p>
 <div class="cell" data-cache="true" data-message="true" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> math <span class="co"># On importe le module math</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="co"># Et deux fonctions du module statistics</span></span>
-<span id="cb1-3"><a href="#cb1-3"></a><span class="im">from</span> statistics <span class="im">import</span> mean, stdev</span>
-<span id="cb1-4"><a href="#cb1-4"></a></span>
-<span id="cb1-5"><a href="#cb1-5"></a><span class="co"># Définition d'une fonction</span></span>
-<span id="cb1-6"><a href="#cb1-6"></a><span class="kw">def</span> cv(x):</span>
-<span id="cb1-7"><a href="#cb1-7"></a>    moy <span class="op">=</span> mean(x)</span>
-<span id="cb1-8"><a href="#cb1-8"></a>    s <span class="op">=</span> stdev(x)</span>
-<span id="cb1-9"><a href="#cb1-9"></a>    result <span class="op">=</span> s <span class="op">/</span> moy</span>
-<span id="cb1-10"><a href="#cb1-10"></a>    <span class="co"># Retourne le résultat</span></span>
-<span id="cb1-11"><a href="#cb1-11"></a>    <span class="cf">return</span> result </span>
-<span id="cb1-12"><a href="#cb1-12"></a></span>
-<span id="cb1-13"><a href="#cb1-13"></a><span class="co"># La fonction est appelée avec une liste de valeurs,</span></span>
-<span id="cb1-14"><a href="#cb1-14"></a><span class="co"># et le résultat est stocké dans une variable </span></span>
-<span id="cb1-15"><a href="#cb1-15"></a>res <span class="op">=</span> cv([<span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">3</span>, <span class="dv">8</span>, <span class="dv">9</span>, <span class="dv">12</span>])</span>
-<span id="cb1-16"><a href="#cb1-16"></a></span>
-<span id="cb1-17"><a href="#cb1-17"></a><span class="co"># Affichage du résultat</span></span>
-<span id="cb1-18"><a href="#cb1-18"></a><span class="bu">print</span>(res)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># On importe deux fonctions du module statistics</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="im">from</span> statistics <span class="im">import</span> mean, stdev</span>
+<span id="cb1-3"><a href="#cb1-3"></a></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="co"># Définition d'une fonction</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="kw">def</span> cv(x):</span>
+<span id="cb1-6"><a href="#cb1-6"></a>    moy <span class="op">=</span> mean(x)</span>
+<span id="cb1-7"><a href="#cb1-7"></a>    s <span class="op">=</span> stdev(x)</span>
+<span id="cb1-8"><a href="#cb1-8"></a>    result <span class="op">=</span> s <span class="op">/</span> moy</span>
+<span id="cb1-9"><a href="#cb1-9"></a>    <span class="co"># Retourne le résultat</span></span>
+<span id="cb1-10"><a href="#cb1-10"></a>    <span class="cf">return</span> result </span>
+<span id="cb1-11"><a href="#cb1-11"></a></span>
+<span id="cb1-12"><a href="#cb1-12"></a><span class="co"># La fonction est appelée avec une liste de valeurs,</span></span>
+<span id="cb1-13"><a href="#cb1-13"></a><span class="co"># et le résultat est stocké dans une variable </span></span>
+<span id="cb1-14"><a href="#cb1-14"></a>res <span class="op">=</span> cv([<span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">3</span>, <span class="dv">8</span>, <span class="dv">9</span>, <span class="dv">12</span>])</span>
+<span id="cb1-15"><a href="#cb1-15"></a></span>
+<span id="cb1-16"><a href="#cb1-16"></a><span class="co"># Affichage du résultat</span></span>
+<span id="cb1-17"><a href="#cb1-17"></a><span class="bu">print</span>(res)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>0.44490991790020906</code></pre>
 </div>
@@ -1944,7 +1946,7 @@ lignes de texte.
 <div class="medium">
 <ul>
 <li><p>Python est un <strong>langage de programmation généraliste</strong>, sa bibliothèque standard n’est pas dédiée à l’analyse de données.</p></li>
-<li><p>Il existe de <strong>nombreuses bibliothèques additionnelles</strong> pour l’analyse de données (et il s’agit d’un écossystème très riche et vivant).</p></li>
+<li><p>Il existe de <strong>nombreuses bibliothèques additionnelles</strong> pour l’analyse de données (et il s’agit d’un écosystème très riche et vivant).</p></li>
 <li><p>La bibliothèque la plus utilisée pour l’analyse de données est <a href="https://pandas.pydata.org/"><strong>pandas</strong></a>. Cette bibliothèque permet de manipuler des données tabulaires (des tableaux de données).</p></li>
 <li><p>Une autre composante de base de l’écosystème Python pour l’analyse de données est <a href="https://numpy.org/"><strong>NumPy</strong></a>. Cette bibliothèque permet de manipuler des tableaux de données typés de manière efficace (la bibliothèque pandas est basée sur NumPy).</p></li>
 </ul>
@@ -2616,6 +2618,10 @@ Name: name, dtype: object</code></pre>
 </div>
 </div>
 </div>
+<div class="medium">
+<p><br><br><br></p>
+<p><em>Et/ou voir le <a href="notebooks/geopandas-rasterio-demo.html">notebook correspondant</a></em></p>
+</div>
 </section>
 <section id="données-raster" class="slide level2">
 <h2>Données raster</h2>
@@ -3079,7 +3085,7 @@ Attributes:
     res:        [231.65635826 231.65635826]
     is_tiled:   0
     nodata:     -28672.0
-    transform:  [ 2.31656358e+02  0.00000000e+00 -7.27400965e+06  0.00000000e...</pre><div class="xr-wrap" style="display:none"><div class="xr-header"><div class="xr-obj-type">xarray.DataArray</div><div class="xr-array-name"></div><ul class="xr-dim-list"><li><span class="xr-has-index">y</span>: 200</li><li><span class="xr-has-index">x</span>: 200</li></ul></div><ul class="xr-sections"><li class="xr-section-item"><div class="xr-array-wrap"><input id="section-fdf8a630-7e04-4afc-81bb-833126f91de2" class="xr-array-in" type="checkbox" checked=""><label for="section-fdf8a630-7e04-4afc-81bb-833126f91de2" title="Show/hide data repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-array-preview xr-preview"><span>...</span></div><div class="xr-array-data"><pre>[40000 values with dtype=float32]</pre></div></div></li><li class="xr-section-item"><input id="section-2ce73ec2-9ad6-4d9a-99a4-01233db29029" class="xr-section-summary-in" type="checkbox" checked=""><label for="section-2ce73ec2-9ad6-4d9a-99a4-01233db29029" class="xr-section-summary">Coordinates: <span>(2)</span></label><div class="xr-section-inline-details"></div><div class="xr-section-details"><ul class="xr-var-list"><li class="xr-var-item"><div class="xr-var-name"><span class="xr-has-index">y</span></div><div class="xr-var-dims">(y)</div><div class="xr-var-dtype">float64</div><div class="xr-var-preview xr-preview">5.05e+06 5.05e+06 ... 5.004e+06</div><input id="attrs-8ed657ff-a9aa-4afc-a634-31a7a3b95837" class="xr-var-attrs-in" type="checkbox"><label for="attrs-8ed657ff-a9aa-4afc-a634-31a7a3b95837" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use href="#icon-file-text2"></use></svg></label><input id="data-9e7bdff5-d3ed-4a34-b506-18466b57bedc" class="xr-var-data-in" type="checkbox"><label for="data-9e7bdff5-d3ed-4a34-b506-18466b57bedc" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"><dt><span>axis :</span></dt><dd>Y</dd><dt><span>long_name :</span></dt><dd>y coordinate of projection</dd><dt><span>standard_name :</span></dt><dd>projection_y_coordinate</dd><dt><span>units :</span></dt><dd>metre</dd></dl></div><div class="xr-var-data"><pre>array([5049992.781974, 5049761.125615, 5049529.469257, 5049297.812899,
+    transform:  [ 2.31656358e+02  0.00000000e+00 -7.27400965e+06  0.00000000e...</pre><div class="xr-wrap" style="display:none"><div class="xr-header"><div class="xr-obj-type">xarray.DataArray</div><div class="xr-array-name"></div><ul class="xr-dim-list"><li><span class="xr-has-index">y</span>: 200</li><li><span class="xr-has-index">x</span>: 200</li></ul></div><ul class="xr-sections"><li class="xr-section-item"><div class="xr-array-wrap"><input id="section-dd5541df-4dbc-4965-a460-692f2ce0ed6a" class="xr-array-in" type="checkbox" checked=""><label for="section-dd5541df-4dbc-4965-a460-692f2ce0ed6a" title="Show/hide data repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-array-preview xr-preview"><span>...</span></div><div class="xr-array-data"><pre>[40000 values with dtype=float32]</pre></div></div></li><li class="xr-section-item"><input id="section-fbfc2bbf-87cd-4b67-bb8f-729db8d1be69" class="xr-section-summary-in" type="checkbox" checked=""><label for="section-fbfc2bbf-87cd-4b67-bb8f-729db8d1be69" class="xr-section-summary">Coordinates: <span>(2)</span></label><div class="xr-section-inline-details"></div><div class="xr-section-details"><ul class="xr-var-list"><li class="xr-var-item"><div class="xr-var-name"><span class="xr-has-index">y</span></div><div class="xr-var-dims">(y)</div><div class="xr-var-dtype">float64</div><div class="xr-var-preview xr-preview">5.05e+06 5.05e+06 ... 5.004e+06</div><input id="attrs-1c1a87bd-a167-4a97-ba1f-a9aba9b56562" class="xr-var-attrs-in" type="checkbox"><label for="attrs-1c1a87bd-a167-4a97-ba1f-a9aba9b56562" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use href="#icon-file-text2"></use></svg></label><input id="data-b1dbde0d-a5a7-4042-ae25-a60852356dd1" class="xr-var-data-in" type="checkbox"><label for="data-b1dbde0d-a5a7-4042-ae25-a60852356dd1" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"><dt><span>axis :</span></dt><dd>Y</dd><dt><span>long_name :</span></dt><dd>y coordinate of projection</dd><dt><span>standard_name :</span></dt><dd>projection_y_coordinate</dd><dt><span>units :</span></dt><dd>metre</dd></dl></div><div class="xr-var-data"><pre>array([5049992.781974, 5049761.125615, 5049529.469257, 5049297.812899,
        5049066.156541, 5048834.500182, 5048602.843824, 5048371.187466,
        5048139.531108, 5047907.874749, 5047676.218391, 5047444.562033,
        5047212.905674, 5046981.249316, 5046749.592958, 5046517.9366  ,
@@ -3128,7 +3134,7 @@ Attributes:
        5007368.012053, 5007136.355695, 5006904.699337, 5006673.042978,
        5006441.38662 , 5006209.730262, 5005978.073904, 5005746.417545,
        5005514.761187, 5005283.104829, 5005051.44847 , 5004819.792112,
-       5004588.135754, 5004356.479396, 5004124.823037, 5003893.166679])</pre></div></li><li class="xr-var-item"><div class="xr-var-name"><span class="xr-has-index">x</span></div><div class="xr-var-dims">(x)</div><div class="xr-var-dtype">float64</div><div class="xr-var-preview xr-preview">-7.274e+06 ... -7.228e+06</div><input id="attrs-4d7fb817-07ba-4f2b-9306-252ce610ac07" class="xr-var-attrs-in" type="checkbox"><label for="attrs-4d7fb817-07ba-4f2b-9306-252ce610ac07" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use href="#icon-file-text2"></use></svg></label><input id="data-a8d914e5-e405-462c-bb82-420d23abe865" class="xr-var-data-in" type="checkbox"><label for="data-a8d914e5-e405-462c-bb82-420d23abe865" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"><dt><span>axis :</span></dt><dd>X</dd><dt><span>long_name :</span></dt><dd>x coordinate of projection</dd><dt><span>standard_name :</span></dt><dd>projection_x_coordinate</dd><dt><span>units :</span></dt><dd>metre</dd></dl></div><div class="xr-var-data"><pre>array([-7273893.821307, -7273662.164949, -7273430.508591, -7273198.852232,
+       5004588.135754, 5004356.479396, 5004124.823037, 5003893.166679])</pre></div></li><li class="xr-var-item"><div class="xr-var-name"><span class="xr-has-index">x</span></div><div class="xr-var-dims">(x)</div><div class="xr-var-dtype">float64</div><div class="xr-var-preview xr-preview">-7.274e+06 ... -7.228e+06</div><input id="attrs-062a0c97-e41f-4c77-81f5-fb52467e7b15" class="xr-var-attrs-in" type="checkbox"><label for="attrs-062a0c97-e41f-4c77-81f5-fb52467e7b15" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use href="#icon-file-text2"></use></svg></label><input id="data-db182a11-812f-4bea-aa7f-b689acb7852a" class="xr-var-data-in" type="checkbox"><label for="data-db182a11-812f-4bea-aa7f-b689acb7852a" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"><dt><span>axis :</span></dt><dd>X</dd><dt><span>long_name :</span></dt><dd>x coordinate of projection</dd><dt><span>standard_name :</span></dt><dd>projection_x_coordinate</dd><dt><span>units :</span></dt><dd>metre</dd></dl></div><div class="xr-var-data"><pre>array([-7273893.821307, -7273662.164949, -7273430.508591, -7273198.852232,
        -7272967.195874, -7272735.539516, -7272503.883158, -7272272.226799,
        -7272040.570441, -7271808.914083, -7271577.257725, -7271345.601366,
        -7271113.945008, -7270882.28865 , -7270650.632291, -7270418.975933,
@@ -3177,7 +3183,7 @@ Attributes:
        -7231269.051387, -7231037.395028, -7230805.73867 , -7230574.082312,
        -7230342.425954, -7230110.769595, -7229879.113237, -7229647.456879,
        -7229415.80052 , -7229184.144162, -7228952.487804, -7228720.831446,
-       -7228489.175087, -7228257.518729, -7228025.862371, -7227794.206013])</pre></div></li></ul></div></li><li class="xr-section-item"><input id="section-43a08904-11e2-4cdc-ba13-3490aeccf847" class="xr-section-summary-in" type="checkbox"><label for="section-43a08904-11e2-4cdc-ba13-3490aeccf847" class="xr-section-summary">Indexes: <span>(2)</span></label><div class="xr-section-inline-details"></div><div class="xr-section-details"><ul class="xr-var-list"><li class="xr-var-item"><div class="xr-index-name"><div>y</div></div><div class="xr-index-preview">PandasIndex</div><div></div><input id="index-8e1a58e8-9537-4c93-a278-c8db9ff353bd" class="xr-index-data-in" type="checkbox"><label for="index-8e1a58e8-9537-4c93-a278-c8db9ff353bd" title="Show/Hide index repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-index-data"><pre>PandasIndex(Index([ 5049992.781973618,  5049761.125615354,   5049529.46925709,
+       -7228489.175087, -7228257.518729, -7228025.862371, -7227794.206013])</pre></div></li></ul></div></li><li class="xr-section-item"><input id="section-cc9afdea-62b7-4f5b-9611-a865dd66bd33" class="xr-section-summary-in" type="checkbox"><label for="section-cc9afdea-62b7-4f5b-9611-a865dd66bd33" class="xr-section-summary">Indexes: <span>(2)</span></label><div class="xr-section-inline-details"></div><div class="xr-section-details"><ul class="xr-var-list"><li class="xr-var-item"><div class="xr-index-name"><div>y</div></div><div class="xr-index-preview">PandasIndex</div><div></div><input id="index-8211bd2e-cd8f-4020-b3d0-8498365258ff" class="xr-index-data-in" type="checkbox"><label for="index-8211bd2e-cd8f-4020-b3d0-8498365258ff" title="Show/Hide index repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-index-data"><pre>PandasIndex(Index([ 5049992.781973618,  5049761.125615354,   5049529.46925709,
         5049297.812898827,  5049066.156540562,  5048834.500182299,
        5048602.8438240355,  5048371.187465771,  5048139.531107508,
         5047907.874749244,
@@ -3186,7 +3192,7 @@ Attributes:
         5005283.104828713,   5005051.44847045,  5004819.792112187,
         5004588.135753923,  5004356.479395659,  5004124.823037395,
         5003893.166679132],
-      dtype='float64', name='y', length=200))</pre></div></li><li class="xr-var-item"><div class="xr-index-name"><div>x</div></div><div class="xr-index-preview">PandasIndex</div><div></div><input id="index-2f12f658-4020-4ed6-8929-66673ed960e1" class="xr-index-data-in" type="checkbox"><label for="index-2f12f658-4020-4ed6-8929-66673ed960e1" title="Show/Hide index repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-index-data"><pre>PandasIndex(Index([ -7273893.821307159,  -7273662.164948896,  -7273430.508590631,
+      dtype='float64', name='y', length=200))</pre></div></li><li class="xr-var-item"><div class="xr-index-name"><div>x</div></div><div class="xr-index-preview">PandasIndex</div><div></div><input id="index-a382a801-f90c-4f09-8fdc-7dd7e018e6c5" class="xr-index-data-in" type="checkbox"><label for="index-a382a801-f90c-4f09-8fdc-7dd7e018e6c5" title="Show/Hide index repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-index-data"><pre>PandasIndex(Index([ -7273893.821307159,  -7273662.164948896,  -7273430.508590631,
         -7273198.852232368,  -7272967.195874103,   -7272735.53951584,
        -7272503.8831575755,  -7272272.226799311,  -7272040.570441048,
         -7271808.914082783,
@@ -3195,7 +3201,7 @@ Attributes:
         -7229184.144162215,  -7228952.487803951,  -7228720.831445687,
         -7228489.175087423,   -7228257.51872916,  -7228025.862370895,
         -7227794.206012632],
-      dtype='float64', name='x', length=200))</pre></div></li></ul></div></li><li class="xr-section-item"><input id="section-9748706c-c74f-41c9-bb64-453e4d0e87ea" class="xr-section-summary-in" type="checkbox" checked=""><label for="section-9748706c-c74f-41c9-bb64-453e4d0e87ea" class="xr-section-summary">Attributes: <span>(5)</span></label><div class="xr-section-inline-details"></div><div class="xr-section-details"><dl class="xr-attrs"><dt><span>crs :</span></dt><dd>+a=6371007.181 +b=6371007.181 +lon_0=0 +no_defs +proj=sinu +units=m +x_0=0 +y_0=0</dd><dt><span>res :</span></dt><dd>[231.65635826 231.65635826]</dd><dt><span>is_tiled :</span></dt><dd>0</dd><dt><span>nodata :</span></dt><dd>-28672.0</dd><dt><span>transform :</span></dt><dd>[ 2.31656358e+02  0.00000000e+00 -7.27400965e+06  0.00000000e+00
+      dtype='float64', name='x', length=200))</pre></div></li></ul></div></li><li class="xr-section-item"><input id="section-068545a5-1242-4b1d-8819-1db6cb076c64" class="xr-section-summary-in" type="checkbox" checked=""><label for="section-068545a5-1242-4b1d-8819-1db6cb076c64" class="xr-section-summary">Attributes: <span>(5)</span></label><div class="xr-section-inline-details"></div><div class="xr-section-details"><dl class="xr-attrs"><dt><span>crs :</span></dt><dd>+a=6371007.181 +b=6371007.181 +lon_0=0 +no_defs +proj=sinu +units=m +x_0=0 +y_0=0</dd><dt><span>res :</span></dt><dd>[231.65635826 231.65635826]</dd><dt><span>is_tiled :</span></dt><dd>0</dd><dt><span>nodata :</span></dt><dd>-28672.0</dd><dt><span>transform :</span></dt><dd>[ 2.31656358e+02  0.00000000e+00 -7.27400965e+06  0.00000000e+00
  -2.31656358e+02  5.05010861e+06  0.00000000e+00  0.00000000e+00
   1.00000000e+00]</dd></dl></div></li></ul></div></div>
 </div>
@@ -3217,7 +3223,7 @@ Attributes:
 <span id="cb184-6"><a href="#cb184-6"></a>xds.isel(x<span class="op">=</span><span class="bu">slice</span>(<span class="dv">0</span>, <span class="dv">20</span>), y<span class="op">=</span><span class="bu">slice</span>(<span class="dv">0</span>, <span class="dv">20</span>)).plot(ax<span class="op">=</span>ax1)</span>
 <span id="cb184-7"><a href="#cb184-7"></a>filled.isel(x<span class="op">=</span><span class="bu">slice</span>(<span class="dv">0</span>, <span class="dv">20</span>), y<span class="op">=</span><span class="bu">slice</span>(<span class="dv">0</span>, <span class="dv">20</span>)).plot(ax<span class="op">=</span>ax2)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="116">
-<pre><code>&lt;matplotlib.collections.QuadMesh at 0x7f40e782aef0&gt;</code></pre>
+<pre><code>&lt;matplotlib.collections.QuadMesh at 0x7f11150c2e60&gt;</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <p><img data-src="index_files/figure-revealjs/cell-117-output-2.png" width="1220" height="464"></p>
@@ -3312,7 +3318,7 @@ Attributes:
 <section id="python-pour-quoi-dautre" class="slide level2">
 <h2>Python pour quoi d’autre ?</h2>
 <div class="medium">
-<p>Un écossystème riche pour de nombreux d’autres usages.</p>
+<p>Un écosystème riche pour de nombreux autres usages.</p>
 <p><strong><em>Machine learning</em> et <em>Deep learning</em></strong> :</p>
 <ul>
 <li><a href="https://scikit-learn.org/">Scikit-learn</a> (apprentissage automatique, developpé par des membres de l’INRIA - dispose d’une <a href="https://scikit-learn.org/stable/tutorial/basic/tutorial.html">documentation très détaillée</a>)</li>
@@ -3435,7 +3441,7 @@ Attributes:
 <li><p><a href="https://py.geocompx.org/">Livre gratuit “Geocomputation with Python” (en anglais)</a> <span class="citation" data-cites="Dorman2022">(<a href="#/références-bibliographiques" role="doc-biblioref" onclick="">Dorman et al., 2022</a>)</span></p></li>
 <li><p><a href="https://autogis-site.readthedocs.io/en/latest/">Cours “Automating GIS processes” (en anglais)</a></p></li>
 <li><p><a href="https://www.earthdatascience.org/courses/use-data-open-source-python/">Cours “Use Data for Earth and Environmental Science in Open Source Python” (en anglais)</a></p></li>
-<li><p><a href="https://geographicdata.science/book/intro.html">Livre gratuit “Geographic Data Science with Python”</a></p></li>
+<li><p><a href="https://geographicdata.science/book/intro.html">Livre gratuit “Geographic Data Science with Python” (en anglais)</a></p></li>
 </ul>
 </div>
 </section></section>
@@ -3492,14 +3498,30 @@ Attributes:
 <li><p>Créez un programme Python qui permet de modifier l’entête du fichier <code>cities.csv</code> en remplaçant les valeurs <code>coord1</code> et <code>coord2</code> par <code>latitude</code> et <code>longitude</code>. Nous traitons ici ce fichier comme un fichier texte, il n’est donc pas nécessaire d’utiliser la bibliothèque <code>csv</code>. Le nouveau contenu doit être écrit dans un nouveau fichier nommé <code>cities-new.csv</code>.</p></li>
 <li><p>Exécutez le programme et vérifiez que le fichier <code>cities-new.csv</code> a bien été créé et qu’il contient le nouveau contenu.</p></li>
 </ol>
+<ul>
+<li><em>Pour aller plus loin</em> : importer la classe <code>date</code> du module <code>datetime</code> (<code>from datetime import date</code>) et essayez d’utiliser sa méthode <code>today()</code> pour faire en sortes que le nom du fichier de sortie contienne la date de l’exécution du programme (par exemple <code>cities-2021-01-01.csv</code>).</li>
+</ul>
 </div><div class="column" style="width:30%;">
 <p><strong>Contenu du fichier <code>data.csv</code></strong> :</p>
-<textarea style="width: 100%; font-size: 0.8em;" rows="5">nom,coord1,coord2,value
+<pre><code>nom,coord1,coord2,value
 Paris,48.8566,2.3522,10
 Lyon,45.7640,4.8357,20
 Marseille,43.2964,5.3700,30
-Grenoble,45.1885,5.7245,40
-</textarea>
+Grenoble,45.1885,5.7245,40</code></pre>
+<p><br></p>
+<div class="small">
+<p><strong>Modèle de programme Python à utiliser</strong> :</p>
+<div class="sourceCode" id="cb192"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb192-1"><a href="#cb192-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">'cities.csv'</span>, <span class="st">'r'</span>) <span class="im">as</span> f:</span>
+<span id="cb192-2"><a href="#cb192-2"></a>    <span class="co"># Lire le contenu du fichier</span></span>
+<span id="cb192-3"><a href="#cb192-3"></a>    content <span class="op">=</span> f.read()</span>
+<span id="cb192-4"><a href="#cb192-4"></a></span>
+<span id="cb192-5"><a href="#cb192-5"></a><span class="co"># Écrire ici la ou les instructions permettant</span></span>
+<span id="cb192-6"><a href="#cb192-6"></a><span class="co"># de modifier le contenu du fichier</span></span>
+<span id="cb192-7"><a href="#cb192-7"></a></span>
+<span id="cb192-8"><a href="#cb192-8"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">'cities-new.csv'</span>, <span class="st">'w'</span>) <span class="im">as</span> f:</span>
+<span id="cb192-9"><a href="#cb192-9"></a>    <span class="co"># Écrire le nouveau contenu dans le fichier</span></span>
+<span id="cb192-10"><a href="#cb192-10"></a>    f.write(content)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </div>
 </div>
 </section>
@@ -3596,16 +3618,16 @@ Grenoble,45.1885,5.7245,40
 <p><br></p>
 <p><strong>Exemple 1</strong> : Afficher le nom des couches vecteur ou raster chargées dans QGIS et le nombre d’entités pour les couches vecteur</p>
 <div class="small">
-<div class="sourceCode" id="cb191"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb191-1"><a href="#cb191-1"></a><span class="cf">for</span> layer <span class="kw">in</span> iface.mapCanvas().layers():</span>
-<span id="cb191-2"><a href="#cb191-2"></a>    <span class="cf">if</span> layer.<span class="bu">type</span>() <span class="op">==</span> QgsMapLayer.VectorLayer:</span>
-<span id="cb191-3"><a href="#cb191-3"></a>        <span class="bu">print</span>(<span class="ss">f"Vecteur : </span><span class="sc">{</span>layer<span class="sc">.</span>name()<span class="sc">}</span><span class="ss"> (</span><span class="sc">{</span>layer<span class="sc">.</span>featureCount()<span class="sc">}</span><span class="ss"> entités) - </span><span class="sc">{</span>layer<span class="sc">.</span>crs()<span class="sc">.</span>authid()<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb191-4"><a href="#cb191-4"></a>    <span class="cf">elif</span> layer.<span class="bu">type</span>() <span class="op">==</span> QgsMapLayer.RasterLayer:</span>
-<span id="cb191-5"><a href="#cb191-5"></a>        <span class="bu">print</span>(<span class="ss">f"Raster : </span><span class="sc">{</span>layer<span class="sc">.</span>name()<span class="sc">}</span><span class="ss"> - </span><span class="sc">{</span>layer<span class="sc">.</span>crs()<span class="sc">.</span>authid()<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb193"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb193-1"><a href="#cb193-1"></a><span class="cf">for</span> layer <span class="kw">in</span> iface.mapCanvas().layers():</span>
+<span id="cb193-2"><a href="#cb193-2"></a>    <span class="cf">if</span> layer.<span class="bu">type</span>() <span class="op">==</span> QgsMapLayer.VectorLayer:</span>
+<span id="cb193-3"><a href="#cb193-3"></a>        <span class="bu">print</span>(<span class="ss">f"Vecteur : </span><span class="sc">{</span>layer<span class="sc">.</span>name()<span class="sc">}</span><span class="ss"> (</span><span class="sc">{</span>layer<span class="sc">.</span>featureCount()<span class="sc">}</span><span class="ss"> entités) - </span><span class="sc">{</span>layer<span class="sc">.</span>crs()<span class="sc">.</span>authid()<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb193-4"><a href="#cb193-4"></a>    <span class="cf">elif</span> layer.<span class="bu">type</span>() <span class="op">==</span> QgsMapLayer.RasterLayer:</span>
+<span id="cb193-5"><a href="#cb193-5"></a>        <span class="bu">print</span>(<span class="ss">f"Raster : </span><span class="sc">{</span>layer<span class="sc">.</span>name()<span class="sc">}</span><span class="ss"> - </span><span class="sc">{</span>layer<span class="sc">.</span>crs()<span class="sc">.</span>authid()<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><br></p>
 <p><strong>Exemple 2</strong> : Accéder à la projection du projet</p>
 <div class="small">
-<div class="sourceCode" id="cb192"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb192-1"><a href="#cb192-1"></a><span class="bu">print</span>(iface.mapCanvas().mapSettings().destinationCrs().authid())</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb194"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb194-1"><a href="#cb194-1"></a><span class="bu">print</span>(iface.mapCanvas().mapSettings().destinationCrs().authid())</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section>
@@ -3614,24 +3636,24 @@ Grenoble,45.1885,5.7245,40
 <div class="medium">
 <p><strong>Exemple 3</strong> : Obtenir une référence vers une couche vecteur à partir de son nom et itérer sur ses entités</p>
 <div class="small">
-<div class="sourceCode" id="cb193"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb193-1"><a href="#cb193-1"></a>layer <span class="op">=</span> QgsProject.instance().mapLayersByName(<span class="st">'cities'</span>)[<span class="dv">0</span>]</span>
-<span id="cb193-2"><a href="#cb193-2"></a></span>
-<span id="cb193-3"><a href="#cb193-3"></a><span class="co"># Une expression peut être utilisée pour filtrer les entités</span></span>
-<span id="cb193-4"><a href="#cb193-4"></a>expression <span class="op">=</span> <span class="st">"$id &lt; 5"</span></span>
-<span id="cb193-5"><a href="#cb193-5"></a></span>
-<span id="cb193-6"><a href="#cb193-6"></a><span class="co"># On peut utiliser la méthode getFeatures() de la couche</span></span>
-<span id="cb193-7"><a href="#cb193-7"></a><span class="co"># pour obtenir un itérateur sur les entités :</span></span>
-<span id="cb193-8"><a href="#cb193-8"></a><span class="co"># - si on ne lui donne pas d'argument,</span></span>
-<span id="cb193-9"><a href="#cb193-9"></a><span class="co">#   on obtient toutes les entités de la couche</span></span>
-<span id="cb193-10"><a href="#cb193-10"></a><span class="co"># - si on lui donne une expression,</span></span>
-<span id="cb193-11"><a href="#cb193-11"></a><span class="co">#   on obtient seulement les entités qui vérifient l'expression</span></span>
-<span id="cb193-12"><a href="#cb193-12"></a><span class="cf">for</span> feature <span class="kw">in</span> layer.getFeatures(expression):</span>
-<span id="cb193-13"><a href="#cb193-13"></a>    <span class="co"># Ici 'feature' est donc un objet de type QgsFeature</span></span>
-<span id="cb193-14"><a href="#cb193-14"></a>    <span class="co"># Nous pouvons consulter la documentation pour connaitre les méthodes et les attributs disponibles</span></span>
-<span id="cb193-15"><a href="#cb193-15"></a>    <span class="bu">print</span>(feature[<span class="st">'name'</span>])</span>
-<span id="cb193-16"><a href="#cb193-16"></a>    <span class="co"># On peut aussi accéder à la géométrie de l'entité</span></span>
-<span id="cb193-17"><a href="#cb193-17"></a>    geom <span class="op">=</span> feature.geometry()</span>
-<span id="cb193-18"><a href="#cb193-18"></a>    <span class="bu">print</span>(geom.asWkt())</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb195"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb195-1"><a href="#cb195-1"></a>layer <span class="op">=</span> QgsProject.instance().mapLayersByName(<span class="st">'cities'</span>)[<span class="dv">0</span>]</span>
+<span id="cb195-2"><a href="#cb195-2"></a></span>
+<span id="cb195-3"><a href="#cb195-3"></a><span class="co"># Une expression peut être utilisée pour filtrer les entités</span></span>
+<span id="cb195-4"><a href="#cb195-4"></a>expression <span class="op">=</span> <span class="st">"$id &lt; 5"</span></span>
+<span id="cb195-5"><a href="#cb195-5"></a></span>
+<span id="cb195-6"><a href="#cb195-6"></a><span class="co"># On peut utiliser la méthode getFeatures() de la couche</span></span>
+<span id="cb195-7"><a href="#cb195-7"></a><span class="co"># pour obtenir un itérateur sur les entités :</span></span>
+<span id="cb195-8"><a href="#cb195-8"></a><span class="co"># - si on ne lui donne pas d'argument,</span></span>
+<span id="cb195-9"><a href="#cb195-9"></a><span class="co">#   on obtient toutes les entités de la couche</span></span>
+<span id="cb195-10"><a href="#cb195-10"></a><span class="co"># - si on lui donne une expression,</span></span>
+<span id="cb195-11"><a href="#cb195-11"></a><span class="co">#   on obtient seulement les entités qui vérifient l'expression</span></span>
+<span id="cb195-12"><a href="#cb195-12"></a><span class="cf">for</span> feature <span class="kw">in</span> layer.getFeatures(expression):</span>
+<span id="cb195-13"><a href="#cb195-13"></a>    <span class="co"># Ici 'feature' est donc un objet de type QgsFeature</span></span>
+<span id="cb195-14"><a href="#cb195-14"></a>    <span class="co"># Nous pouvons consulter la documentation pour connaitre les méthodes et les attributs disponibles</span></span>
+<span id="cb195-15"><a href="#cb195-15"></a>    <span class="bu">print</span>(feature[<span class="st">'name'</span>])</span>
+<span id="cb195-16"><a href="#cb195-16"></a>    <span class="co"># On peut aussi accéder à la géométrie de l'entité</span></span>
+<span id="cb195-17"><a href="#cb195-17"></a>    geom <span class="op">=</span> feature.geometry()</span>
+<span id="cb195-18"><a href="#cb195-18"></a>    <span class="bu">print</span>(geom.asWkt())</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section>
@@ -3639,40 +3661,36 @@ Grenoble,45.1885,5.7245,40
 <h2>Exécuter des commandes dans la console Python</h2>
 <div class="small">
 <p><strong>Exemple 4</strong> : Créer une couche vecteur à partir d’une couche existante et l’ajouter au projet</p>
-<div class="sourceCode" id="cb194"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb194-1"><a href="#cb194-1"></a><span class="im">import</span> random</span>
-<span id="cb194-2"><a href="#cb194-2"></a></span>
-<span id="cb194-3"><a href="#cb194-3"></a>layer <span class="op">=</span> QgsProject.instance().mapLayersByName(<span class="st">'cities'</span>)[<span class="dv">0</span>]</span>
-<span id="cb194-4"><a href="#cb194-4"></a></span>
-<span id="cb194-5"><a href="#cb194-5"></a><span class="co"># On crée une couche mémoire vide</span></span>
-<span id="cb194-6"><a href="#cb194-6"></a>mem_layer <span class="op">=</span> QgsVectorLayer(<span class="st">'Polygon?crs=EPSG:4326'</span>, <span class="st">'cities-buffer'</span>, <span class="st">'memory'</span>)</span>
-<span id="cb194-7"><a href="#cb194-7"></a>pr <span class="op">=</span> mem_layer.dataProvider()</span>
-<span id="cb194-8"><a href="#cb194-8"></a></span>
-<span id="cb194-9"><a href="#cb194-9"></a><span class="co"># Spécification de deux champs</span></span>
-<span id="cb194-10"><a href="#cb194-10"></a>pr.addAttributes([</span>
-<span id="cb194-11"><a href="#cb194-11"></a>    QgsField(<span class="st">"Buffer_value"</span>, QVariant.Double),</span>
-<span id="cb194-12"><a href="#cb194-12"></a>])</span>
-<span id="cb194-13"><a href="#cb194-13"></a>mem_layer.updateFields()</span>
-<span id="cb194-14"><a href="#cb194-14"></a></span>
-<span id="cb194-15"><a href="#cb194-15"></a><span class="cf">for</span> feature <span class="kw">in</span> layer.getFeatures():</span>
-<span id="cb194-16"><a href="#cb194-16"></a>    ft <span class="op">=</span> QgsFeature()</span>
-<span id="cb194-17"><a href="#cb194-17"></a>    <span class="co"># On calcule le buffer</span></span>
-<span id="cb194-18"><a href="#cb194-18"></a>    geom <span class="op">=</span> QgsGeometry(feature.geometry())</span>
-<span id="cb194-19"><a href="#cb194-19"></a>    <span class="co"># On converti la géométrie dans un système de coordonnées permettant de calculer des distances</span></span>
-<span id="cb194-20"><a href="#cb194-20"></a>    geom.transform(QgsCoordinateTransform(layer.crs(), QgsCoordinateReferenceSystem(<span class="st">"ESRI:53030"</span>), QgsProject.instance()))</span>
-<span id="cb194-21"><a href="#cb194-21"></a>    buffer_value <span class="op">=</span> random.randint(<span class="dv">10000</span>, <span class="dv">200000</span>)</span>
-<span id="cb194-22"><a href="#cb194-22"></a>    <span class="bu">buffer</span> <span class="op">=</span> geom.<span class="bu">buffer</span>(buffer_value, <span class="dv">5</span>)</span>
-<span id="cb194-23"><a href="#cb194-23"></a>    <span class="co"># On remet la géométrie dans le système de coordonnées de la couche</span></span>
-<span id="cb194-24"><a href="#cb194-24"></a>    <span class="bu">buffer</span>.transform(QgsCoordinateTransform(QgsCoordinateReferenceSystem(<span class="st">"ESRI:53030"</span>), layer.crs(), QgsProject.instance()))</span>
-<span id="cb194-25"><a href="#cb194-25"></a>    <span class="co"># On ajoute la géométrie à l'entité</span></span>
-<span id="cb194-26"><a href="#cb194-26"></a>    ft.setGeometry(<span class="bu">buffer</span>)</span>
-<span id="cb194-27"><a href="#cb194-27"></a>    ft.setAttributes([buffer_value])</span>
-<span id="cb194-28"><a href="#cb194-28"></a>    <span class="co"># On ajoute l'entité à la couche mémoire</span></span>
-<span id="cb194-29"><a href="#cb194-29"></a>    pr.addFeatures([ft])</span>
-<span id="cb194-30"><a href="#cb194-30"></a></span>
-<span id="cb194-31"><a href="#cb194-31"></a>mem_layer.updateExtents()</span>
-<span id="cb194-32"><a href="#cb194-32"></a>    </span>
-<span id="cb194-33"><a href="#cb194-33"></a><span class="co"># On ajoute la couche mémoire au projet</span></span>
-<span id="cb194-34"><a href="#cb194-34"></a>QgsProject.instance().addMapLayer(mem_layer)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb196"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb196-1"><a href="#cb196-1"></a><span class="im">import</span> random</span>
+<span id="cb196-2"><a href="#cb196-2"></a></span>
+<span id="cb196-3"><a href="#cb196-3"></a>layer <span class="op">=</span> QgsProject.instance().mapLayersByName(<span class="st">'cities'</span>)[<span class="dv">0</span>]</span>
+<span id="cb196-4"><a href="#cb196-4"></a></span>
+<span id="cb196-5"><a href="#cb196-5"></a><span class="co"># On crée une couche mémoire vide</span></span>
+<span id="cb196-6"><a href="#cb196-6"></a>mem_layer <span class="op">=</span> QgsVectorLayer(<span class="st">'Polygon?crs=EPSG:4326'</span>, <span class="st">'cities-buffer'</span>, <span class="st">'memory'</span>)</span>
+<span id="cb196-7"><a href="#cb196-7"></a>pr <span class="op">=</span> mem_layer.dataProvider()</span>
+<span id="cb196-8"><a href="#cb196-8"></a></span>
+<span id="cb196-9"><a href="#cb196-9"></a><span class="co"># Spécification de deux champs</span></span>
+<span id="cb196-10"><a href="#cb196-10"></a>pr.addAttributes([</span>
+<span id="cb196-11"><a href="#cb196-11"></a>    QgsField(<span class="st">"Buffer_value"</span>, QVariant.Double),</span>
+<span id="cb196-12"><a href="#cb196-12"></a>])</span>
+<span id="cb196-13"><a href="#cb196-13"></a>mem_layer.updateFields()</span>
+<span id="cb196-14"><a href="#cb196-14"></a></span>
+<span id="cb196-15"><a href="#cb196-15"></a><span class="cf">for</span> feature <span class="kw">in</span> layer.getFeatures():</span>
+<span id="cb196-16"><a href="#cb196-16"></a>    ft <span class="op">=</span> QgsFeature()</span>
+<span id="cb196-17"><a href="#cb196-17"></a>    <span class="co"># On calcule le buffer</span></span>
+<span id="cb196-18"><a href="#cb196-18"></a>    geom <span class="op">=</span> QgsGeometry(feature.geometry())</span>
+<span id="cb196-19"><a href="#cb196-19"></a>    buffer_value <span class="op">=</span> random.randint(<span class="dv">1</span>, <span class="dv">20</span>)</span>
+<span id="cb196-20"><a href="#cb196-20"></a>    <span class="bu">buffer</span> <span class="op">=</span> geom.<span class="bu">buffer</span>(buffer_value, <span class="dv">5</span>)</span>
+<span id="cb196-21"><a href="#cb196-21"></a>    <span class="co"># On ajoute la géométrie à l'entité</span></span>
+<span id="cb196-22"><a href="#cb196-22"></a>    ft.setGeometry(<span class="bu">buffer</span>)</span>
+<span id="cb196-23"><a href="#cb196-23"></a>    ft.setAttributes([buffer_value])</span>
+<span id="cb196-24"><a href="#cb196-24"></a>    <span class="co"># On ajoute l'entité à la couche mémoire</span></span>
+<span id="cb196-25"><a href="#cb196-25"></a>    pr.addFeature(ft)</span>
+<span id="cb196-26"><a href="#cb196-26"></a></span>
+<span id="cb196-27"><a href="#cb196-27"></a>mem_layer.updateExtents()</span>
+<span id="cb196-28"><a href="#cb196-28"></a>    </span>
+<span id="cb196-29"><a href="#cb196-29"></a><span class="co"># On ajoute la couche mémoire au projet</span></span>
+<span id="cb196-30"><a href="#cb196-30"></a>QgsProject.instance().addMapLayer(mem_layer)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="utiliser-les-algorithmes-de-traitement-existants" class="slide level2">
@@ -3680,13 +3698,13 @@ Grenoble,45.1885,5.7245,40
 <div class="small">
 <p><br></p>
 <p>QGIS fournit un ensemble d’algorithmes de traitement qui peuvent être utilisés dans la console Python, en utilisant le module Python <code>processing</code>.</p>
-<div class="sourceCode" id="cb195"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb195-1"><a href="#cb195-1"></a><span class="co"># On peut lister les algorithmes disponibles</span></span>
-<span id="cb195-2"><a href="#cb195-2"></a><span class="cf">for</span> alg <span class="kw">in</span> QgsApplication.processingRegistry().algorithms():</span>
-<span id="cb195-3"><a href="#cb195-3"></a>    <span class="bu">print</span>(<span class="st">"</span><span class="sc">{}</span><span class="st">:</span><span class="sc">{}</span><span class="st"> --&gt; </span><span class="sc">{}</span><span class="st">"</span>.<span class="bu">format</span>(</span>
-<span id="cb195-4"><a href="#cb195-4"></a>        alg.provider().name(), alg.name(), alg.displayName()))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb197"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb197-1"><a href="#cb197-1"></a><span class="co"># On peut lister les algorithmes disponibles</span></span>
+<span id="cb197-2"><a href="#cb197-2"></a><span class="cf">for</span> alg <span class="kw">in</span> QgsApplication.processingRegistry().algorithms():</span>
+<span id="cb197-3"><a href="#cb197-3"></a>    <span class="bu">print</span>(<span class="st">"</span><span class="sc">{}</span><span class="st">:</span><span class="sc">{}</span><span class="st"> --&gt; </span><span class="sc">{}</span><span class="st">"</span>.<span class="bu">format</span>(</span>
+<span id="cb197-4"><a href="#cb197-4"></a>        alg.provider().name(), alg.name(), alg.displayName()))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><br></p>
 <p>Il est possible de consulter la documentation de chaque algorithme en utilisant la méthode <code>help()</code>.</p>
-<div class="sourceCode" id="cb196"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb196-1"><a href="#cb196-1"></a>processing.algorithmHelp(<span class="st">"qgis:voronoipolygons"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb198"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb198-1"><a href="#cb198-1"></a>processing.algorithmHelp(<span class="st">"qgis:voronoipolygons"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Ou de consulter la documentation en ligne : <a href="https://docs.qgis.org/latest/en/docs/user_manual/processing_algs/qgis/vectorgeometry.html#voronoi-polygons">https://docs.qgis.org/latest/en/docs/user_manual/processing_algs/qgis/vectorgeometry.html#voronoi-polygons</a></p>
 <p>C’est grâce à ces informations que vous aurez connaissance des paramètres nécessaires pour utiliser un algorithme.</p>
 <p><em>Notez que les paramètres sont les mêmes que ceux utilisés dans l’interface graphique (et qui peuvent être consultés dans la boite de dialogue de l’algorithme).</em></p>
@@ -3696,20 +3714,20 @@ Grenoble,45.1885,5.7245,40
 <h2>Utiliser les algorithmes de traitement existants</h2>
 <p><br></p>
 <div class="medium">
-<div class="sourceCode" id="cb197"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb197-1"><a href="#cb197-1"></a><span class="im">import</span> processing</span>
-<span id="cb197-2"><a href="#cb197-2"></a></span>
-<span id="cb197-3"><a href="#cb197-3"></a><span class="co"># Pour utiliser un algorithme, il faut connaitre son nom complet</span></span>
-<span id="cb197-4"><a href="#cb197-4"></a><span class="co"># Généralement, deux arguments sont nécessaires : son nom et les paramètres</span></span>
-<span id="cb197-5"><a href="#cb197-5"></a>result <span class="op">=</span> processing.run(<span class="st">"qgis:voronoipolygons"</span>, {</span>
-<span id="cb197-6"><a href="#cb197-6"></a>    <span class="st">'INPUT'</span>: <span class="st">'cities'</span>,</span>
-<span id="cb197-7"><a href="#cb197-7"></a>    <span class="st">'BUFFER'</span>: <span class="dv">0</span>,</span>
-<span id="cb197-8"><a href="#cb197-8"></a>    <span class="st">'OUTPUT'</span>: <span class="st">'TEMPORARY_OUTPUT'</span></span>
-<span id="cb197-9"><a href="#cb197-9"></a>})</span>
-<span id="cb197-10"><a href="#cb197-10"></a></span>
-<span id="cb197-11"><a href="#cb197-11"></a><span class="co"># On peut ensuite ajouter le résultat au projet</span></span>
-<span id="cb197-12"><a href="#cb197-12"></a><span class="co"># (l'objet retourné par la méthode run() est un dictionnaire,</span></span>
-<span id="cb197-13"><a href="#cb197-13"></a><span class="co"># on peut donc accéder à la couche résultat avec la clé 'OUTPUT')</span></span>
-<span id="cb197-14"><a href="#cb197-14"></a>QgsProject.instance().addMapLayer(result[<span class="st">'OUTPUT'</span>])</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb199"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb199-1"><a href="#cb199-1"></a><span class="im">import</span> processing</span>
+<span id="cb199-2"><a href="#cb199-2"></a></span>
+<span id="cb199-3"><a href="#cb199-3"></a><span class="co"># Pour utiliser un algorithme, il faut connaitre son nom complet</span></span>
+<span id="cb199-4"><a href="#cb199-4"></a><span class="co"># Généralement, deux arguments sont nécessaires : son nom et les paramètres</span></span>
+<span id="cb199-5"><a href="#cb199-5"></a>result <span class="op">=</span> processing.run(<span class="st">"qgis:voronoipolygons"</span>, {</span>
+<span id="cb199-6"><a href="#cb199-6"></a>    <span class="st">'INPUT'</span>: <span class="st">'cities'</span>,</span>
+<span id="cb199-7"><a href="#cb199-7"></a>    <span class="st">'BUFFER'</span>: <span class="dv">0</span>,</span>
+<span id="cb199-8"><a href="#cb199-8"></a>    <span class="st">'OUTPUT'</span>: <span class="st">'TEMPORARY_OUTPUT'</span></span>
+<span id="cb199-9"><a href="#cb199-9"></a>})</span>
+<span id="cb199-10"><a href="#cb199-10"></a></span>
+<span id="cb199-11"><a href="#cb199-11"></a><span class="co"># On peut ensuite ajouter le résultat au projet</span></span>
+<span id="cb199-12"><a href="#cb199-12"></a><span class="co"># (l'objet retourné par la méthode run() est un dictionnaire,</span></span>
+<span id="cb199-13"><a href="#cb199-13"></a><span class="co"># on peut donc accéder à la couche résultat avec la clé 'OUTPUT')</span></span>
+<span id="cb199-14"><a href="#cb199-14"></a>QgsProject.instance().addMapLayer(result[<span class="st">'OUTPUT'</span>])</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="utiliser-les-algorithmes-de-traitement-existants-2" class="slide level2">
@@ -3721,14 +3739,116 @@ Grenoble,45.1885,5.7245,40
 </section>
 <section id="créer-des-algorithmes-de-traitement" class="slide level2">
 <h2>Créer des algorithmes de traitement</h2>
-<div class="medium">
-<p>Il est possible de créer des algorithmes de traitement personnalisés en utilisant le module Python <code>processing</code>.</p>
+<div class="columns small">
+<div class="column" style="width:60%;">
+<p>Il est possible de créer des algorithmes de traitement personnalisés sous forme d’un script Python.</p>
+<p>Ils seront ajoutés à la boite à outils de traitement et pourront être utilisés comme n’importe quel autre algorithme.</p>
+</div><div class="column" style="width:40%;">
+<p><img data-src="images/processingtoolbox.png"></p>
+</div>
+</div>
+</section>
+<section id="créer-des-algorithmes-de-traitement-1" class="slide level2">
+<h2>Créer des algorithmes de traitement</h2>
+<div class="small">
+<p>Ces algorithmes peuvent réutiliser d’autres algorithmes existants déjà dans la boite à outils géotraitement (cf.&nbsp;<a href="https://docs.qgis.org/3.28/en/docs/user_manual/processing/scripts.html#the-alg-decorator">exemple dans la documentation</a>) ou non (cf.&nbsp;exemple ci-dessous).</p>
+<div class="sourceCode" id="cb200"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb200-1"><a href="#cb200-1"></a><span class="im">from</span> qgis <span class="im">import</span> processing</span>
+<span id="cb200-2"><a href="#cb200-2"></a><span class="im">from</span> qgis.processing <span class="im">import</span> alg</span>
+<span id="cb200-3"><a href="#cb200-3"></a><span class="im">from</span> qgis.core <span class="im">import</span> (</span>
+<span id="cb200-4"><a href="#cb200-4"></a>    QgsProject,</span>
+<span id="cb200-5"><a href="#cb200-5"></a>    QgsVectorLayer,</span>
+<span id="cb200-6"><a href="#cb200-6"></a>    QgsField,</span>
+<span id="cb200-7"><a href="#cb200-7"></a>    QgsFeature,</span>
+<span id="cb200-8"><a href="#cb200-8"></a>    QgsGeometry</span>
+<span id="cb200-9"><a href="#cb200-9"></a>)</span>
+<span id="cb200-10"><a href="#cb200-10"></a><span class="im">from</span> PyQt5.QtCore <span class="im">import</span> QVariant</span>
+<span id="cb200-11"><a href="#cb200-11"></a><span class="im">import</span> random</span>
+<span id="cb200-12"><a href="#cb200-12"></a></span>
+<span id="cb200-13"><a href="#cb200-13"></a><span class="at">@alg</span>(name<span class="op">=</span><span class="st">'bufferrandomdistance'</span>, label<span class="op">=</span><span class="st">'Our custom buffer operation with random distance'</span>,</span>
+<span id="cb200-14"><a href="#cb200-14"></a>     group<span class="op">=</span><span class="st">'examplescripts'</span>, group_label<span class="op">=</span><span class="st">'Example scripts'</span>)</span>
+<span id="cb200-15"><a href="#cb200-15"></a><span class="at">@alg.input</span>(<span class="bu">type</span><span class="op">=</span>alg.SOURCE, name<span class="op">=</span><span class="st">'INPUT'</span>, label<span class="op">=</span><span class="st">'Input vector layer'</span>)</span>
+<span id="cb200-16"><a href="#cb200-16"></a><span class="at">@alg.input</span>(<span class="bu">type</span><span class="op">=</span>alg.VECTOR_LAYER_DEST, name<span class="op">=</span><span class="st">'OUTPUT'</span>, label<span class="op">=</span><span class="st">'Buffer output'</span>)</span>
+<span id="cb200-17"><a href="#cb200-17"></a><span class="at">@alg.input</span>(<span class="bu">type</span><span class="op">=</span>alg.INT, name<span class="op">=</span><span class="st">'BUFFERDISTMIN'</span>, label<span class="op">=</span><span class="st">'BUFFER MINIMUM DISTANCE'</span>,</span>
+<span id="cb200-18"><a href="#cb200-18"></a>           default<span class="op">=</span><span class="fl">1.0</span>)</span>
+<span id="cb200-19"><a href="#cb200-19"></a><span class="at">@alg.input</span>(<span class="bu">type</span><span class="op">=</span>alg.INT, name<span class="op">=</span><span class="st">'BUFFERDISTMAX'</span>, label<span class="op">=</span><span class="st">'BUFFER MAXIMUM DISTANCE'</span>,</span>
+<span id="cb200-20"><a href="#cb200-20"></a>           default<span class="op">=</span><span class="fl">100.0</span>)</span>
+<span id="cb200-21"><a href="#cb200-21"></a><span class="at">@alg.output</span>(<span class="bu">type</span><span class="op">=</span>alg.NUMBER, name<span class="op">=</span><span class="st">'NUMBEROFFEATURES'</span>,</span>
+<span id="cb200-22"><a href="#cb200-22"></a>            label<span class="op">=</span><span class="st">'Number of features processed'</span>)</span>
+<span id="cb200-23"><a href="#cb200-23"></a><span class="kw">def</span> bufferrandomdistance(instance, parameters, context, feedback, inputs):</span>
+<span id="cb200-24"><a href="#cb200-24"></a>    <span class="co">"""</span></span>
+<span id="cb200-25"><a href="#cb200-25"></a><span class="co">    Description of the algorithm.</span></span>
+<span id="cb200-26"><a href="#cb200-26"></a><span class="co">    (If there is no comment here, you will get an error)</span></span>
+<span id="cb200-27"><a href="#cb200-27"></a><span class="co">    """</span></span>
+<span id="cb200-28"><a href="#cb200-28"></a>    input_featuresource <span class="op">=</span> instance.parameterAsSource(</span>
+<span id="cb200-29"><a href="#cb200-29"></a>      parameters, <span class="st">'INPUT'</span>, context)</span>
+<span id="cb200-30"><a href="#cb200-30"></a>    numfeatures <span class="op">=</span> input_featuresource.featureCount()</span>
+<span id="cb200-31"><a href="#cb200-31"></a>    bufferdistmin <span class="op">=</span> instance.parameterAsInt(</span>
+<span id="cb200-32"><a href="#cb200-32"></a>      parameters, <span class="st">'BUFFERDISTMIN'</span>, context)</span>
+<span id="cb200-33"><a href="#cb200-33"></a>    bufferdistmax <span class="op">=</span> instance.parameterAsInt(</span>
+<span id="cb200-34"><a href="#cb200-34"></a>        parameters, <span class="st">'BUFFERDISTMAX'</span>, context)</span>
+<span id="cb200-35"><a href="#cb200-35"></a></span>
+<span id="cb200-36"><a href="#cb200-36"></a>    <span class="cf">if</span> feedback.isCanceled():</span>
+<span id="cb200-37"><a href="#cb200-37"></a>        <span class="cf">return</span> {}</span>
+<span id="cb200-38"><a href="#cb200-38"></a></span>
+<span id="cb200-39"><a href="#cb200-39"></a>    <span class="co"># On crée une couche mémoire vide</span></span>
+<span id="cb200-40"><a href="#cb200-40"></a>    mem_layer <span class="op">=</span> QgsVectorLayer(</span>
+<span id="cb200-41"><a href="#cb200-41"></a>    <span class="ss">f'Polygon?crs=</span><span class="sc">{</span>input_featuresource<span class="sc">.</span>sourceCrs()<span class="sc">.</span>authid()<span class="sc">}</span><span class="ss">'</span>,</span>
+<span id="cb200-42"><a href="#cb200-42"></a>    <span class="st">'Buffer output'</span>,</span>
+<span id="cb200-43"><a href="#cb200-43"></a>    <span class="st">'memory'</span>,</span>
+<span id="cb200-44"><a href="#cb200-44"></a>    )</span>
+<span id="cb200-45"><a href="#cb200-45"></a>    pr <span class="op">=</span> mem_layer.dataProvider()</span>
+<span id="cb200-46"><a href="#cb200-46"></a>    </span>
+<span id="cb200-47"><a href="#cb200-47"></a>    <span class="co"># Spécification de deux champs</span></span>
+<span id="cb200-48"><a href="#cb200-48"></a>    pr.addAttributes([</span>
+<span id="cb200-49"><a href="#cb200-49"></a>        QgsField(<span class="st">"Buffer_value"</span>, QVariant.Double),</span>
+<span id="cb200-50"><a href="#cb200-50"></a>    ])</span>
+<span id="cb200-51"><a href="#cb200-51"></a>    mem_layer.updateFields()</span>
+<span id="cb200-52"><a href="#cb200-52"></a>    </span>
+<span id="cb200-53"><a href="#cb200-53"></a>    <span class="cf">for</span> feature <span class="kw">in</span> input_featuresource.getFeatures():</span>
+<span id="cb200-54"><a href="#cb200-54"></a>        ft <span class="op">=</span> QgsFeature()</span>
+<span id="cb200-55"><a href="#cb200-55"></a>        <span class="co"># On calcule le buffer</span></span>
+<span id="cb200-56"><a href="#cb200-56"></a>        geom <span class="op">=</span> QgsGeometry(feature.geometry())</span>
+<span id="cb200-57"><a href="#cb200-57"></a>        buffer_value <span class="op">=</span> random.randint(bufferdistmin, bufferdistmax)</span>
+<span id="cb200-58"><a href="#cb200-58"></a>        <span class="bu">buffer</span> <span class="op">=</span> geom.<span class="bu">buffer</span>(buffer_value, <span class="dv">5</span>)</span>
+<span id="cb200-59"><a href="#cb200-59"></a>        <span class="co"># On ajoute la géométrie à l'entité</span></span>
+<span id="cb200-60"><a href="#cb200-60"></a>        ft.setGeometry(<span class="bu">buffer</span>)</span>
+<span id="cb200-61"><a href="#cb200-61"></a>        ft.setAttributes([buffer_value])</span>
+<span id="cb200-62"><a href="#cb200-62"></a>        <span class="co"># On ajoute l'entité à la couche mémoire</span></span>
+<span id="cb200-63"><a href="#cb200-63"></a>        pr.addFeatures([ft])</span>
+<span id="cb200-64"><a href="#cb200-64"></a>    </span>
+<span id="cb200-65"><a href="#cb200-65"></a>    <span class="cf">if</span> feedback.isCanceled():</span>
+<span id="cb200-66"><a href="#cb200-66"></a>        <span class="cf">return</span> {}</span>
+<span id="cb200-67"><a href="#cb200-67"></a></span>
+<span id="cb200-68"><a href="#cb200-68"></a>    QgsProject.instance().addMapLayer(mem_layer)</span>
+<span id="cb200-69"><a href="#cb200-69"></a>    </span>
+<span id="cb200-70"><a href="#cb200-70"></a>    <span class="cf">return</span> {</span>
+<span id="cb200-71"><a href="#cb200-71"></a>      <span class="st">'OUTPUT'</span>: mem_layer.<span class="bu">id</span>(),</span>
+<span id="cb200-72"><a href="#cb200-72"></a>      <span class="st">'NUMBEROFFEATURES'</span>: numfeatures</span>
+<span id="cb200-73"><a href="#cb200-73"></a>    }</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="créer-un-plugin-qgis" class="slide level2">
 <h2>Créer un plugin QGIS</h2>
 <div class="medium">
-<p>Il est possible de créer des plugins QGIS en Python,</p>
+<p>Il est possible de créer des plugins QGIS en Python. Par rapport à la création d’algorithmes de traitement, les plugins :</p>
+<ul>
+<li>permettent de créer des interfaces graphiques plus complexes (avec plusieurs fenêtres, des onglets, etc.),</li>
+<li>permettent d’inclure une documentation complexe au format HTML,</li>
+<li>permettent d’ajouter des données d’exemples,</li>
+<li>permettent d’ajouter des fonctionnalités à QGIS qui ne sont pas des algorithmes de traitement (par exemple : ajouter une barre d’outils, ajouter un menu, etc.),</li>
+<li>peuvent être partagés avec la communauté via le <a href="https://plugins.qgis.org/">QGIS Python Plugins Repository</a>.</li>
+</ul>
+<p><br></p>
+<div class="midly-small">
+<p>À l’inverse des algorithmes de traitement, vous dévelloperez un plugin QGIS dans un environnement de développement Python classique (VSCodium, Spyder, etc.) et non dans l’éditeur de code de QGIS.</p>
+</div>
+</div>
+</section>
+<section id="créer-un-plugin-qgis-1" class="slide level2">
+<h2>Créer un plugin QGIS</h2>
+<div class="medium">
+<p>Étude de cas : Le plugin <strong>DistanceCartogram</strong> permet de créer des cartogrammes de distance dans QGIS.</p>
+<p><img data-src="./images/cartogram-train.png" class="bordered"></p>
 </div>
 </section>
 <section id="références-sur-lapi-python-de-qgis" class="slide level2">
@@ -3747,7 +3867,7 @@ Grenoble,45.1885,5.7245,40
 <section>
 <section id="partie-4---mise-en-pratique" class="title-slide slide level1 center">
 <h1>Partie 4 - Mise en pratique</h1>
-<p><strong><em>Choisir une des 3 mise en situation ci-dessous proposées dans ce qui suit.</em></strong></p>
+<p><strong><em>Choisir une des 3 mises en situation proposées dans ce qui suit.</em></strong></p>
 </section>
 <section id="mise-en-situation-1" class="slide level2">
 <h2>Mise en situation 1</h2>
@@ -3766,27 +3886,27 @@ Grenoble,45.1885,5.7245,40
 </ul>
 </div><div class="column very-small" style="width:43%;">
 <p><br></p>
-<div class="sourceCode" id="cb198"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb198-1"><a href="#cb198-1"></a><span class="im">from</span> qgis.core <span class="im">import</span> <span class="op">*</span></span>
-<span id="cb198-2"><a href="#cb198-2"></a><span class="im">from</span> qgis.gui <span class="im">import</span> <span class="op">*</span></span>
-<span id="cb198-3"><a href="#cb198-3"></a><span class="im">import</span> math</span>
-<span id="cb198-4"><a href="#cb198-4"></a></span>
-<span id="cb198-5"><a href="#cb198-5"></a><span class="at">@qgsfunction</span>(args<span class="op">=</span><span class="st">'auto'</span>, group<span class="op">=</span><span class="st">'Custom'</span>, usesgeometry<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb198-6"><a href="#cb198-6"></a><span class="kw">def</span> get_utm_zone(feature, parent):</span>
-<span id="cb198-7"><a href="#cb198-7"></a>    <span class="co">"""</span></span>
-<span id="cb198-8"><a href="#cb198-8"></a><span class="co">    Return the UTM Zone of the</span></span>
-<span id="cb198-9"><a href="#cb198-9"></a><span class="co">    feature's geometry as a String</span></span>
-<span id="cb198-10"><a href="#cb198-10"></a><span class="co">    """</span></span>
-<span id="cb198-11"><a href="#cb198-11"></a>    pt <span class="op">=</span> feature.geometry().asPoint()</span>
-<span id="cb198-12"><a href="#cb198-12"></a>    longitude <span class="op">=</span> pt.x()</span>
-<span id="cb198-13"><a href="#cb198-13"></a>    latitude <span class="op">=</span> pt.y()</span>
-<span id="cb198-14"><a href="#cb198-14"></a>    zone_number <span class="op">=</span> math.floor(((longitude <span class="op">+</span> <span class="dv">180</span>) <span class="op">/</span> <span class="dv">6</span>) <span class="op">%</span> <span class="dv">60</span>) <span class="op">+</span> <span class="dv">1</span></span>
-<span id="cb198-15"><a href="#cb198-15"></a></span>
-<span id="cb198-16"><a href="#cb198-16"></a>    <span class="cf">if</span> latitude <span class="op">&gt;=</span> <span class="dv">0</span>:</span>
-<span id="cb198-17"><a href="#cb198-17"></a>        zone_letter <span class="op">=</span> <span class="st">'N'</span></span>
-<span id="cb198-18"><a href="#cb198-18"></a>    <span class="cf">else</span>:</span>
-<span id="cb198-19"><a href="#cb198-19"></a>        zone_letter <span class="op">=</span> <span class="st">'S'</span></span>
-<span id="cb198-20"><a href="#cb198-20"></a></span>
-<span id="cb198-21"><a href="#cb198-21"></a>    <span class="cf">return</span> <span class="ss">f"</span><span class="sc">{</span><span class="bu">int</span>(zone_number)<span class="sc">}{</span>zone_letter<span class="sc">}</span><span class="ss">"</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb201"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb201-1"><a href="#cb201-1"></a><span class="im">from</span> qgis.core <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb201-2"><a href="#cb201-2"></a><span class="im">from</span> qgis.gui <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb201-3"><a href="#cb201-3"></a><span class="im">import</span> math</span>
+<span id="cb201-4"><a href="#cb201-4"></a></span>
+<span id="cb201-5"><a href="#cb201-5"></a><span class="at">@qgsfunction</span>(args<span class="op">=</span><span class="st">'auto'</span>, group<span class="op">=</span><span class="st">'Custom'</span>, usesgeometry<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb201-6"><a href="#cb201-6"></a><span class="kw">def</span> get_utm_zone(feature, parent):</span>
+<span id="cb201-7"><a href="#cb201-7"></a>    <span class="co">"""</span></span>
+<span id="cb201-8"><a href="#cb201-8"></a><span class="co">    Return the UTM Zone of the</span></span>
+<span id="cb201-9"><a href="#cb201-9"></a><span class="co">    feature's geometry as a String</span></span>
+<span id="cb201-10"><a href="#cb201-10"></a><span class="co">    """</span></span>
+<span id="cb201-11"><a href="#cb201-11"></a>    pt <span class="op">=</span> feature.geometry().asPoint()</span>
+<span id="cb201-12"><a href="#cb201-12"></a>    longitude <span class="op">=</span> pt.x()</span>
+<span id="cb201-13"><a href="#cb201-13"></a>    latitude <span class="op">=</span> pt.y()</span>
+<span id="cb201-14"><a href="#cb201-14"></a>    zone_number <span class="op">=</span> math.floor(((longitude <span class="op">+</span> <span class="dv">180</span>) <span class="op">/</span> <span class="dv">6</span>) <span class="op">%</span> <span class="dv">60</span>) <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb201-15"><a href="#cb201-15"></a></span>
+<span id="cb201-16"><a href="#cb201-16"></a>    <span class="cf">if</span> latitude <span class="op">&gt;=</span> <span class="dv">0</span>:</span>
+<span id="cb201-17"><a href="#cb201-17"></a>        zone_letter <span class="op">=</span> <span class="st">'N'</span></span>
+<span id="cb201-18"><a href="#cb201-18"></a>    <span class="cf">else</span>:</span>
+<span id="cb201-19"><a href="#cb201-19"></a>        zone_letter <span class="op">=</span> <span class="st">'S'</span></span>
+<span id="cb201-20"><a href="#cb201-20"></a></span>
+<span id="cb201-21"><a href="#cb201-21"></a>    <span class="cf">return</span> <span class="ss">f"</span><span class="sc">{</span><span class="bu">int</span>(zone_number)<span class="sc">}{</span>zone_letter<span class="sc">}</span><span class="ss">"</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section>
@@ -3798,7 +3918,7 @@ Grenoble,45.1885,5.7245,40
 <ul>
 <li><p><strong>Ouvrez un nouveau projet QGIS et ajoutez les <a href="data/data-qgis.zip">données d’exemple</a></strong> <em>(vous pouvez utiliser un projet QGIS personnel si vous le souhaitez)</em>.</p></li>
 <li><p><strong>Ouvrez la console Python de QGIS.</strong></p></li>
-<li><p><strong>Testez l’ensemble des commandes présentées précédemment dans la console Python</strong>. Vous pouvez d’abord copier ces morceaux de code dans l’éditeur de texte de la console Python puis les exécuter en utilisant le bouton <img src="./images/python-console-run.png" style="display: inline-block; width: 0.8em; height: auto;"> ou le raccourci clavier <kbd>Ctrl</kbd> + <kbd>Enter</kbd>.</p></li>
+<li><p><strong>Testez l’ensemble des commandes présentées précédemment dans la console Python</strong>. Vous pouvez d’abord copier ces morceaux de code dans l’éditeur de texte de la console Python puis les exécuter en utilisant le bouton ▶ ou le raccourci clavier <kbd>Ctrl</kbd> + <kbd>e</kbd>.</p></li>
 <li><p><strong>Testez de nouveaux géotraitements</strong>, au choix :</p>
 <ul>
 <li>un ou plusieurs algorithmes de traitement existants (voir la liste des algorithmes disponibles dans la console Python),</li>
@@ -3835,15 +3955,15 @@ Grenoble,45.1885,5.7245,40
 <div class="medium">
 <h3 id="partie-2">Partie 2</h3>
 <ul>
-<li><strong>Exercice 1</strong> : <a href="corrections/ex1.py">Correction</a></li>
-<li><strong>Exercice 2</strong> : <a href="corrections/ogc-web-services-correction.ipynb">Correction</a></li>
-<li><strong>Exercice 3</strong> : <a href="corrections/geopandas-rasterio-correction.ipynb">Correction</a></li>
+<li><strong>Exercice 1</strong> : <a href="corrections/ex1.py" download="">Correction</a></li>
+<li><strong>Exercice 2</strong> : <a href="notebooks/ogc-web-services-solution.ipynb" download="">Notebook</a> / <a href="notebooks/ogc-web-services-solution.html">Version HTML</a></li>
+<li><strong>Exercice 3</strong> : <a href="notebooks/geopandas-rasterio-solution.ipynb" download="">Correction</a> / <a href="notebooks/geopandas-rasterio-solution.html">Version HTML</a></li>
 </ul>
 <p><br></p>
 <h3 id="partie-4">Partie 4</h3>
 <ul>
-<li><strong>Mise en situation 1</strong> : <a href="corrections/qgis-ex1.py">Correction</a></li>
-<li><strong>Mise en situation 2</strong> : <a href="corrections/qgis-ex2.py">Correction</a></li>
+<li><strong>Mise en situation 1</strong> : <a href="corrections/qgis-ex1.py" download="">Correction</a></li>
+<li><strong>Mise en situation 2</strong> : <a href="corrections/qgis-ex2.py" download="">Correction</a></li>
 </ul>
 </div>
 </section>
