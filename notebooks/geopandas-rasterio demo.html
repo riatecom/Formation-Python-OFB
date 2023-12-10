@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Démonstration de l’écosystème géospatial de Python</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="geopandas-rasterio demo_files/libs/clipboard/clipboard.min.js"></script>
+<script src="geopandas-rasterio demo_files/libs/quarto-html/quarto.js"></script>
+<script src="geopandas-rasterio demo_files/libs/quarto-html/popper.min.js"></script>
+<script src="geopandas-rasterio demo_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="geopandas-rasterio demo_files/libs/quarto-html/anchor.min.js"></script>
+<link href="geopandas-rasterio demo_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="geopandas-rasterio demo_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="geopandas-rasterio demo_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="geopandas-rasterio demo_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="geopandas-rasterio demo_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Démonstration de l’écosystème géospatial de Python</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p>Import des bibliothèques</p>
+<div class="cell" data-execution_count="61">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> rasterio <span class="im">as</span> rio</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="92">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>communes <span class="op">=</span> gpd.read_file(<span class="st">'../data/COMMUNE.shp'</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>communes.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="92">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">ID</th>
+<th data-quarto-table-cell-role="th">INSEE_COM</th>
+<th data-quarto-table-cell-role="th">INSEE_ARR</th>
+<th data-quarto-table-cell-role="th">INSEE_COL</th>
+<th data-quarto-table-cell-role="th">INSEE_DEP</th>
+<th data-quarto-table-cell-role="th">INSEE_REG</th>
+<th data-quarto-table-cell-role="th">POPULATION</th>
+<th data-quarto-table-cell-role="th">SURFACE_HA</th>
+<th data-quarto-table-cell-role="th">DATE_CREAT</th>
+<th data-quarto-table-cell-role="th">DATE_MAJ</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">CL_DEPART</th>
+<th data-quarto-table-cell-role="th">CL_REGION</th>
+<th data-quarto-table-cell-role="th">CAPITALE</th>
+<th data-quarto-table-cell-role="th">DATE_RCT</th>
+<th data-quarto-table-cell-role="th">RECENSEUR</th>
+<th data-quarto-table-cell-role="th">SIREN_EPCI</th>
+<th data-quarto-table-cell-role="th">ID_CH_LIEU</th>
+<th data-quarto-table-cell-role="th">ID_AUT_ADM</th>
+<th data-quarto-table-cell-role="th">CODE_SIREN</th>
+<th data-quarto-table-cell-role="th">geometry</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>COMMUNE_0000000009754200</td>
+<td>38359</td>
+<td>1</td>
+<td>38D</td>
+<td>38</td>
+<td>84</td>
+<td>1197</td>
+<td>3622</td>
+<td>2006-08-02 08:36:54</td>
+<td>2023-01-20 10:57:47</td>
+<td>...</td>
+<td>Non</td>
+<td>Non</td>
+<td>Non</td>
+<td>2020-01-01</td>
+<td>INSEE</td>
+<td>200070431</td>
+<td>PAIHABIT0000000007545622</td>
+<td>SURFACTI0000000007463791</td>
+<td>200054526</td>
+<td>POLYGON ((872007.300 6454019.300, 872006.300 6...</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>COMMUNE_0000000009755669</td>
+<td>38243</td>
+<td>1</td>
+<td>38D</td>
+<td>38</td>
+<td>84</td>
+<td>247</td>
+<td>1499</td>
+<td>2006-08-02 08:36:54</td>
+<td>2023-02-14 10:36:40</td>
+<td>...</td>
+<td>Non</td>
+<td>Non</td>
+<td>Non</td>
+<td>2020-01-01</td>
+<td>INSEE</td>
+<td>200030658</td>
+<td>PAIHABIT0000000007548437</td>
+<td>SURFACTI0000000042499727</td>
+<td>213802432</td>
+<td>POLYGON ((907510.800 6409545.700, 907506.100 6...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>COMMUNE_0000000009753737</td>
+<td>38239</td>
+<td>1</td>
+<td>38D</td>
+<td>38</td>
+<td>84</td>
+<td>7495</td>
+<td>2006</td>
+<td>2006-08-02 08:36:54</td>
+<td>2023-01-18 18:39:43</td>
+<td>...</td>
+<td>Non</td>
+<td>Non</td>
+<td>Non</td>
+<td>2020-01-01</td>
+<td>INSEE</td>
+<td>243800984</td>
+<td>PAIHABIT0000000007542619</td>
+<td>SURFACTI0000000007463524</td>
+<td>213802390</td>
+<td>POLYGON ((900804.200 6475473.300, 900816.800 6...</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>COMMUNE_0000000009755432</td>
+<td>05064</td>
+<td>2</td>
+<td>05D</td>
+<td>05</td>
+<td>93</td>
+<td>105</td>
+<td>10802</td>
+<td>2006-08-02 08:36:54</td>
+<td>2023-01-18 18:39:43</td>
+<td>...</td>
+<td>Non</td>
+<td>Non</td>
+<td>Non</td>
+<td>2020-01-01</td>
+<td>INSEE</td>
+<td>200068096</td>
+<td>PAIHABIT0000000075658095</td>
+<td>SURFACTI0000000118484062</td>
+<td>210500641</td>
+<td>POLYGON ((950358.400 6422049.800, 950358.000 6...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>COMMUNE_0000000009754591</td>
+<td>38237</td>
+<td>1</td>
+<td>38D</td>
+<td>38</td>
+<td>84</td>
+<td>190</td>
+<td>1460</td>
+<td>2006-08-02 08:36:54</td>
+<td>2023-01-18 18:39:43</td>
+<td>...</td>
+<td>Non</td>
+<td>Non</td>
+<td>Non</td>
+<td>2020-01-01</td>
+<td>INSEE</td>
+<td>243800745</td>
+<td>PAIHABIT0000000007546970</td>
+<td>SURFACTI0000000007463883</td>
+<td>213802374</td>
+<td>POLYGON ((946870.000 6443476.500, 946851.600 6...</td>
+</tr>
+</tbody>
+</table>
+
+<p>5 rows × 26 columns</p>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="93">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>communes.crs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="93">
+<pre><code>&lt;Projected CRS: EPSG:2154&gt;
+Name: RGF93 v1 / Lambert-93
+Axis Info [cartesian]:
+- X[east]: Easting (metre)
+- Y[north]: Northing (metre)
+Area of Use:
+- name: France - onshore and offshore, mainland and Corsica (France métropolitaine including Corsica).
+- bounds: (-9.86, 41.15, 10.38, 51.56)
+Coordinate Operation:
+- name: Lambert-93
+- method: Lambert Conic Conformal (2SP)
+Datum: Reseau Geodesique Francais 1993 v1
+- Ellipsoid: GRS 1980
+- Prime Meridian: Greenwich</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="68">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>communes.plot(edgecolor<span class="op">=</span><span class="st">'black'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="68">
+<pre><code>&lt;Axes: &gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="geopandas-rasterio%20demo_files/figure-html/cell-5-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="90">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>arrondissements <span class="op">=</span> communes.dissolve(by<span class="op">=</span><span class="st">'INSEE_ARR'</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>arrondissements.plot(edgecolor<span class="op">=</span><span class="st">'red'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="90">
+<pre><code>&lt;Axes: &gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="geopandas-rasterio%20demo_files/figure-html/cell-6-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="91">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>centroids <span class="op">=</span> communes.centroid</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>centroids.plot()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="91">
+<pre><code>&lt;Axes: &gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="geopandas-rasterio%20demo_files/figure-html/cell-7-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="74">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>communes.boundary.plot()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="74">
+<pre><code>&lt;Axes: &gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="geopandas-rasterio%20demo_files/figure-html/cell-8-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>cours_deau <span class="op">=</span> gpd.read_file(<span class="st">'../data/COURS_D_EAU.shp'</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>cours_deau.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">ID</th>
+<th data-quarto-table-cell-role="th">CODE_HYDRO</th>
+<th data-quarto-table-cell-role="th">TOPONYME</th>
+<th data-quarto-table-cell-role="th">STATUT_TOP</th>
+<th data-quarto-table-cell-role="th">IMPORTANCE</th>
+<th data-quarto-table-cell-role="th">DATE_CREAT</th>
+<th data-quarto-table-cell-role="th">DATE_MAJ</th>
+<th data-quarto-table-cell-role="th">DATE_APP</th>
+<th data-quarto-table-cell-role="th">DATE_CONF</th>
+<th data-quarto-table-cell-role="th">SOURCE</th>
+<th data-quarto-table-cell-role="th">ID_SOURCE</th>
+<th data-quarto-table-cell-role="th">STATUT</th>
+<th data-quarto-table-cell-role="th">MAREE</th>
+<th data-quarto-table-cell-role="th">PERMANENT</th>
+<th data-quarto-table-cell-role="th">COMMENT</th>
+<th data-quarto-table-cell-role="th">geometry</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>COURDEAU0000002215479238</td>
+<td>06C0000002215479238</td>
+<td>Canal de Pulivès</td>
+<td>Validé</td>
+<td>5</td>
+<td>2020-10-21 09:35:44</td>
+<td>2020-11-12 10:46:00</td>
+<td>None</td>
+<td>None</td>
+<td>None</td>
+<td>None</td>
+<td>Validé</td>
+<td>None</td>
+<td>None</td>
+<td>None</td>
+<td>LINESTRING (847280.500 6505594.500, 847273.400...</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>COURDEAU0000002000792297</td>
+<td>06C0000002000792297</td>
+<td>Torrent du Clot des Cavales</td>
+<td>Validé</td>
+<td>5</td>
+<td>2017-01-24 16:06:18</td>
+<td>2022-06-03 22:58:45</td>
+<td>None</td>
+<td>None</td>
+<td>None</td>
+<td>None</td>
+<td>Validé</td>
+<td>None</td>
+<td>None</td>
+<td>None</td>
+<td>LINESTRING (963060.600 6437049.700, 963068.600...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>COURDEAU0000002215478774</td>
+<td>06C0000002215478774</td>
+<td>le Bouveyron</td>
+<td>Validé</td>
+<td>5</td>
+<td>2020-10-21 09:35:44</td>
+<td>2020-11-12 10:46:00</td>
+<td>None</td>
+<td>None</td>
+<td>None</td>
+<td>None</td>
+<td>Validé</td>
+<td>None</td>
+<td>None</td>
+<td>None</td>
+<td>LINESTRING (895311.900 6452665.700, 895271.300...</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>COURDEAU0000002000803076</td>
+<td>06C0000002000803076</td>
+<td>Ruisseau de la Combe de Mouze</td>
+<td>Validé</td>
+<td>5</td>
+<td>2017-01-24 16:06:18</td>
+<td>2020-09-28 10:34:31</td>
+<td>None</td>
+<td>None</td>
+<td>None</td>
+<td>None</td>
+<td>Validé</td>
+<td>None</td>
+<td>None</td>
+<td>None</td>
+<td>LINESTRING (878398.000 6459581.500, 878400.900...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>COURDEAU0000002215480545</td>
+<td>06C0000002215480545</td>
+<td>le Pachoux</td>
+<td>Validé</td>
+<td>5</td>
+<td>2020-10-21 09:35:44</td>
+<td>2020-11-12 10:46:00</td>
+<td>None</td>
+<td>None</td>
+<td>None</td>
+<td>None</td>
+<td>Validé</td>
+<td>None</td>
+<td>None</td>
+<td>None</td>
+<td>LINESTRING (945273.400 6484691.600, 945299.600...</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="87">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>cours_deau.plot()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="87">
+<pre><code>&lt;Axes: &gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="geopandas-rasterio%20demo_files/figure-html/cell-10-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="88">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>cours_deau_intersectés <span class="op">=</span> cours_deau.intersection(communes.dissolve().iloc[<span class="dv">0</span>].geometry)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>cours_deau_intersectés.plot()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="88">
+<pre><code>&lt;Axes: &gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="geopandas-rasterio%20demo_files/figure-html/cell-11-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="89">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> contextily <span class="im">as</span> cx</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Les communes, en Web Mercator</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> communes.to_crs(<span class="st">'EPSG:3857'</span>).plot(edgecolor<span class="op">=</span><span class="st">'grey'</span>, color<span class="op">=</span><span class="st">"lightgrey"</span>)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Les cours d'eau, intersectés avec les communes, en Web mercator</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> cours_deau_intersectés.to_crs(<span class="st">'EPSG:3857'</span>).plot(ax <span class="op">=</span> ax, color<span class="op">=</span><span class="st">"blue"</span>)</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Ajout du fond de carte</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>cx.add_basemap(ax, source<span class="op">=</span><span class="st">'https://tile.openstreetmap.org/</span><span class="sc">{z}</span><span class="st">/</span><span class="sc">{x}</span><span class="st">/</span><span class="sc">{y}</span><span class="st">.png'</span>)</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="co"># On enlève les axes du graphique</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>ax.set_axis_off()</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>ax</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="89">
+<pre><code>&lt;Axes: &gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="geopandas-rasterio%20demo_files/figure-html/cell-12-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="26">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>cours_deau.crs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="26">
+<pre><code>&lt;Projected CRS: EPSG:2154&gt;
+Name: RGF93 v1 / Lambert-93
+Axis Info [cartesian]:
+- X[east]: Easting (metre)
+- Y[north]: Northing (metre)
+Area of Use:
+- name: France - onshore and offshore, mainland and Corsica (France métropolitaine including Corsica).
+- bounds: (-9.86, 41.15, 10.38, 51.56)
+Coordinate Operation:
+- name: Lambert-93
+- method: Lambert Conic Conformal (2SP)
+Datum: Reseau Geodesique Francais 1993 v1
+- Ellipsoid: GRS 1980
+- Prime Meridian: Greenwich</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="71">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>cours_deau[[<span class="st">'TOPONYME'</span>, <span class="st">'IMPORTANCE'</span>]].head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="71">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">TOPONYME</th>
+<th data-quarto-table-cell-role="th">IMPORTANCE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Canal de Pulivès</td>
+<td>5</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Torrent du Clot des Cavales</td>
+<td>5</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>le Bouveyron</td>
+<td>5</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>Ruisseau de la Combe de Mouze</td>
+<td>5</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>le Pachoux</td>
+<td>5</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>Sélection de l’entité correspondant au canal du furon et de sa géométrie</p>
+<div class="cell" data-execution_count="94">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>cours_deau[cours_deau.TOPONYME <span class="op">==</span> <span class="st">'Canal du Furon'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="94">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">ID</th>
+<th data-quarto-table-cell-role="th">CODE_HYDRO</th>
+<th data-quarto-table-cell-role="th">TOPONYME</th>
+<th data-quarto-table-cell-role="th">STATUT_TOP</th>
+<th data-quarto-table-cell-role="th">IMPORTANCE</th>
+<th data-quarto-table-cell-role="th">DATE_CREAT</th>
+<th data-quarto-table-cell-role="th">DATE_MAJ</th>
+<th data-quarto-table-cell-role="th">DATE_APP</th>
+<th data-quarto-table-cell-role="th">DATE_CONF</th>
+<th data-quarto-table-cell-role="th">SOURCE</th>
+<th data-quarto-table-cell-role="th">ID_SOURCE</th>
+<th data-quarto-table-cell-role="th">STATUT</th>
+<th data-quarto-table-cell-role="th">MAREE</th>
+<th data-quarto-table-cell-role="th">PERMANENT</th>
+<th data-quarto-table-cell-role="th">COMMENT</th>
+<th data-quarto-table-cell-role="th">geometry</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1236</td>
+<td>COURDEAU0000002000796489</td>
+<td>06C0000002000796489</td>
+<td>Canal du Furon</td>
+<td>Validé</td>
+<td>5</td>
+<td>2017-01-24 16:06:18</td>
+<td>2021-09-16 13:50:18</td>
+<td>None</td>
+<td>None</td>
+<td>None</td>
+<td>None</td>
+<td>Validé</td>
+<td>None</td>
+<td>None</td>
+<td>None</td>
+<td>LINESTRING (904717.400 6447571.200, 904712.000...</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>geom <span class="op">=</span> cours_deau.loc[(cours_deau[cours_deau.TOPONYME <span class="op">==</span> <span class="st">'Canal du Furon'</span>].index[<span class="dv">0</span>], <span class="st">'geometry'</span>)]</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>geom</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="23">
+<p><img src="geopandas-rasterio%20demo_files/figure-html/cell-16-output-1.svg" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>mnt <span class="op">=</span> rio.<span class="bu">open</span>(<span class="st">'../data/DEM_N245E395_l93.tif'</span>)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(mnt.meta)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>{'driver': 'GTiff', 'dtype': 'float32', 'nodata': 3.4028234663852886e+38, 'width': 2393, 'height': 2000, 'count': 1, 'crs': CRS.from_epsg(2154), 'transform': Affine(22.625939867401588, 0.0, 876147.6561479433,
+       0.0, -27.206653628468978, 6496734.7862259)}</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rasterio.plot <span class="im">import</span> show</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>show(mnt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="geopandas-rasterio%20demo_files/figure-html/cell-19-output-1.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="13">
+<pre><code>&lt;Axes: &gt;</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="24">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># geom est la géométrie récupérée plus tôt</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>length <span class="op">=</span> geom.length</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="co"># combien de points :</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>nb_points <span class="op">=</span> <span class="dv">50</span> </span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a><span class="co"># quelle distance entre les points :</span></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>step <span class="op">=</span> geom.length <span class="op">/</span> nb_points</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>dists <span class="op">=</span> []</span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>coords <span class="op">=</span> []</span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> dist <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>, <span class="bu">int</span>(length), <span class="bu">int</span>(step)):</span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>    pt <span class="op">=</span> geom.interpolate(dist) <span class="co"># type(pt) -&gt; shapely.geometry.Point</span></span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># récupération des coordonnées du points sous forme d'un tuple :</span></span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>    c <span class="op">=</span> pt.coords[<span class="dv">0</span>]</span>
+<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a>    coords.append(c)</span>
+<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a>    dists.append(dist)</span>
+<span id="cb30-18"><a href="#cb30-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-19"><a href="#cb30-19" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> []</span>
+<span id="cb30-20"><a href="#cb30-20" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, value <span class="kw">in</span> <span class="bu">enumerate</span>(mnt.sample(coords)):</span>
+<span id="cb30-21"><a href="#cb30-21" aria-hidden="true" tabindex="-1"></a>    result.append((dists[i], value[<span class="dv">0</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="25">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>plt.plot([i[<span class="dv">0</span>] <span class="cf">for</span> i <span class="kw">in</span> result], [i[<span class="dv">1</span>] <span class="cf">for</span> i <span class="kw">in</span> result])</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Profil en long du Canal du Furon'</span>)</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Distance à la source'</span>)</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Altitude'</span>)</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="geopandas-rasterio%20demo_files/figure-html/cell-21-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="32">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> []</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> dist <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>, <span class="bu">int</span>(length), <span class="bu">int</span>(step)):</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>    pt <span class="op">=</span> geom.interpolate(dist)</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>    result.append({</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"geometry"</span>: pt,</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"distance_source"</span>: dist,</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"altitude"</span>: <span class="bu">list</span>(mnt.sample(pt.coords))[<span class="dv">0</span>][<span class="dv">0</span>],</span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Cette fois nous avons utilisé une liste</span></span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a><span class="co"># contenant un dictionnaire pour chaque entité</span></span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a><span class="co"># ... le résultat est le même qu'avec la méthode prédécente</span></span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>sample_pts <span class="op">=</span> gpd.GeoDataFrame(result, crs<span class="op">=</span>cours_deau.crs)</span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Toutes nos nouvelles entités vont prendre cette valeur</span></span>
+<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a>sample_pts[<span class="st">'TOPONYME_COURS_DEAU'</span>] <span class="op">=</span> <span class="st">'Canal du Furon'</span></span>
+<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a>sample_pts.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="32">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">geometry</th>
+<th data-quarto-table-cell-role="th">distance_source</th>
+<th data-quarto-table-cell-role="th">altitude</th>
+<th data-quarto-table-cell-role="th">TOPONYME_COURS_DEAU</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>POINT (904717.400 6447571.200)</td>
+<td>0</td>
+<td>1425.737671</td>
+<td>Canal du Furon</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>POINT (904696.944 6447996.849)</td>
+<td>428</td>
+<td>1362.941040</td>
+<td>Canal du Furon</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>POINT (904755.972 6448415.457)</td>
+<td>856</td>
+<td>1316.247681</td>
+<td>Canal du Furon</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>POINT (904703.201 6448834.857)</td>
+<td>1284</td>
+<td>1288.363037</td>
+<td>Canal du Furon</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>POINT (904552.212 6449229.865)</td>
+<td>1712</td>
+<td>1219.130859</td>
+<td>Canal du Furon</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="59">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>sample_pts.to_crs(<span class="st">'EPSG:4326'</span>).to_file(<span class="st">'/tmp/sample-pts.geojson'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="60">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>cat <span class="op">/</span>tmp<span class="op">/</span>sample<span class="op">-</span>pts.geojson</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>{
+"type": "FeatureCollection",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "distance_source": 0, "altitude": 1425.7376708984375, "TOPONYME_COURS_DEAU": "Canal du Furon" }, "geometry": { "type": "Point", "coordinates": [ 5.602936388562155, 45.097041248809752 ] } },
+{ "type": "Feature", "properties": { "distance_source": 428, "altitude": 1362.9410400390625, "TOPONYME_COURS_DEAU": "Canal du Furon" }, "geometry": { "type": "Point", "coordinates": [ 5.602854817807447, 45.100877769687386 ] } },
+{ "type": "Feature", "properties": { "distance_source": 856, "altitude": 1316.2476806640625, "TOPONYME_COURS_DEAU": "Canal du Furon" }, "geometry": { "type": "Point", "coordinates": [ 5.603780310543639, 45.104627343059583 ] } },
+{ "type": "Feature", "properties": { "distance_source": 1284, "altitude": 1288.363037109375, "TOPONYME_COURS_DEAU": "Canal du Furon" }, "geometry": { "type": "Point", "coordinates": [ 5.603285507285375, 45.108417233222767 ] } },
+{ "type": "Feature", "properties": { "distance_source": 1712, "altitude": 1219.130859375, "TOPONYME_COURS_DEAU": "Canal du Furon" }, "geometry": { "type": "Point", "coordinates": [ 5.601532157195259, 45.112016753315935 ] } },
+{ "type": "Feature", "properties": { "distance_source": 2140, "altitude": 1170.004638671875, "TOPONYME_COURS_DEAU": "Canal du Furon" }, "geometry": { "type": "Point", "coordinates": [ 5.601070658466196, 45.115813452064629 ] } },
+{ "type": "Feature", "properties": { "distance_source": 2568, "altitude": 1128.1978759765625, "TOPONYME_COURS_DEAU": "Canal du Furon" }, "geometry": { "type": "Point", "coordinates": [ 5.602875015792643, 45.119419528471369 ] } },
+{ "type": "Feature", "properties": { "distance_source": 2996, "altitude": 1114.665771484375, "TOPONYME_COURS_DEAU": "Canal du Furon" }, "geometry": { "type": "Point", "coordinates": [ 5.603318600708222, 45.122799392830174 ] } },
+{ "type": "Feature", "properties": { "distance_source": 3424, "altitude": 1064.7662353515625, "TOPONYME_COURS_DEAU": "Canal du Furon" }, "geometry": { "type": "Point", "coordinates": [ 5.600993324093485, 45.125765092317096 ] } },
+{ "type": "Feature", "properties": { "distance_source": 3852, "altitude": 1028.2977294921875, "TOPONYME_COURS_DEAU": "Canal du Furon" }, "geometry": { "type": "Point", "coordinates": [ 5.596714861215382, 45.127787527323783 ] } },
+{ "type": "Feature", "properties": { "distance_source": 4280, "altitude": 1009.6756591796875, "TOPONYME_COURS_DEAU": "Canal du Furon" }, "geometry": { "type": "Point", "coordinates": [ 5.592514319284059, 45.129088181552319 ] } },
+{ "type": "Feature", "properties": { "distance_source": 4708, "altitude": 982.3232421875, "TOPONYME_COURS_DEAU": "Canal du Furon" }, "geometry": { "type": "Point", "coordinates": [ 5.588682946240333, 45.131060046928404 ] } },
+{ "type": "Feature", "properties": { "distance_source": 5136, "altitude": 970.5863037109375, "TOPONYME_COURS_DEAU": "Canal du Furon" }, "geometry": { "type": "Point", "coordinates": [ 5.587298981190339, 45.134015004202809 ] } },
+{ "type": "Feature", "properties": { "distance_source": 5564, "altitude": 966.78436279296875, "TOPONYME_COURS_DEAU": "Canal du Furon" }, "geometry": { "type": "Point", "coordinates": [ 5.587601804540014, 45.137549358350455 ] } },
+{ "type": "Feature", "properties": { "distance_source": 5992, "altitude": 961.939453125, "TOPONYME_COURS_DEAU": "Canal du Furon" }, "geometry": { "type": "Point", "coordinates": [ 5.589307549857743, 45.140425187838744 ] } },
+{ "type": "Feature", "properties": { "distance_source": 6420, "altitude": 969.871826171875, "TOPONYME_COURS_DEAU": "Canal du Furon" }, "geometry": { "type": "Point", "coordinates": [ 5.592913627728214, 45.141984603742451 ] } },
+{ "type": "Feature", "properties": { "distance_source": 6848, "altitude": 976.577880859375, "TOPONYME_COURS_DEAU": "Canal du Furon" }, "geometry": { "type": "Point", "coordinates": [ 5.597445920273993, 45.143742685679122 ] } },
+{ "type": "Feature", "properties": { "distance_source": 7276, "altitude": 982.93341064453125, "TOPONYME_COURS_DEAU": "Canal du Furon" }, "geometry": { "type": "Point", "coordinates": [ 5.599646103684857, 45.146560456559669 ] } },
+{ "type": "Feature", "properties": { "distance_source": 7704, "altitude": 966.16180419921875, "TOPONYME_COURS_DEAU": "Canal du Furon" }, "geometry": { "type": "Point", "coordinates": [ 5.600427204302822, 45.149846695838583 ] } },
+{ "type": "Feature", "properties": { "distance_source": 8132, "altitude": 945.78857421875, "TOPONYME_COURS_DEAU": "Canal du Furon" }, "geometry": { "type": "Point", "coordinates": [ 5.603545080638023, 45.152644680689725 ] } },
+{ "type": "Feature", "properties": { "distance_source": 8560, "altitude": 900.91259765625, "TOPONYME_COURS_DEAU": "Canal du Furon" }, "geometry": { "type": "Point", "coordinates": [ 5.606450670072398, 45.155564354564163 ] } },
+{ "type": "Feature", "properties": { "distance_source": 8988, "altitude": 887.65020751953125, "TOPONYME_COURS_DEAU": "Canal du Furon" }, "geometry": { "type": "Point", "coordinates": [ 5.608563605707576, 45.158904918695256 ] } },
+{ "type": "Feature", "properties": { "distance_source": 9416, "altitude": 902.82696533203125, "TOPONYME_COURS_DEAU": "Canal du Furon" }, "geometry": { "type": "Point", "coordinates": [ 5.609622889418532, 45.162068349970951 ] } },
+{ "type": "Feature", "properties": { "distance_source": 9844, "altitude": 887.63275146484375, "TOPONYME_COURS_DEAU": "Canal du Furon" }, "geometry": { "type": "Point", "coordinates": [ 5.611497801481677, 45.165479333457625 ] } },
+{ "type": "Feature", "properties": { "distance_source": 10272, "altitude": 878.794921875, "TOPONYME_COURS_DEAU": "Canal du Furon" }, "geometry": { "type": "Point", "coordinates": [ 5.613113398049233, 45.168887338191517 ] } },
+{ "type": "Feature", "properties": { "distance_source": 10700, "altitude": 872.40411376953125, "TOPONYME_COURS_DEAU": "Canal du Furon" }, "geometry": { "type": "Point", "coordinates": [ 5.614930460774134, 45.172344289585418 ] } },
+{ "type": "Feature", "properties": { "distance_source": 11128, "altitude": 869.51171875, "TOPONYME_COURS_DEAU": "Canal du Furon" }, "geometry": { "type": "Point", "coordinates": [ 5.618104946640242, 45.174794174570977 ] } },
+{ "type": "Feature", "properties": { "distance_source": 11556, "altitude": 845.72125244140625, "TOPONYME_COURS_DEAU": "Canal du Furon" }, "geometry": { "type": "Point", "coordinates": [ 5.619612546351767, 45.177923171302027 ] } },
+{ "type": "Feature", "properties": { "distance_source": 11984, "altitude": 841.0703125, "TOPONYME_COURS_DEAU": "Canal du Furon" }, "geometry": { "type": "Point", "coordinates": [ 5.620752381457533, 45.181470353452397 ] } },
+{ "type": "Feature", "properties": { "distance_source": 12412, "altitude": 831.24798583984375, "TOPONYME_COURS_DEAU": "Canal du Furon" }, "geometry": { "type": "Point", "coordinates": [ 5.622133643324828, 45.184373138538213 ] } },
+{ "type": "Feature", "properties": { "distance_source": 12840, "altitude": 779.9158935546875, "TOPONYME_COURS_DEAU": "Canal du Furon" }, "geometry": { "type": "Point", "coordinates": [ 5.624211779277705, 45.187667608008951 ] } },
+{ "type": "Feature", "properties": { "distance_source": 13268, "altitude": 730.93505859375, "TOPONYME_COURS_DEAU": "Canal du Furon" }, "geometry": { "type": "Point", "coordinates": [ 5.62779484719948, 45.190185339903387 ] } },
+{ "type": "Feature", "properties": { "distance_source": 13696, "altitude": 695.1026611328125, "TOPONYME_COURS_DEAU": "Canal du Furon" }, "geometry": { "type": "Point", "coordinates": [ 5.6277852170336, 45.193998450489666 ] } },
+{ "type": "Feature", "properties": { "distance_source": 14124, "altitude": 661.1397705078125, "TOPONYME_COURS_DEAU": "Canal du Furon" }, "geometry": { "type": "Point", "coordinates": [ 5.629914860357067, 45.197418964335661 ] } },
+{ "type": "Feature", "properties": { "distance_source": 14552, "altitude": 574.65057373046875, "TOPONYME_COURS_DEAU": "Canal du Furon" }, "geometry": { "type": "Point", "coordinates": [ 5.633707541744952, 45.199807975440336 ] } },
+{ "type": "Feature", "properties": { "distance_source": 14980, "altitude": 554.5118408203125, "TOPONYME_COURS_DEAU": "Canal du Furon" }, "geometry": { "type": "Point", "coordinates": [ 5.636334960225095, 45.202530705404811 ] } },
+{ "type": "Feature", "properties": { "distance_source": 15408, "altitude": 537.9266357421875, "TOPONYME_COURS_DEAU": "Canal du Furon" }, "geometry": { "type": "Point", "coordinates": [ 5.639964335327242, 45.20477696452906 ] } },
+{ "type": "Feature", "properties": { "distance_source": 15836, "altitude": 488.54095458984375, "TOPONYME_COURS_DEAU": "Canal du Furon" }, "geometry": { "type": "Point", "coordinates": [ 5.642399549382896, 45.207890545428768 ] } },
+{ "type": "Feature", "properties": { "distance_source": 16264, "altitude": 387.07159423828125, "TOPONYME_COURS_DEAU": "Canal du Furon" }, "geometry": { "type": "Point", "coordinates": [ 5.646623860523144, 45.209265173965186 ] } },
+{ "type": "Feature", "properties": { "distance_source": 16692, "altitude": 317.86752319335938, "TOPONYME_COURS_DEAU": "Canal du Furon" }, "geometry": { "type": "Point", "coordinates": [ 5.651810844049399, 45.208978670733813 ] } },
+{ "type": "Feature", "properties": { "distance_source": 17120, "altitude": 216.86354064941406, "TOPONYME_COURS_DEAU": "Canal du Furon" }, "geometry": { "type": "Point", "coordinates": [ 5.657052766355505, 45.208349663445603 ] } },
+{ "type": "Feature", "properties": { "distance_source": 17548, "altitude": 208.27235412597656, "TOPONYME_COURS_DEAU": "Canal du Furon" }, "geometry": { "type": "Point", "coordinates": [ 5.661201118701395, 45.209238149946053 ] } },
+{ "type": "Feature", "properties": { "distance_source": 17976, "altitude": 205.74320983886719, "TOPONYME_COURS_DEAU": "Canal du Furon" }, "geometry": { "type": "Point", "coordinates": [ 5.663603071168562, 45.212182069309662 ] } },
+{ "type": "Feature", "properties": { "distance_source": 18404, "altitude": 207.64234924316406, "TOPONYME_COURS_DEAU": "Canal du Furon" }, "geometry": { "type": "Point", "coordinates": [ 5.666696966832268, 45.214685949193147 ] } },
+{ "type": "Feature", "properties": { "distance_source": 18832, "altitude": 202.63288879394531, "TOPONYME_COURS_DEAU": "Canal du Furon" }, "geometry": { "type": "Point", "coordinates": [ 5.665296781211094, 45.218376791831325 ] } },
+{ "type": "Feature", "properties": { "distance_source": 19260, "altitude": 203.68572998046875, "TOPONYME_COURS_DEAU": "Canal du Furon" }, "geometry": { "type": "Point", "coordinates": [ 5.666779168351665, 45.221590543317554 ] } },
+{ "type": "Feature", "properties": { "distance_source": 19688, "altitude": 202.07421875, "TOPONYME_COURS_DEAU": "Canal du Furon" }, "geometry": { "type": "Point", "coordinates": [ 5.664208221363736, 45.224988806681253 ] } },
+{ "type": "Feature", "properties": { "distance_source": 20116, "altitude": 200.82586669921875, "TOPONYME_COURS_DEAU": "Canal du Furon" }, "geometry": { "type": "Point", "coordinates": [ 5.661614069298556, 45.228378651112351 ] } },
+{ "type": "Feature", "properties": { "distance_source": 20544, "altitude": 201.16197204589844, "TOPONYME_COURS_DEAU": "Canal du Furon" }, "geometry": { "type": "Point", "coordinates": [ 5.659027861999523, 45.231771571750315 ] } },
+{ "type": "Feature", "properties": { "distance_source": 20972, "altitude": 202.91989135742188, "TOPONYME_COURS_DEAU": "Canal du Furon" }, "geometry": { "type": "Point", "coordinates": [ 5.656581431065963, 45.235089044362191 ] } },
+{ "type": "Feature", "properties": { "distance_source": 21400, "altitude": 198.91233825683594, "TOPONYME_COURS_DEAU": "Canal du Furon" }, "geometry": { "type": "Point", "coordinates": [ 5.656615308778129, 45.238526696492357 ] } }
+]
+}</code></pre>
+</div>
+</div>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

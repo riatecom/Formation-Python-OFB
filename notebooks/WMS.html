@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Web Services de l’OGC</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="WMS_files/libs/clipboard/clipboard.min.js"></script>
+<script src="WMS_files/libs/quarto-html/quarto.js"></script>
+<script src="WMS_files/libs/quarto-html/popper.min.js"></script>
+<script src="WMS_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="WMS_files/libs/quarto-html/anchor.min.js"></script>
+<link href="WMS_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="WMS_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="WMS_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="WMS_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="WMS_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Web Services de l’OGC</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p>Nous allons utiliser la bibliothèque <a href="https://owslib.readthedocs.io/en/latest/">OWSLib</a> qui permet d’accéder aux différents services Web compatibles avec les standards de l’OGC (WMS, WFS, WMTS, WPS, CSW, etc.)</p>
+<div class="cell" data-execution_count="39">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> owslib.wms <span class="im">import</span> WebMapService</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> owslib.wfs <span class="im">import</span> WebFeatureService</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="40">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>url_wms_raster_geoportail <span class="op">=</span> <span class="st">'https://wxs.ign.fr/essentiels/geoportail/r/wms?SERVICE=WMS&amp;VERSION=1.3.0&amp;REQUEST=GetCapabilities'</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>url_wfs_geoportail <span class="op">=</span> <span class="st">'https://wxs.ign.fr/essentiels/geoportail/wfs?SERVICE=WFS&amp;VERSION=2.0.0&amp;REQUEST=GetCapabilities'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="wms" class="level2">
+<h2 class="anchored" data-anchor-id="wms">WMS</h2>
+<p>Explorons le contenu du serveur WMS du geoportail de l’IGN :</p>
+<div class="cell" data-execution_count="41">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>wms <span class="op">=</span> WebMapService(url_wms_raster_geoportail, version<span class="op">=</span><span class="st">'1.3.0'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="42">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>wms.identification.title</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="42">
+<pre><code>'Service WMS Raster Geoportail Publics'</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="43">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>wms.identification.abstract</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="43">
+<pre><code>"Ce service permet la visualisation de couches de données raster IGN au travers d'un flux WMS"</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="44">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="bu">list</span>(wms.contents)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="44">
+<pre><code>['CADASTRALPARCELS.PARCELLAIRE_EXPRESS',
+ 'GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2',
+ 'LIMITES_ADMINISTRATIVES_EXPRESS.LATEST',
+ 'ORTHOIMAGERY.ORTHOPHOTOS']</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="45">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>wms[<span class="st">'CADASTRALPARCELS.PARCELLAIRE_EXPRESS'</span>].title</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="45">
+<pre><code>'PCI vecteur'</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="46">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> wms[<span class="st">'CADASTRALPARCELS.PARCELLAIRE_EXPRESS'</span>]</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>a.boundingBoxWGS84</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="46">
+<pre><code>(-63.372521503, -21.475586668, 55.925864577, 51.312119281)</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="47">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>wms[<span class="st">'CADASTRALPARCELS.PARCELLAIRE_EXPRESS'</span>].crsOptions</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="47">
+<pre><code>['EPSG:4692',
+ 'IGNF:RGF93CC49',
+ 'EPSG:27593',
+ 'EPSG:4642',
+ 'EPSG:2987',
+ 'EPSG:4632',
+ 'IGNF:MAYO50GEO',
+ 'EPSG:23030',
+ 'EPSG:4467',
+ 'EPSG:27561',
+ 'EPSG:2154',
+ 'EPSG:3312',
+ 'IGNF:RGM04UTM38S',
+ 'EPSG:27583',
+ 'IGNF:RGPFUTM7S',
+ 'IGNF:RGF93CC45',
+ 'EPSG:2970',
+ 'IGNF:UTM01SW84',
+ 'IGNF:STPM50GEO',
+ 'EPSG:2988',
+ 'IGNF:CSG67UTM22',
+ 'EPSG:4749',
+ 'EPSG:32738',
+ 'IGNF:UTM20W84',
+ 'EPSG:3950',
+ 'EPSG:27574',
+ 'EPSG:4623',
+ 'EPSG:27571',
+ 'EPSG:27562',
+ 'IGNF:UTM20W84MART',
+ 'IGNF:RGF93CC46',
+ 'CRS:84',
+ 'IGNF:LAMB2',
+ 'IGNF:CSG67GEO',
+ 'EPSG:3305',
+ 'IGNF:WALL78UTM1S',
+ 'EPSG:4559',
+ 'EPSG:4326',
+ 'IGNF:UTM22RGFG95',
+ 'IGNF:LAMB1C',
+ 'IGNF:TAHI51UTM06S',
+ 'EPSG:27591',
+ 'IGNF:RGPFUTM6S',
+ 'EPSG:3035',
+ 'EPSG:4637',
+ 'IGNF:RGR92GEO',
+ 'IGNF:MART38UTM20',
+ 'EPSG:4690',
+ 'EPSG:4628',
+ 'EPSG:2977',
+ 'EPSG:3034',
+ 'IGNF:UTM20W84GUAD',
+ 'IGNF:RGPFUTM5S',
+ 'EPSG:32701',
+ 'EPSG:3303',
+ 'EPSG:4630',
+ 'EPSG:27584',
+ 'EPSG:27564',
+ 'EPSG:3043',
+ 'EPSG:3297',
+ 'IGNF:LAMB1',
+ 'EPSG:3298',
+ 'IGNF:LAMB93',
+ 'EPSG:3170',
+ 'EPSG:4171',
+ 'IGNF:UTM32W84',
+ 'EPSG:4622',
+ 'EPSG:27594',
+ 'IGNF:RGSPM06U21',
+ 'EPSG:2978',
+ 'EPSG:4629',
+ 'IGNF:RGR92UTM40S',
+ 'EPSG:3304',
+ 'EPSG:27563',
+ 'EPSG:32631',
+ 'EPSG:3044',
+ 'EPSG:4643',
+ 'IGNF:UTM30W84',
+ 'IGNF:LAMB4',
+ 'EPSG:3857',
+ 'EPSG:4470',
+ 'EPSG:4636',
+ 'IGNF:RGF93G',
+ 'IGNF:CSG67UTM21',
+ 'EPSG:3042',
+ 'EPSG:4463',
+ 'EPSG:2990',
+ 'EPSG:32705',
+ 'EPSG:3171',
+ 'EPSG:27573',
+ 'EPSG:4621',
+ 'IGNF:RGF93CC50',
+ 'EPSG:3943',
+ 'EPSG:32630',
+ 'EPSG:4807',
+ 'EPSG:32706',
+ 'IGNF:UTM39SW84',
+ 'IGNF:GUADFM49U20',
+ 'EPSG:2969',
+ 'IGNF:LAMB3',
+ 'IGNF:REUN47GEO',
+ 'EPSG:32632',
+ 'EPSG:4638',
+ 'EPSG:4625',
+ 'IGNF:LAMB4C',
+ 'EPSG:4687',
+ 'EPSG:4626',
+ 'IGNF:STPM50UTM21',
+ 'EPSG:2971',
+ 'IGNF:RGF93CC42',
+ 'EPSG:3949',
+ 'EPSG:23032',
+ 'IGNF:LAMBE',
+ 'EPSG:21781',
+ 'EPSG:2980',
+ 'EPSG:4639',
+ 'IGNF:MAYO50UTM38S',
+ 'EPSG:32740',
+ 'IGNF:RGF93CC44',
+ 'IGNF:TAHI79UTM6S',
+ 'EPSG:3948',
+ 'EPSG:27572',
+ 'EPSG:3313',
+ 'EPSG:3302',
+ 'EPSG:4627',
+ 'EPSG:2975',
+ 'EPSG:3944',
+ 'EPSG:4558',
+ 'EPSG:3727',
+ 'EPSG:23031',
+ 'IGNF:RGM04GEO',
+ 'EPSG:3947',
+ 'IGNF:LAMB2C',
+ 'EPSG:3306',
+ 'EPSG:4471',
+ 'IGNF:REUN47GAUSSL',
+ 'IGNF:UTM31W84',
+ 'EPSG:27581',
+ 'IGNF:WGS84G',
+ 'EPSG:3296',
+ 'EPSG:4633',
+ 'IGNF:RGFG95GEO',
+ 'IGNF:IGN63UTM7S',
+ 'EPSG:3945',
+ 'EPSG:32621',
+ 'EPSG:32739',
+ 'EPSG:3946',
+ 'EPSG:32707',
+ 'EPSG:4258',
+ 'EPSG:4691',
+ 'EPSG:3942',
+ 'EPSG:4689',
+ 'EPSG:2981',
+ 'EPSG:4624',
+ 'IGNF:MART38GEO',
+ 'EPSG:27592',
+ 'EPSG:32622',
+ 'EPSG:27582',
+ 'IGNF:RGF93CC48',
+ 'EPSG:4644',
+ 'IGNF:GUAD48GEO',
+ 'IGNF:GUADFM49GEO',
+ 'EPSG:2989',
+ 'IGNF:GUAD48UTM20',
+ 'EPSG:2973',
+ 'EPSG:3172',
+ 'EPSG:32620',
+ 'EPSG:2976',
+ 'EPSG:4688',
+ 'IGNF:LAMB3C',
+ 'IGNF:RGF93CC47',
+ 'IGNF:WGS84UTM20',
+ 'EPSG:4275',
+ 'EPSG:2972',
+ 'IGNF:RGF93CC43',
+ 'EPSG:4641']</code></pre>
+</div>
+</div>
+</section>
+<section id="wfs" class="level2">
+<h2 class="anchored" data-anchor-id="wfs">WFS</h2>
+<p>Explorons désormais le contenu du serveur WFS du geoportail de l’IGN :</p>
+</section>
+<section id="écrire-dans-un-fichier-csv-ou-dans-un-fichier-excel" class="level2">
+<h2 class="anchored" data-anchor-id="écrire-dans-un-fichier-csv-ou-dans-un-fichier-excel">Écrire dans un fichier CSV ou dans un fichier excel</h2>
+<p>La bibliothèque standard de Python propose le module <code>csv</code> qui va permettre de manipuler facilement des fichiers CSV (lecture, écriture)</p>
+<p>Pour écrire ou lire des tableurs dans des formats plus compliqués (XLS, XLSX, ODS, etc.) il va être nécessaire d’utiliser des bibliothèques tiers (la bibliothèque <code>pandas</code> qui )</p>
+</section>
+<section id="putting-it-all-together" class="level2">
+<h2 class="anchored" data-anchor-id="putting-it-all-together"><em>Putting it all together</em></h2>
+<p>Sur la base des commandes vues au-dessus et en vous aidant de l’extrait de code ci-dessous, écrivez un script permettant de lister les différentes couches présentes dans un flux WMS ou WFS de votre choix (vous trouverez ci-dessous une liste d’URL si besoin) et de la sauvegarder dans un fichier CSV. Pour chaque couche, vous devez stocker son identifiant, son titre, etc. etc.</p>
+<p>Le tableur obtenu doit ainsi être de la forme suivante :</p>
+<table class="table">
+<colgroup>
+<col style="width: 24%">
+<col style="width: 21%">
+<col style="width: 18%">
+<col style="width: 18%">
+<col style="width: 18%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Couche</th>
+<th>Titre</th>
+<th>Abstract</th>
+<th>Bounding Box WGS84</th>
+<th>ZZZZ</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>CADASTRALPARCELS.PARCELLAIRE_EXPRESS</td>
+<td>PCI vecteur</td>
+<td>Plan cadastral informatisé vecteur de la DGFIP.</td>
+<td>YYYY</td>
+<td>ZZZZ</td>
+</tr>
+<tr class="even">
+<td>GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2</td>
+<td>Plan IGN v2</td>
+<td>Cartographie multi-échelles sur le territoire national, issue des bases de données vecteur de l’IGN, mis à jour régulièrement et réalisée selon un processus entièrement automatisé.</td>
+<td>YYYY</td>
+<td>ZZZZ</td>
+</tr>
+</tbody>
+</table>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

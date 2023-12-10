@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>geospatial</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="geospatial_files/libs/clipboard/clipboard.min.js"></script>
+<script src="geospatial_files/libs/quarto-html/quarto.js"></script>
+<script src="geospatial_files/libs/quarto-html/popper.min.js"></script>
+<script src="geospatial_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="geospatial_files/libs/quarto-html/anchor.min.js"></script>
+<link href="geospatial_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="geospatial_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="geospatial_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="geospatial_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="geospatial_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+
+
+<h1>
+Manipulation de données vecteur et raster
+</h1>
+<p>Ouverture du jeu de donnée d’occupation du sol :</p>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> rioxarray</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>xds <span class="op">=</span> rioxarray.open_rasterio(<span class="st">'/home/mthh/Téléchargements/U2018_CLC2018_V2020_20u1.tif'</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>xds</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+
+<div><svg style="position: absolute; width: 0; height: 0; overflow: hidden">
+<defs>
+<symbol id="icon-database" viewbox="0 0 32 32">
+<path d="M16 0c-8.837 0-16 2.239-16 5v4c0 2.761 7.163 5 16 5s16-2.239 16-5v-4c0-2.761-7.163-5-16-5z"></path>
+<path d="M16 17c-8.837 0-16-2.239-16-5v6c0 2.761 7.163 5 16 5s16-2.239 16-5v-6c0 2.761-7.163 5-16 5z"></path>
+<path d="M16 26c-8.837 0-16-2.239-16-5v6c0 2.761 7.163 5 16 5s16-2.239 16-5v-6c0 2.761-7.163 5-16 5z"></path>
+</symbol>
+<symbol id="icon-file-text2" viewbox="0 0 32 32">
+<path d="M28.681 7.159c-0.694-0.947-1.662-2.053-2.724-3.116s-2.169-2.030-3.116-2.724c-1.612-1.182-2.393-1.319-2.841-1.319h-15.5c-1.378 0-2.5 1.121-2.5 2.5v27c0 1.378 1.122 2.5 2.5 2.5h23c1.378 0 2.5-1.122 2.5-2.5v-19.5c0-0.448-0.137-1.23-1.319-2.841zM24.543 5.457c0.959 0.959 1.712 1.825 2.268 2.543h-4.811v-4.811c0.718 0.556 1.584 1.309 2.543 2.268zM28 29.5c0 0.271-0.229 0.5-0.5 0.5h-23c-0.271 0-0.5-0.229-0.5-0.5v-27c0-0.271 0.229-0.5 0.5-0.5 0 0 15.499-0 15.5 0v7c0 0.552 0.448 1 1 1h7v19.5z"></path>
+<path d="M23 26h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+<path d="M23 22h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+<path d="M23 18h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+</symbol>
+</defs>
+</svg>
+<style>/* CSS stylesheet for displaying xarray objects in jupyterlab.
+ *
+ */
+
+:root {
+  --xr-font-color0: var(--jp-content-font-color0, rgba(0, 0, 0, 1));
+  --xr-font-color2: var(--jp-content-font-color2, rgba(0, 0, 0, 0.54));
+  --xr-font-color3: var(--jp-content-font-color3, rgba(0, 0, 0, 0.38));
+  --xr-border-color: var(--jp-border-color2, #e0e0e0);
+  --xr-disabled-color: var(--jp-layout-color3, #bdbdbd);
+  --xr-background-color: var(--jp-layout-color0, white);
+  --xr-background-color-row-even: var(--jp-layout-color1, white);
+  --xr-background-color-row-odd: var(--jp-layout-color2, #eeeeee);
+}
+
+html[theme=dark],
+body[data-theme=dark],
+body.vscode-dark {
+  --xr-font-color0: rgba(255, 255, 255, 1);
+  --xr-font-color2: rgba(255, 255, 255, 0.54);
+  --xr-font-color3: rgba(255, 255, 255, 0.38);
+  --xr-border-color: #1F1F1F;
+  --xr-disabled-color: #515151;
+  --xr-background-color: #111111;
+  --xr-background-color-row-even: #111111;
+  --xr-background-color-row-odd: #313131;
+}
+
+.xr-wrap {
+  display: block !important;
+  min-width: 300px;
+  max-width: 700px;
+}
+
+.xr-text-repr-fallback {
+  /* fallback to plain text repr when CSS is not injected (untrusted notebook) */
+  display: none;
+}
+
+.xr-header {
+  padding-top: 6px;
+  padding-bottom: 6px;
+  margin-bottom: 4px;
+  border-bottom: solid 1px var(--xr-border-color);
+}
+
+.xr-header > div,
+.xr-header > ul {
+  display: inline;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.xr-obj-type,
+.xr-array-name {
+  margin-left: 2px;
+  margin-right: 10px;
+}
+
+.xr-obj-type {
+  color: var(--xr-font-color2);
+}
+
+.xr-sections {
+  padding-left: 0 !important;
+  display: grid;
+  grid-template-columns: 150px auto auto 1fr 20px 20px;
+}
+
+.xr-section-item {
+  display: contents;
+}
+
+.xr-section-item input {
+  display: none;
+}
+
+.xr-section-item input + label {
+  color: var(--xr-disabled-color);
+}
+
+.xr-section-item input:enabled + label {
+  cursor: pointer;
+  color: var(--xr-font-color2);
+}
+
+.xr-section-item input:enabled + label:hover {
+  color: var(--xr-font-color0);
+}
+
+.xr-section-summary {
+  grid-column: 1;
+  color: var(--xr-font-color2);
+  font-weight: 500;
+}
+
+.xr-section-summary > span {
+  display: inline-block;
+  padding-left: 0.5em;
+}
+
+.xr-section-summary-in:disabled + label {
+  color: var(--xr-font-color2);
+}
+
+.xr-section-summary-in + label:before {
+  display: inline-block;
+  content: '►';
+  font-size: 11px;
+  width: 15px;
+  text-align: center;
+}
+
+.xr-section-summary-in:disabled + label:before {
+  color: var(--xr-disabled-color);
+}
+
+.xr-section-summary-in:checked + label:before {
+  content: '▼';
+}
+
+.xr-section-summary-in:checked + label > span {
+  display: none;
+}
+
+.xr-section-summary,
+.xr-section-inline-details {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.xr-section-inline-details {
+  grid-column: 2 / -1;
+}
+
+.xr-section-details {
+  display: none;
+  grid-column: 1 / -1;
+  margin-bottom: 5px;
+}
+
+.xr-section-summary-in:checked ~ .xr-section-details {
+  display: contents;
+}
+
+.xr-array-wrap {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 20px auto;
+}
+
+.xr-array-wrap > label {
+  grid-column: 1;
+  vertical-align: top;
+}
+
+.xr-preview {
+  color: var(--xr-font-color3);
+}
+
+.xr-array-preview,
+.xr-array-data {
+  padding: 0 5px !important;
+  grid-column: 2;
+}
+
+.xr-array-data,
+.xr-array-in:checked ~ .xr-array-preview {
+  display: none;
+}
+
+.xr-array-in:checked ~ .xr-array-data,
+.xr-array-preview {
+  display: inline-block;
+}
+
+.xr-dim-list {
+  display: inline-block !important;
+  list-style: none;
+  padding: 0 !important;
+  margin: 0;
+}
+
+.xr-dim-list li {
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+}
+
+.xr-dim-list:before {
+  content: '(';
+}
+
+.xr-dim-list:after {
+  content: ')';
+}
+
+.xr-dim-list li:not(:last-child):after {
+  content: ',';
+  padding-right: 5px;
+}
+
+.xr-has-index {
+  font-weight: bold;
+}
+
+.xr-var-list,
+.xr-var-item {
+  display: contents;
+}
+
+.xr-var-item > div,
+.xr-var-item label,
+.xr-var-item > .xr-var-name span {
+  background-color: var(--xr-background-color-row-even);
+  margin-bottom: 0;
+}
+
+.xr-var-item > .xr-var-name:hover span {
+  padding-right: 5px;
+}
+
+.xr-var-list > li:nth-child(odd) > div,
+.xr-var-list > li:nth-child(odd) > label,
+.xr-var-list > li:nth-child(odd) > .xr-var-name span {
+  background-color: var(--xr-background-color-row-odd);
+}
+
+.xr-var-name {
+  grid-column: 1;
+}
+
+.xr-var-dims {
+  grid-column: 2;
+}
+
+.xr-var-dtype {
+  grid-column: 3;
+  text-align: right;
+  color: var(--xr-font-color2);
+}
+
+.xr-var-preview {
+  grid-column: 4;
+}
+
+.xr-index-preview {
+  grid-column: 2 / 5;
+  color: var(--xr-font-color2);
+}
+
+.xr-var-name,
+.xr-var-dims,
+.xr-var-dtype,
+.xr-preview,
+.xr-attrs dt {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 10px;
+}
+
+.xr-var-name:hover,
+.xr-var-dims:hover,
+.xr-var-dtype:hover,
+.xr-attrs dt:hover {
+  overflow: visible;
+  width: auto;
+  z-index: 1;
+}
+
+.xr-var-attrs,
+.xr-var-data,
+.xr-index-data {
+  display: none;
+  background-color: var(--xr-background-color) !important;
+  padding-bottom: 5px !important;
+}
+
+.xr-var-attrs-in:checked ~ .xr-var-attrs,
+.xr-var-data-in:checked ~ .xr-var-data,
+.xr-index-data-in:checked ~ .xr-index-data {
+  display: block;
+}
+
+.xr-var-data > table {
+  float: right;
+}
+
+.xr-var-name span,
+.xr-var-data,
+.xr-index-name div,
+.xr-index-data,
+.xr-attrs {
+  padding-left: 25px !important;
+}
+
+.xr-attrs,
+.xr-var-attrs,
+.xr-var-data,
+.xr-index-data {
+  grid-column: 1 / -1;
+}
+
+dl.xr-attrs {
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 125px auto;
+}
+
+.xr-attrs dt,
+.xr-attrs dd {
+  padding: 0;
+  margin: 0;
+  float: left;
+  padding-right: 10px;
+  width: auto;
+}
+
+.xr-attrs dt {
+  font-weight: normal;
+  grid-column: 1;
+}
+
+.xr-attrs dt:hover span {
+  display: inline-block;
+  background: var(--xr-background-color);
+  padding-right: 10px;
+}
+
+.xr-attrs dd {
+  grid-column: 2;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.xr-icon-database,
+.xr-icon-file-text2,
+.xr-no-icon {
+  display: inline-block;
+  vertical-align: middle;
+  width: 1em;
+  height: 1.5em !important;
+  stroke-width: 0;
+  stroke: currentColor;
+  fill: currentColor;
+}
+</style><pre class="xr-text-repr-fallback">&lt;xarray.DataArray (band: 1, y: 46000, x: 65000)&gt;
+[2990000000 values with dtype=int8]
+Coordinates:
+  * band         (band) int64 1
+  * x            (x) float64 9e+05 9.002e+05 9.002e+05 ... 7.4e+06 7.4e+06
+  * y            (y) float64 5.5e+06 5.5e+06 5.5e+06 ... 9.002e+05 9e+05
+    spatial_ref  int64 0
+Attributes: (12/13)
+    AREA_OR_POINT:           Area
+    DataType:                Thematic
+    RepresentationType:      THEMATIC
+    STATISTICS_COVARIANCES:  136.429646247598
+    STATISTICS_MAXIMUM:      48
+    STATISTICS_MEAN:         25.753373398066
+    ...                      ...
+    STATISTICS_SKIPFACTORX:  1
+    STATISTICS_SKIPFACTORY:  1
+    STATISTICS_STDDEV:       11.680310194836
+    _FillValue:              -128
+    scale_factor:            1.0
+    add_offset:              0.0</pre><div class="xr-wrap" style="display:none"><div class="xr-header"><div class="xr-obj-type">xarray.DataArray</div><div class="xr-array-name"></div><ul class="xr-dim-list"><li><span class="xr-has-index">band</span>: 1</li><li><span class="xr-has-index">y</span>: 46000</li><li><span class="xr-has-index">x</span>: 65000</li></ul></div><ul class="xr-sections"><li class="xr-section-item"><div class="xr-array-wrap"><input id="section-fad11624-57d8-4bb7-ad83-cf6d4e7516af" class="xr-array-in" type="checkbox" checked=""><label for="section-fad11624-57d8-4bb7-ad83-cf6d4e7516af" title="Show/hide data repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-array-preview xr-preview"><span>...</span></div><div class="xr-array-data"><pre>[2990000000 values with dtype=int8]</pre></div></div></li><li class="xr-section-item"><input id="section-04e965fb-3d5d-434d-a0ea-c7c8ea13f033" class="xr-section-summary-in" type="checkbox" checked=""><label for="section-04e965fb-3d5d-434d-a0ea-c7c8ea13f033" class="xr-section-summary">Coordinates: <span>(4)</span></label><div class="xr-section-inline-details"></div><div class="xr-section-details"><ul class="xr-var-list"><li class="xr-var-item"><div class="xr-var-name"><span class="xr-has-index">band</span></div><div class="xr-var-dims">(band)</div><div class="xr-var-dtype">int64</div><div class="xr-var-preview xr-preview">1</div><input id="attrs-5ae127bd-a813-419d-8c6e-cc91008b0255" class="xr-var-attrs-in" type="checkbox" disabled=""><label for="attrs-5ae127bd-a813-419d-8c6e-cc91008b0255" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use href="#icon-file-text2"></use></svg></label><input id="data-649d20b9-1717-4060-992d-67fb0c83b333" class="xr-var-data-in" type="checkbox"><label for="data-649d20b9-1717-4060-992d-67fb0c83b333" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"></dl></div><div class="xr-var-data"><pre>array([1])</pre></div></li><li class="xr-var-item"><div class="xr-var-name"><span class="xr-has-index">x</span></div><div class="xr-var-dims">(x)</div><div class="xr-var-dtype">float64</div><div class="xr-var-preview xr-preview">9e+05 9.002e+05 ... 7.4e+06 7.4e+06</div><input id="attrs-c61243f5-c77c-4dcd-8aa0-edc6aabc1a56" class="xr-var-attrs-in" type="checkbox" disabled=""><label for="attrs-c61243f5-c77c-4dcd-8aa0-edc6aabc1a56" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use href="#icon-file-text2"></use></svg></label><input id="data-6dad0617-dd9a-479e-be5f-62816615e06a" class="xr-var-data-in" type="checkbox"><label for="data-6dad0617-dd9a-479e-be5f-62816615e06a" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"></dl></div><div class="xr-var-data"><pre>array([ 900050.,  900150.,  900250., ..., 7399750., 7399850., 7399950.])</pre></div></li><li class="xr-var-item"><div class="xr-var-name"><span class="xr-has-index">y</span></div><div class="xr-var-dims">(y)</div><div class="xr-var-dtype">float64</div><div class="xr-var-preview xr-preview">5.5e+06 5.5e+06 ... 9.002e+05 9e+05</div><input id="attrs-1e695bfe-746a-488c-8422-3ffbaa6143db" class="xr-var-attrs-in" type="checkbox" disabled=""><label for="attrs-1e695bfe-746a-488c-8422-3ffbaa6143db" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use href="#icon-file-text2"></use></svg></label><input id="data-e6a43ced-8ab2-47a7-8841-6a1ed54a339b" class="xr-var-data-in" type="checkbox"><label for="data-e6a43ced-8ab2-47a7-8841-6a1ed54a339b" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"></dl></div><div class="xr-var-data"><pre>array([5499950., 5499850., 5499750., ...,  900250.,  900150.,  900050.])</pre></div></li><li class="xr-var-item"><div class="xr-var-name"><span>spatial_ref</span></div><div class="xr-var-dims">()</div><div class="xr-var-dtype">int64</div><div class="xr-var-preview xr-preview">0</div><input id="attrs-83ec3a60-de3e-4a63-b2b7-ad1af7e758d5" class="xr-var-attrs-in" type="checkbox"><label for="attrs-83ec3a60-de3e-4a63-b2b7-ad1af7e758d5" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use href="#icon-file-text2"></use></svg></label><input id="data-6f2d7985-f7a4-49d3-a576-8a31aa3365a5" class="xr-var-data-in" type="checkbox"><label for="data-6f2d7985-f7a4-49d3-a576-8a31aa3365a5" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"><dt><span>crs_wkt :</span></dt><dd>PROJCS["ETRS89-extended / LAEA Europe",GEOGCS["ETRS89",DATUM["European_Terrestrial_Reference_System_1989",SPHEROID["GRS 1980",6378137,298.257222101004,AUTHORITY["EPSG","7019"]],AUTHORITY["EPSG","6258"]],PRIMEM["Greenwich",0],UNIT["degree",0.0174532925199433,AUTHORITY["EPSG","9122"]],AUTHORITY["EPSG","4258"]],PROJECTION["Lambert_Azimuthal_Equal_Area"],PARAMETER["latitude_of_center",52],PARAMETER["longitude_of_center",10],PARAMETER["false_easting",4321000],PARAMETER["false_northing",3210000],UNIT["metre",1],AXIS["Easting",EAST],AXIS["Northing",NORTH],AUTHORITY["EPSG","3035"]]</dd><dt><span>semi_major_axis :</span></dt><dd>6378137.0</dd><dt><span>semi_minor_axis :</span></dt><dd>6356752.314140356</dd><dt><span>inverse_flattening :</span></dt><dd>298.257222101004</dd><dt><span>reference_ellipsoid_name :</span></dt><dd>GRS 1980</dd><dt><span>longitude_of_prime_meridian :</span></dt><dd>0.0</dd><dt><span>prime_meridian_name :</span></dt><dd>Greenwich</dd><dt><span>geographic_crs_name :</span></dt><dd>ETRS89</dd><dt><span>horizontal_datum_name :</span></dt><dd>European Terrestrial Reference System 1989</dd><dt><span>projected_crs_name :</span></dt><dd>ETRS89-extended / LAEA Europe</dd><dt><span>grid_mapping_name :</span></dt><dd>lambert_azimuthal_equal_area</dd><dt><span>latitude_of_projection_origin :</span></dt><dd>52.0</dd><dt><span>longitude_of_projection_origin :</span></dt><dd>10.0</dd><dt><span>false_easting :</span></dt><dd>4321000.0</dd><dt><span>false_northing :</span></dt><dd>3210000.0</dd><dt><span>spatial_ref :</span></dt><dd>PROJCS["ETRS89-extended / LAEA Europe",GEOGCS["ETRS89",DATUM["European_Terrestrial_Reference_System_1989",SPHEROID["GRS 1980",6378137,298.257222101004,AUTHORITY["EPSG","7019"]],AUTHORITY["EPSG","6258"]],PRIMEM["Greenwich",0],UNIT["degree",0.0174532925199433,AUTHORITY["EPSG","9122"]],AUTHORITY["EPSG","4258"]],PROJECTION["Lambert_Azimuthal_Equal_Area"],PARAMETER["latitude_of_center",52],PARAMETER["longitude_of_center",10],PARAMETER["false_easting",4321000],PARAMETER["false_northing",3210000],UNIT["metre",1],AXIS["Easting",EAST],AXIS["Northing",NORTH],AUTHORITY["EPSG","3035"]]</dd><dt><span>GeoTransform :</span></dt><dd>900000.0 100.0 0.0 5500000.0 0.0 -100.0</dd></dl></div><div class="xr-var-data"><pre>array(0)</pre></div></li></ul></div></li><li class="xr-section-item"><input id="section-dc231827-31b2-4362-83bb-2a7111109b98" class="xr-section-summary-in" type="checkbox"><label for="section-dc231827-31b2-4362-83bb-2a7111109b98" class="xr-section-summary">Indexes: <span>(3)</span></label><div class="xr-section-inline-details"></div><div class="xr-section-details"><ul class="xr-var-list"><li class="xr-var-item"><div class="xr-index-name"><div>band</div></div><div class="xr-index-preview">PandasIndex</div><div></div><input id="index-ec259ed8-8597-4968-8d25-5a5cc4ac0aca" class="xr-index-data-in" type="checkbox"><label for="index-ec259ed8-8597-4968-8d25-5a5cc4ac0aca" title="Show/Hide index repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-index-data"><pre>PandasIndex(Index([1], dtype='int64', name='band'))</pre></div></li><li class="xr-var-item"><div class="xr-index-name"><div>x</div></div><div class="xr-index-preview">PandasIndex</div><div></div><input id="index-c219caa9-6d1c-4237-9be4-13c0832c4d04" class="xr-index-data-in" type="checkbox"><label for="index-c219caa9-6d1c-4237-9be4-13c0832c4d04" title="Show/Hide index repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-index-data"><pre>PandasIndex(Index([ 900050.0,  900150.0,  900250.0,  900350.0,  900450.0,  900550.0,
+        900650.0,  900750.0,  900850.0,  900950.0,
+       ...
+       7399050.0, 7399150.0, 7399250.0, 7399350.0, 7399450.0, 7399550.0,
+       7399650.0, 7399750.0, 7399850.0, 7399950.0],
+      dtype='float64', name='x', length=65000))</pre></div></li><li class="xr-var-item"><div class="xr-index-name"><div>y</div></div><div class="xr-index-preview">PandasIndex</div><div></div><input id="index-01a1da20-6582-458d-9ca3-4e2d39eb741b" class="xr-index-data-in" type="checkbox"><label for="index-01a1da20-6582-458d-9ca3-4e2d39eb741b" title="Show/Hide index repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-index-data"><pre>PandasIndex(Index([5499950.0, 5499850.0, 5499750.0, 5499650.0, 5499550.0, 5499450.0,
+       5499350.0, 5499250.0, 5499150.0, 5499050.0,
+       ...
+        900950.0,  900850.0,  900750.0,  900650.0,  900550.0,  900450.0,
+        900350.0,  900250.0,  900150.0,  900050.0],
+      dtype='float64', name='y', length=46000))</pre></div></li></ul></div></li><li class="xr-section-item"><input id="section-bbc3b28d-a66c-4996-b33c-958858642ee5" class="xr-section-summary-in" type="checkbox"><label for="section-bbc3b28d-a66c-4996-b33c-958858642ee5" class="xr-section-summary">Attributes: <span>(13)</span></label><div class="xr-section-inline-details"></div><div class="xr-section-details"><dl class="xr-attrs"><dt><span>AREA_OR_POINT :</span></dt><dd>Area</dd><dt><span>DataType :</span></dt><dd>Thematic</dd><dt><span>RepresentationType :</span></dt><dd>THEMATIC</dd><dt><span>STATISTICS_COVARIANCES :</span></dt><dd>136.429646247598</dd><dt><span>STATISTICS_MAXIMUM :</span></dt><dd>48</dd><dt><span>STATISTICS_MEAN :</span></dt><dd>25.753373398066</dd><dt><span>STATISTICS_MINIMUM :</span></dt><dd>1</dd><dt><span>STATISTICS_SKIPFACTORX :</span></dt><dd>1</dd><dt><span>STATISTICS_SKIPFACTORY :</span></dt><dd>1</dd><dt><span>STATISTICS_STDDEV :</span></dt><dd>11.680310194836</dd><dt><span>_FillValue :</span></dt><dd>-128</dd><dt><span>scale_factor :</span></dt><dd>1.0</dd><dt><span>add_offset :</span></dt><dd>0.0</dd></dl></div></li></ul></div></div>
+</div>
+</div>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>xds.rio.crs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<pre><code>CRS.from_wkt('PROJCS["ETRS89-extended / LAEA Europe",GEOGCS["ETRS89",DATUM["European_Terrestrial_Reference_System_1989",SPHEROID["GRS 1980",6378137,298.257222101004,AUTHORITY["EPSG","7019"]],AUTHORITY["EPSG","6258"]],PRIMEM["Greenwich",0],UNIT["degree",0.0174532925199433,AUTHORITY["EPSG","9122"]],AUTHORITY["EPSG","4258"]],PROJECTION["Lambert_Azimuthal_Equal_Area"],PARAMETER["latitude_of_center",52],PARAMETER["longitude_of_center",10],PARAMETER["false_easting",4321000],PARAMETER["false_northing",3210000],UNIT["metre",1],AXIS["Easting",EAST],AXIS["Northing",NORTH],AUTHORITY["EPSG","3035"]]')</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>xds_l93 <span class="op">=</span> xds.rio.reproject(<span class="st">'EPSG:2154'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pynsee.geodata <span class="im">import</span> get_geodata_list, get_geodata</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>geodata_list <span class="op">=</span> get_geodata_list()</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>geodata_list</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Topic</th>
+<th data-quarto-table-cell-role="th">DataFormat</th>
+<th data-quarto-table-cell-role="th">ApiVersion</th>
+<th data-quarto-table-cell-role="th">Identifier</th>
+<th data-quarto-table-cell-role="th">Abstract</th>
+<th data-quarto-table-cell-role="th">Title</th>
+<th data-quarto-table-cell-role="th">DefaultCRS</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>administratif</td>
+<td>WFS</td>
+<td>2.0.0</td>
+<td>ADMINEXPRESS-COG-CARTO.LATEST:arrondissement</td>
+<td>édition 2023</td>
+<td>ADMINEXPRESS-COG-CARTO.LATEST:arrondissement.t...</td>
+<td>urn:ogc:def:crs:EPSG::4326</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>administratif</td>
+<td>WFS</td>
+<td>2.0.0</td>
+<td>ADMINEXPRESS-COG-CARTO.LATEST:arrondissement_m...</td>
+<td>édition 2023</td>
+<td>ADMINEXPRESS-COG-CARTO.LATEST:arrondissement_m...</td>
+<td>urn:ogc:def:crs:EPSG::4326</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>administratif</td>
+<td>WFS</td>
+<td>2.0.0</td>
+<td>ADMINEXPRESS-COG-CARTO.LATEST:canton</td>
+<td>édition 2023</td>
+<td>ADMINEXPRESS-COG-CARTO.LATEST:canton.title</td>
+<td>urn:ogc:def:crs:EPSG::4326</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>administratif</td>
+<td>WFS</td>
+<td>2.0.0</td>
+<td>ADMINEXPRESS-COG-CARTO.LATEST:chflieu_arrondis...</td>
+<td>édition 2023</td>
+<td>ADMINEXPRESS-COG-CARTO.LATEST:chflieu_arrondis...</td>
+<td>urn:ogc:def:crs:EPSG::4326</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>administratif</td>
+<td>WFS</td>
+<td>2.0.0</td>
+<td>ADMINEXPRESS-COG-CARTO.LATEST:chflieu_commune</td>
+<td>édition 2023</td>
+<td>ADMINEXPRESS-COG-CARTO.LATEST:chflieu_commune....</td>
+<td>urn:ogc:def:crs:EPSG::4326</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>administratif</td>
+<td>WFS</td>
+<td>2.0.0</td>
+<td>ADMINEXPRESS-COG-CARTO.LATEST:chflieu_commune_...</td>
+<td>édition 2023</td>
+<td>ADMINEXPRESS-COG-CARTO.LATEST:chflieu_commune_...</td>
+<td>urn:ogc:def:crs:EPSG::4326</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>administratif</td>
+<td>WFS</td>
+<td>2.0.0</td>
+<td>ADMINEXPRESS-COG-CARTO.LATEST:collectivite_ter...</td>
+<td>édition 2023</td>
+<td>ADMINEXPRESS-COG-CARTO.LATEST:collectivite_ter...</td>
+<td>urn:ogc:def:crs:EPSG::4326</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>administratif</td>
+<td>WFS</td>
+<td>2.0.0</td>
+<td>ADMINEXPRESS-COG-CARTO.LATEST:commune</td>
+<td>édition 2023</td>
+<td>ADMINEXPRESS-COG-CARTO.LATEST:commune.title</td>
+<td>urn:ogc:def:crs:EPSG::4326</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>administratif</td>
+<td>WFS</td>
+<td>2.0.0</td>
+<td>ADMINEXPRESS-COG-CARTO.LATEST:commune_associee...</td>
+<td>édition 2023</td>
+<td>ADMINEXPRESS-COG-CARTO.LATEST:commune_associee...</td>
+<td>urn:ogc:def:crs:EPSG::4326</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9</td>
+<td>administratif</td>
+<td>WFS</td>
+<td>2.0.0</td>
+<td>ADMINEXPRESS-COG-CARTO.LATEST:departement</td>
+<td>édition 2023</td>
+<td>ADMINEXPRESS-COG-CARTO.LATEST:departement.title</td>
+<td>urn:ogc:def:crs:EPSG::4326</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">10</td>
+<td>administratif</td>
+<td>WFS</td>
+<td>2.0.0</td>
+<td>ADMINEXPRESS-COG-CARTO.LATEST:epci</td>
+<td>édition 2023</td>
+<td>ADMINEXPRESS-COG-CARTO.LATEST:epci.title</td>
+<td>urn:ogc:def:crs:EPSG::4326</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">11</td>
+<td>administratif</td>
+<td>WFS</td>
+<td>2.0.0</td>
+<td>ADMINEXPRESS-COG-CARTO.LATEST:region</td>
+<td>édition 2023</td>
+<td>ADMINEXPRESS-COG-CARTO.LATEST:region.title</td>
+<td>urn:ogc:def:crs:EPSG::4326</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">12</td>
+<td>administratif</td>
+<td>WFS</td>
+<td>2.0.0</td>
+<td>ADMINEXPRESS-COG.LATEST:arrondissement</td>
+<td>édition 2023</td>
+<td>ADMINEXPRESS-COG.LATEST:arrondissement.title</td>
+<td>urn:ogc:def:crs:EPSG::4326</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">13</td>
+<td>administratif</td>
+<td>WFS</td>
+<td>2.0.0</td>
+<td>ADMINEXPRESS-COG.LATEST:arrondissement_municipal</td>
+<td>édition 2023</td>
+<td>ADMINEXPRESS-COG.LATEST:arrondissement_municip...</td>
+<td>urn:ogc:def:crs:EPSG::4326</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">14</td>
+<td>administratif</td>
+<td>WFS</td>
+<td>2.0.0</td>
+<td>ADMINEXPRESS-COG.LATEST:canton</td>
+<td>édition 2023</td>
+<td>ADMINEXPRESS-COG.LATEST:canton.title</td>
+<td>urn:ogc:def:crs:EPSG::4326</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">15</td>
+<td>administratif</td>
+<td>WFS</td>
+<td>2.0.0</td>
+<td>ADMINEXPRESS-COG.LATEST:chflieu_arrondissement...</td>
+<td>édition 2023</td>
+<td>ADMINEXPRESS-COG.LATEST:chflieu_arrondissement...</td>
+<td>urn:ogc:def:crs:EPSG::4326</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">16</td>
+<td>administratif</td>
+<td>WFS</td>
+<td>2.0.0</td>
+<td>ADMINEXPRESS-COG.LATEST:chflieu_commune</td>
+<td>édition 2023</td>
+<td>ADMINEXPRESS-COG.LATEST:chflieu_commune.title</td>
+<td>urn:ogc:def:crs:EPSG::4326</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">17</td>
+<td>administratif</td>
+<td>WFS</td>
+<td>2.0.0</td>
+<td>ADMINEXPRESS-COG.LATEST:chflieu_commune_associ...</td>
+<td>édition 2023</td>
+<td>ADMINEXPRESS-COG.LATEST:chflieu_commune_associ...</td>
+<td>urn:ogc:def:crs:EPSG::4326</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">18</td>
+<td>administratif</td>
+<td>WFS</td>
+<td>2.0.0</td>
+<td>ADMINEXPRESS-COG.LATEST:collectivite_territoriale</td>
+<td>édition 2023</td>
+<td>ADMINEXPRESS-COG.LATEST:collectivite_territori...</td>
+<td>urn:ogc:def:crs:EPSG::4326</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">19</td>
+<td>administratif</td>
+<td>WFS</td>
+<td>2.0.0</td>
+<td>ADMINEXPRESS-COG.LATEST:commune</td>
+<td>édition 2023</td>
+<td>ADMINEXPRESS-COG.LATEST:commune.title</td>
+<td>urn:ogc:def:crs:EPSG::4326</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">20</td>
+<td>administratif</td>
+<td>WFS</td>
+<td>2.0.0</td>
+<td>ADMINEXPRESS-COG.LATEST:commune_associee_ou_de...</td>
+<td>édition 2023</td>
+<td>ADMINEXPRESS-COG.LATEST:commune_associee_ou_de...</td>
+<td>urn:ogc:def:crs:EPSG::4326</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">21</td>
+<td>administratif</td>
+<td>WFS</td>
+<td>2.0.0</td>
+<td>ADMINEXPRESS-COG.LATEST:departement</td>
+<td>édition 2023</td>
+<td>ADMINEXPRESS-COG.LATEST:departement.title</td>
+<td>urn:ogc:def:crs:EPSG::4326</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">22</td>
+<td>administratif</td>
+<td>WFS</td>
+<td>2.0.0</td>
+<td>ADMINEXPRESS-COG.LATEST:epci</td>
+<td>édition 2023</td>
+<td>ADMINEXPRESS-COG.LATEST:epci.title</td>
+<td>urn:ogc:def:crs:EPSG::4326</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">23</td>
+<td>administratif</td>
+<td>WFS</td>
+<td>2.0.0</td>
+<td>ADMINEXPRESS-COG.LATEST:region</td>
+<td>édition 2023</td>
+<td>ADMINEXPRESS-COG.LATEST:region.title</td>
+<td>urn:ogc:def:crs:EPSG::4326</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">24</td>
+<td>administratif</td>
+<td>WFS</td>
+<td>2.0.0</td>
+<td>LIMITES_ADMINISTRATIVES_EXPRESS.LATEST:arrondi...</td>
+<td>Limites administrative mises à jour en continu...</td>
+<td>LIMITES_ADMINISTRATIVES_EXPRESS.LATEST:arrondi...</td>
+<td>urn:ogc:def:crs:EPSG::4326</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">25</td>
+<td>administratif</td>
+<td>WFS</td>
+<td>2.0.0</td>
+<td>LIMITES_ADMINISTRATIVES_EXPRESS.LATEST:arrondi...</td>
+<td>Limites administrative mises à jour en continu...</td>
+<td>LIMITES_ADMINISTRATIVES_EXPRESS.LATEST:arrondi...</td>
+<td>urn:ogc:def:crs:EPSG::4326</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">26</td>
+<td>administratif</td>
+<td>WFS</td>
+<td>2.0.0</td>
+<td>LIMITES_ADMINISTRATIVES_EXPRESS.LATEST:canton</td>
+<td>Limites administrative mises à jour en continu...</td>
+<td>LIMITES_ADMINISTRATIVES_EXPRESS.LATEST:canton....</td>
+<td>urn:ogc:def:crs:EPSG::4326</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">27</td>
+<td>administratif</td>
+<td>WFS</td>
+<td>2.0.0</td>
+<td>LIMITES_ADMINISTRATIVES_EXPRESS.LATEST:chflieu...</td>
+<td>Limites administrative mises à jour en continu...</td>
+<td>LIMITES_ADMINISTRATIVES_EXPRESS.LATEST:chflieu...</td>
+<td>urn:ogc:def:crs:EPSG::4326</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">28</td>
+<td>administratif</td>
+<td>WFS</td>
+<td>2.0.0</td>
+<td>LIMITES_ADMINISTRATIVES_EXPRESS.LATEST:chflieu...</td>
+<td>Limites administrative mises à jour en continu...</td>
+<td>LIMITES_ADMINISTRATIVES_EXPRESS.LATEST:chflieu...</td>
+<td>urn:ogc:def:crs:EPSG::4326</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">29</td>
+<td>administratif</td>
+<td>WFS</td>
+<td>2.0.0</td>
+<td>LIMITES_ADMINISTRATIVES_EXPRESS.LATEST:chflieu...</td>
+<td>Limites administrative mises à jour en continu...</td>
+<td>LIMITES_ADMINISTRATIVES_EXPRESS.LATEST:chflieu...</td>
+<td>urn:ogc:def:crs:EPSG::4326</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">30</td>
+<td>administratif</td>
+<td>WFS</td>
+<td>2.0.0</td>
+<td>LIMITES_ADMINISTRATIVES_EXPRESS.LATEST:collect...</td>
+<td>Limites administrative mises à jour en continu...</td>
+<td>LIMITES_ADMINISTRATIVES_EXPRESS.LATEST:collect...</td>
+<td>urn:ogc:def:crs:EPSG::4326</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">31</td>
+<td>administratif</td>
+<td>WFS</td>
+<td>2.0.0</td>
+<td>LIMITES_ADMINISTRATIVES_EXPRESS.LATEST:commune</td>
+<td>Limites administrative mises à jour en continu...</td>
+<td>LIMITES_ADMINISTRATIVES_EXPRESS.LATEST:commune...</td>
+<td>urn:ogc:def:crs:EPSG::4326</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">32</td>
+<td>administratif</td>
+<td>WFS</td>
+<td>2.0.0</td>
+<td>LIMITES_ADMINISTRATIVES_EXPRESS.LATEST:commune...</td>
+<td>Limites administrative mises à jour en continu...</td>
+<td>LIMITES_ADMINISTRATIVES_EXPRESS.LATEST:commune...</td>
+<td>urn:ogc:def:crs:EPSG::4326</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">33</td>
+<td>administratif</td>
+<td>WFS</td>
+<td>2.0.0</td>
+<td>LIMITES_ADMINISTRATIVES_EXPRESS.LATEST:departe...</td>
+<td>Limites administrative mises à jour en continu...</td>
+<td>LIMITES_ADMINISTRATIVES_EXPRESS.LATEST:departe...</td>
+<td>urn:ogc:def:crs:EPSG::4326</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">34</td>
+<td>administratif</td>
+<td>WFS</td>
+<td>2.0.0</td>
+<td>LIMITES_ADMINISTRATIVES_EXPRESS.LATEST:epci</td>
+<td>Limites administrative mises à jour en continu...</td>
+<td>LIMITES_ADMINISTRATIVES_EXPRESS.LATEST:epci.title</td>
+<td>urn:ogc:def:crs:EPSG::4326</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">35</td>
+<td>administratif</td>
+<td>WFS</td>
+<td>2.0.0</td>
+<td>LIMITES_ADMINISTRATIVES_EXPRESS.LATEST:region</td>
+<td>Limites administrative mises à jour en continu...</td>
+<td>LIMITES_ADMINISTRATIVES_EXPRESS.LATEST:region....</td>
+<td>urn:ogc:def:crs:EPSG::4326</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>gdf <span class="op">=</span> get_geodata(<span class="st">'ADMINEXPRESS-COG-CARTO.LATEST:departement'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>gdf <span class="op">=</span> gpd.GeoDataFrame(gdf, crs<span class="op">=</span><span class="st">'EPSG:2154'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>gdf.plot()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<pre><code>&lt;Axes: &gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="geospatial_files/figure-html/cell-13-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>gdf.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="11">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">id</th>
+<th data-quarto-table-cell-role="th">nom_m</th>
+<th data-quarto-table-cell-role="th">nom</th>
+<th data-quarto-table-cell-role="th">insee_dep</th>
+<th data-quarto-table-cell-role="th">insee_reg</th>
+<th data-quarto-table-cell-role="th">geometry</th>
+<th data-quarto-table-cell-role="th">bbox</th>
+<th data-quarto-table-cell-role="th">crsCoord</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>DEPARTEM_FXX_00000000001</td>
+<td>AIN</td>
+<td>Ain</td>
+<td>01</td>
+<td>84</td>
+<td>MULTIPOLYGON (((533820.757 5815685.538, 533972...</td>
+<td>[526326.17657804, 5718243.07849634, 686844.673...</td>
+<td>EPSG:3857</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>DEPARTEM_FXX_00000000002</td>
+<td>AISNE</td>
+<td>Aisne</td>
+<td>02</td>
+<td>32</td>
+<td>MULTIPOLYGON (((347405.807 6395467.470, 347374...</td>
+<td>[329287.01250143, 6247283.90975461, 473757.590...</td>
+<td>EPSG:3857</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>DEPARTEM_FXX_00000000003</td>
+<td>HAUTE-CORSE</td>
+<td>Haute-Corse</td>
+<td>2B</td>
+<td>94</td>
+<td>MULTIPOLYGON (((1046859.484 5315956.073, 10468...</td>
+<td>[954375.99061918, 5135874.22687899, 1064224.75...</td>
+<td>EPSG:3857</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>DEPARTEM_FXX_00000000004</td>
+<td>CORSE-DU-SUD</td>
+<td>Corse-du-Sud</td>
+<td>2A</td>
+<td>94</td>
+<td>MULTIPOLYGON (((955740.729 5142374.305, 955755...</td>
+<td>[950075.80695316, 5061666.24384658, 1047298.19...</td>
+<td>EPSG:3857</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>DEPARTEM_FXX_00000000005</td>
+<td>ALLIER</td>
+<td>Allier</td>
+<td>03</td>
+<td>84</td>
+<td>MULTIPOLYGON (((282378.517 5864026.958, 282436...</td>
+<td>[253450.63564406, 5769255.25344536, 445916.554...</td>
+<td>EPSG:3857</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>Sélection d’une région</p>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>my_reg <span class="op">=</span> gdf[gdf.insee_reg <span class="op">==</span> <span class="st">'84'</span>]</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>my_reg.plot()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="12">
+<pre><code>&lt;Axes: &gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="geospatial_files/figure-html/cell-17-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<p>Ou sélection d’un département</p>
+<div class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>my_dep <span class="op">=</span> gdf[gdf.insee_dep <span class="op">==</span> <span class="st">'38'</span>]</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>my_dep.plot()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="13">
+<pre><code>&lt;Axes: &gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="geospatial_files/figure-html/cell-18-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>clipped <span class="op">=</span> xds_l93.rio.clip(my_dep.geometry.values, gdf.crs, drop<span class="op">=</span><span class="va">True</span>, invert<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>clipped</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

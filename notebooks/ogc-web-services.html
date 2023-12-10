@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Web Services de l’OGC</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="ogc-web-services_files/libs/clipboard/clipboard.min.js"></script>
+<script src="ogc-web-services_files/libs/quarto-html/quarto.js"></script>
+<script src="ogc-web-services_files/libs/quarto-html/popper.min.js"></script>
+<script src="ogc-web-services_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="ogc-web-services_files/libs/quarto-html/anchor.min.js"></script>
+<link href="ogc-web-services_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="ogc-web-services_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="ogc-web-services_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="ogc-web-services_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="ogc-web-services_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Web Services de l’OGC</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p>Nous allons utiliser la bibliothèque <a href="https://owslib.readthedocs.io/en/latest/">OWSLib</a> qui permet d’accéder aux différents services Web compatibles avec les standards de l’OGC (WMS, WFS, WMTS, WPS, CSW, etc.)</p>
+<section id="préambule" class="level2">
+<h2 class="anchored" data-anchor-id="préambule">Préambule</h2>
+<p>Nous importons ici les bibliothèques que nous allons utiliser dans le notebook.</p>
+<div class="cell" data-execution_count="111">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> owslib.wms <span class="im">import</span> WebMapService</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> owslib.wfs <span class="im">import</span> WebFeatureService</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Les URLs des services que nous souhaitons explorer.</p>
+<div class="cell" data-execution_count="112">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>url_wms_raster_geoportail <span class="op">=</span> <span class="st">'https://wxs.ign.fr/essentiels/geoportail/r/wms?SERVICE=WMS&amp;VERSION=1.3.0&amp;REQUEST=GetCapabilities'</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>url_wfs_geoportail <span class="op">=</span> <span class="st">'https://wxs.ign.fr/essentiels/geoportail/wfs?SERVICE=WFS&amp;VERSION=2.0.0&amp;REQUEST=GetCapabilities'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="wms" class="level2">
+<h2 class="anchored" data-anchor-id="wms">WMS</h2>
+<p>Explorons le contenu du serveur WMS du geoportail de l’IGN :</p>
+<div class="cell" data-execution_count="113">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>wms <span class="op">=</span> WebMapService(url_wms_raster_geoportail, version<span class="op">=</span><span class="st">'1.3.0'</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>wms</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="113">
+<pre><code>&lt;owslib.map.wms130.WebMapService_1_3_0 at 0x7f93977e8e80&gt;</code></pre>
+</div>
+</div>
+<p>L’object de type <code>WebMapService</code> qui est contenu dans la variable <code>wms</code> contient des attributs décrivant le Web Service en question (attribut <code>identification</code> par exemple), un attribut décrivant les différents opérations supportées (<code>operations</code>) et un attribut décrivant les différentes couche qu’il fournit (<code>contents</code>) :</p>
+<div class="cell" data-execution_count="114">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>wms.identification.title</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="114">
+<pre><code>'Service WMS Raster Geoportail Publics'</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="115">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>wms.identification.<span class="bu">type</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="115">
+<pre><code>'WMS'</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="116">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>wms.identification.version</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="116">
+<pre><code>'1.3.0'</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="117">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>wms.identification.abstract</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="117">
+<pre><code>"Ce service permet la visualisation de couches de données raster IGN au travers d'un flux WMS"</code></pre>
+</div>
+</div>
+<p>Lister les opérations supportées :</p>
+<div class="cell" data-execution_count="118">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>wms.operations</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="118">
+<pre><code>[&lt;owslib.map.wms130.OperationMetadata at 0x7f93977e8730&gt;,
+ &lt;owslib.map.wms130.OperationMetadata at 0x7f93977e80a0&gt;,
+ &lt;owslib.map.wms130.OperationMetadata at 0x7f93977e9150&gt;]</code></pre>
+</div>
+</div>
+<p>Chaque opération est décrite par un objet de type <a href=""><code>OperationMetadata</code></a>, utilisons une bouche pour afficher le nom de chaque opération :</p>
+<div class="cell" data-execution_count="119">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> op <span class="kw">in</span> wms.operations:</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(op.name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>GetCapabilities
+GetMap
+GetFeatureInfo</code></pre>
+</div>
+</div>
+<p>Liste des couches disponibles :</p>
+<div class="cell" data-execution_count="120">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>wms.contents</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="120">
+<pre><code>OrderedDict([('CADASTRALPARCELS.PARCELLAIRE_EXPRESS',
+              &lt;owslib.map.wms130.ContentMetadata at 0x7f93977e8580&gt;),
+             ('GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2',
+              &lt;owslib.map.wms130.ContentMetadata at 0x7f93976ec670&gt;),
+             ('LIMITES_ADMINISTRATIVES_EXPRESS.LATEST',
+              &lt;owslib.map.wms130.ContentMetadata at 0x7f93978015d0&gt;),
+             ('ORTHOIMAGERY.ORTHOPHOTOS',
+              &lt;owslib.map.wms130.ContentMetadata at 0x7f9397801d80&gt;)])</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="121">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="bu">list</span>(wms.contents)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="121">
+<pre><code>['CADASTRALPARCELS.PARCELLAIRE_EXPRESS',
+ 'GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2',
+ 'LIMITES_ADMINISTRATIVES_EXPRESS.LATEST',
+ 'ORTHOIMAGERY.ORTHOPHOTOS']</code></pre>
+</div>
+</div>
+<p>On peut explorer les attributs de chacune des couches en utilisant l’objet <code>WebMapService</code> comme un dictionnaire et en utilisant les noms des couches comme des clés.</p>
+<div class="cell" data-execution_count="122">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>parcellaire_express <span class="op">=</span> wms[<span class="st">'CADASTRALPARCELS.PARCELLAIRE_EXPRESS'</span>]</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>parcellaire_express</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="122">
+<pre><code>&lt;owslib.map.wms130.ContentMetadata at 0x7f93977e8580&gt;</code></pre>
+</div>
+</div>
+<p>L’objet qui est retourné dispose de plusieurs attributs décrivant la couche en question : <code>tile</code>, <code>abstract</code>, <code>boundingBoxWGS84</code>, <code>crsOptions</code> etc.</p>
+<div class="cell" data-execution_count="123">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>parcellaire_express.title</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="123">
+<pre><code>'PCI vecteur'</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="124">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>parcellaire_express.abstract</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="124">
+<pre><code>'Plan cadastral informatisé vecteur de la DGFIP.'</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="125">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>parcellaire_express.styles</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="125">
+<pre><code>{'PCI vecteur': {'title': 'PCI vecteur',
+  'legend': 'https://wxs.ign.fr/static/legends/CADASTRALPARCELS.PARCELLAIRE_EXPRESS.png',
+  'legend_width': '300',
+  'legend_height': '183',
+  'legend_format': 'image/png'},
+ 'normal': {'title': 'Légende générique',
+  'legend': 'https://wxs.ign.fr/static/legends/LEGEND.jpg',
+  'legend_width': '200',
+  'legend_height': '200',
+  'legend_format': 'image/jpeg'}}</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="126">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>parcellaire_express.boundingBoxWGS84</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="126">
+<pre><code>(-63.372521503, -21.475586668, 55.925864577, 51.312119281)</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="127">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>parcellaire_express.crsOptions</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="127">
+<pre><code>['EPSG:4558',
+ 'EPSG:2971',
+ 'IGNF:REUN47GEO',
+ 'EPSG:4463',
+ 'IGNF:LAMB2C',
+ 'EPSG:2976',
+ 'EPSG:2972',
+ 'IGNF:CSG67GEO',
+ 'IGNF:RGM04GEO',
+ 'IGNF:UTM39SW84',
+ 'EPSG:27571',
+ 'EPSG:27582',
+ 'EPSG:27564',
+ 'EPSG:2987',
+ 'IGNF:UTM30W84',
+ 'EPSG:2973',
+ 'EPSG:3945',
+ 'EPSG:2989',
+ 'EPSG:27584',
+ 'EPSG:21781',
+ 'EPSG:3296',
+ 'EPSG:2981',
+ 'EPSG:4275',
+ 'EPSG:4807',
+ 'IGNF:UTM20W84MART',
+ 'IGNF:RGF93CC50',
+ 'IGNF:LAMB1C',
+ 'IGNF:WGS84UTM20',
+ 'IGNF:RGF93CC43',
+ 'IGNF:REUN47GAUSSL',
+ 'EPSG:4641',
+ 'EPSG:32621',
+ 'EPSG:23031',
+ 'EPSG:4690',
+ 'EPSG:23030',
+ 'EPSG:4258',
+ 'IGNF:RGF93CC44',
+ 'IGNF:WGS84G',
+ 'EPSG:27572',
+ 'IGNF:RGPFUTM5S',
+ 'EPSG:4638',
+ 'EPSG:27561',
+ 'EPSG:2977',
+ 'EPSG:3034',
+ 'EPSG:32738',
+ 'IGNF:MAYO50GEO',
+ 'IGNF:GUAD48GEO',
+ 'EPSG:3044',
+ 'EPSG:27563',
+ 'IGNF:RGF93CC45',
+ 'EPSG:2980',
+ 'IGNF:LAMB4C',
+ 'EPSG:4627',
+ 'IGNF:LAMB2',
+ 'EPSG:4630',
+ 'IGNF:CSG67UTM21',
+ 'EPSG:3949',
+ 'EPSG:3043',
+ 'EPSG:4470',
+ 'IGNF:TAHI79UTM6S',
+ 'EPSG:4467',
+ 'EPSG:3171',
+ 'EPSG:32701',
+ 'IGNF:RGSPM06U21',
+ 'EPSG:2975',
+ 'EPSG:3298',
+ 'EPSG:27594',
+ 'IGNF:RGF93CC42',
+ 'EPSG:4624',
+ 'EPSG:32631',
+ 'EPSG:2970',
+ 'EPSG:2990',
+ 'EPSG:2978',
+ 'IGNF:LAMBE',
+ 'EPSG:3948',
+ 'EPSG:3943',
+ 'EPSG:3305',
+ 'EPSG:32622',
+ 'EPSG:3312',
+ 'EPSG:32739',
+ 'IGNF:UTM01SW84',
+ 'IGNF:LAMB4',
+ 'IGNF:RGF93CC46',
+ 'IGNF:STPM50UTM21',
+ 'EPSG:32630',
+ 'EPSG:4633',
+ 'EPSG:4644',
+ 'EPSG:3942',
+ 'EPSG:4749',
+ 'IGNF:UTM31W84',
+ 'EPSG:27583',
+ 'IGNF:GUADFM49U20',
+ 'EPSG:4559',
+ 'IGNF:UTM22RGFG95',
+ 'EPSG:4629',
+ 'IGNF:RGF93CC48',
+ 'EPSG:4637',
+ 'IGNF:GUAD48UTM20',
+ 'IGNF:LAMB3',
+ 'IGNF:LAMB1',
+ 'EPSG:3170',
+ 'IGNF:WALL78UTM1S',
+ 'IGNF:RGM04UTM38S',
+ 'EPSG:27573',
+ 'EPSG:3172',
+ 'EPSG:4623',
+ 'IGNF:RGPFUTM6S',
+ 'EPSG:4626',
+ 'EPSG:27562',
+ 'EPSG:32707',
+ 'IGNF:RGFG95GEO',
+ 'EPSG:3857',
+ 'EPSG:32740',
+ 'EPSG:23032',
+ 'EPSG:27592',
+ 'IGNF:STPM50GEO',
+ 'EPSG:4687',
+ 'IGNF:MART38UTM20',
+ 'EPSG:3035',
+ 'EPSG:4691',
+ 'IGNF:UTM20W84',
+ 'EPSG:4622',
+ 'IGNF:RGF93G',
+ 'EPSG:4471',
+ 'IGNF:RGR92GEO',
+ 'IGNF:MAYO50UTM38S',
+ 'EPSG:32706',
+ 'EPSG:4171',
+ 'EPSG:4689',
+ 'EPSG:3304',
+ 'EPSG:4628',
+ 'EPSG:3946',
+ 'EPSG:4643',
+ 'IGNF:UTM20W84GUAD',
+ 'EPSG:3950',
+ 'EPSG:4639',
+ 'EPSG:27581',
+ 'EPSG:3042',
+ 'EPSG:3727',
+ 'IGNF:RGR92UTM40S',
+ 'EPSG:3313',
+ 'EPSG:3944',
+ 'IGNF:TAHI51UTM06S',
+ 'EPSG:32632',
+ 'IGNF:RGF93CC47',
+ 'IGNF:GUADFM49GEO',
+ 'IGNF:LAMB3C',
+ 'EPSG:4642',
+ 'EPSG:3297',
+ 'IGNF:CSG67UTM22',
+ 'IGNF:UTM32W84',
+ 'EPSG:27591',
+ 'EPSG:4688',
+ 'EPSG:4692',
+ 'EPSG:4632',
+ 'EPSG:4636',
+ 'EPSG:3947',
+ 'EPSG:2154',
+ 'EPSG:4621',
+ 'IGNF:LAMB93',
+ 'IGNF:RGF93CC49',
+ 'EPSG:4326',
+ 'EPSG:2969',
+ 'EPSG:3302',
+ 'EPSG:4625',
+ 'CRS:84',
+ 'IGNF:IGN63UTM7S',
+ 'EPSG:2988',
+ 'EPSG:3303',
+ 'IGNF:RGPFUTM7S',
+ 'EPSG:32620',
+ 'EPSG:32705',
+ 'IGNF:MART38GEO',
+ 'EPSG:27574',
+ 'EPSG:27593',
+ 'EPSG:3306']</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="128">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>img <span class="op">=</span> wms.getmap(</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>    layers<span class="op">=</span>[<span class="st">'CADASTRALPARCELS.PARCELLAIRE_EXPRESS'</span>],</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    size<span class="op">=</span>[<span class="dv">600</span>, <span class="dv">400</span>],</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    srs<span class="op">=</span><span class="st">"EPSG:4326"</span>,</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>    bbox<span class="op">=</span>[<span class="op">-</span><span class="fl">1.0</span>, <span class="fl">46.0</span>, <span class="fl">8.0</span>, <span class="fl">50.0</span>],</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">format</span><span class="op">=</span><span class="st">"image/jpeg"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>On peut afficher l’image dans le notebook :</p>
+<div class="cell" data-execution_count="129">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> Image</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="130">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>Image(img.read())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="130">
+<p><img src="ogc-web-services_files/figure-html/cell-21-output-1.jpeg" class="img-fluid"></p>
+</div>
+</div>
+<p>Ou la sauvegarder :</p>
+<div class="cell" data-execution_count="131">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">'/tmp/image.jpeg'</span>, <span class="st">'wb'</span>) <span class="im">as</span> f:</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>    f.write(img.read())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Et pour récupérer automatique des informations sur chacune des couches ?</p>
+<div class="cell" data-execution_count="132">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Une liste vide</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> []</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Une boucle sur les nom de couche disponibles</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> layer_name <span class="kw">in</span> wms.contents:</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Une référence aux metadonnées de la couche en question</span></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>    layer <span class="op">=</span> wms[layer_name]</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Un dictionnaire pour stocker les métadonnes</span></span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># qui nous intéresse pour chaque couche</span></span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> {</span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">"id"</span>: layer_name,</span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">"title"</span>: layer.title</span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># On ajoute le résultat à la liste "result"</span></span>
+<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a>    result.append(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>On a donc créé une liste (un objet Python de type <code>list</code>) contenant plusieurs dictionnaires (objet Python de type <code>dict</code>), autant qu’il y a de couches décrites par le serveur WMS que nous explorons.</p>
+<div class="cell" data-execution_count="133">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>result</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="133">
+<pre><code>[{'id': 'CADASTRALPARCELS.PARCELLAIRE_EXPRESS', 'title': 'PCI vecteur'},
+ {'id': 'GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2', 'title': 'Plan IGN v2'},
+ {'id': 'LIMITES_ADMINISTRATIVES_EXPRESS.LATEST',
+  'title': 'Limites administratives mises à jour en continu.'},
+ {'id': 'ORTHOIMAGERY.ORTHOPHOTOS', 'title': 'Photographies aériennes'}]</code></pre>
+</div>
+</div>
+<section id="écrire-dans-un-fichier-csv-ou-dans-un-fichier-excel" class="level3">
+<h3 class="anchored" data-anchor-id="écrire-dans-un-fichier-csv-ou-dans-un-fichier-excel">Écrire dans un fichier CSV ou dans un fichier excel</h3>
+<p>La bibliothèque standard de Python propose le module <code>csv</code> qui va permettre de manipuler facilement des fichiers CSV (lecture, écriture)</p>
+<p>Pour écrire ou lire des tableurs dans des formats plus compliqués (XLS, XLSX, ODS, etc.) il va être nécessaire d’utiliser des bibliothèques tiers (la bibliothèque <code>pandas</code> par exemple).</p>
+<div class="cell" data-execution_count="134">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="135">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="135">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">id</th>
+<th data-quarto-table-cell-role="th">title</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>CADASTRALPARCELS.PARCELLAIRE_EXPRESS</td>
+<td>PCI vecteur</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2</td>
+<td>Plan IGN v2</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>LIMITES_ADMINISTRATIVES_EXPRESS.LATEST</td>
+<td>Limites administratives mises à jour en continu.</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>ORTHOIMAGERY.ORTHOPHOTOS</td>
+<td>Photographies aériennes</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="136">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>df.to_csv(<span class="st">'/tmp/mon_fichier.csv'</span>, index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="137">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>cat <span class="op">/</span>tmp<span class="op">/</span>mon_fichier.csv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>id,title
+CADASTRALPARCELS.PARCELLAIRE_EXPRESS,PCI vecteur
+GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2,Plan IGN v2
+LIMITES_ADMINISTRATIVES_EXPRESS.LATEST,Limites administratives mises à jour en continu.
+ORTHOIMAGERY.ORTHOPHOTOS,Photographies aériennes</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="exercice---wfs" class="level2">
+<h2 class="anchored" data-anchor-id="exercice---wfs">Exercice - WFS</h2>
+<p>Explorons désormais le contenu du serveur WFS du geoportail de l’IGN (dont l’url est contenue dans la variable <code>url_wfs_geoportail</code>).</p>
+<p>Répéter les opérations présentées ci-dessus mais sur le flux WFS suivant :</p>
+<div class="cell" data-execution_count="138">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>wfs <span class="op">=</span> WebFeatureService(url_wfs_geoportail, version<span class="op">=</span><span class="st">'2.0.0'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Pour chaque couche, vous devez stocker son identifiant, son titre, sa description et sa bounding-box en WGS84.</p>
+<p>Le tableur obtenu doit ainsi être de la forme suivante :</p>
+<table class="table">
+<colgroup>
+<col style="width: 29%">
+<col style="width: 25%">
+<col style="width: 22%">
+<col style="width: 22%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Couche</th>
+<th>Titre</th>
+<th>Abstract</th>
+<th>Bounding Box WGS84</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>CADASTRALPARCELS.PARCELLAIRE_EXPRESS</td>
+<td>PCI vecteur</td>
+<td>Plan cadastral informatisé vecteur de la DGFIP.</td>
+<td>YYYY</td>
+</tr>
+<tr class="even">
+<td>GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2</td>
+<td>Plan IGN v2</td>
+<td>Cartographie multi-échelles sur le territoire national, issue des bases de données vecteur de l’IGN, mis à jour régulièrement et réalisée selon un processus entièrement automatisé.</td>
+<td>YYYY</td>
+</tr>
+</tbody>
+</table>
+<p>Vous devez stocker ces informations sous forme d’une liste de dictionnaires, puis convertir le résultat en un objet <code>DataFrame</code> et exportez le résultat au format CSV (méthode <code>to_csv</code>) ou au format Excel (méthode <code>to_excel</code>).</p>
+<p><strong><em>À vous de jouer…!</em></strong></p>
+</section>
+<section id="solution" class="level2">
+<h2 class="anchored" data-anchor-id="solution">Solution</h2>
+<div class="cell" data-execution_count="145">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># On se connecte au service WFS souhaité</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>wfs <span class="op">=</span> WebFeatureService(url_wfs_geoportail, version<span class="op">=</span><span class="st">'2.0.0'</span>)</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Une liste vide pour accueillir les résultats</span></span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>resultat <span class="op">=</span> []</span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a><span class="co"># On fait une boucle sur la liste contenant les noms de couche</span></span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> l_name <span class="kw">in</span> wfs.contents:</span>
+<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># On stocke une référence à l'objet ContentMetadata</span></span>
+<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># décrivant la couche avec le nom contenu dans la variable "l_name"</span></span>
+<span id="cb46-11"><a href="#cb46-11" aria-hidden="true" tabindex="-1"></a>    l <span class="op">=</span> wfs[l_name]</span>
+<span id="cb46-12"><a href="#cb46-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-13"><a href="#cb46-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># On créé un dictionnaire pour stocker la description de cette couche</span></span>
+<span id="cb46-14"><a href="#cb46-14" aria-hidden="true" tabindex="-1"></a>    d <span class="op">=</span> {</span>
+<span id="cb46-15"><a href="#cb46-15" aria-hidden="true" tabindex="-1"></a>        <span class="st">'Couche'</span>: layer_name,</span>
+<span id="cb46-16"><a href="#cb46-16" aria-hidden="true" tabindex="-1"></a>        <span class="st">'Title'</span>: l.title,</span>
+<span id="cb46-17"><a href="#cb46-17" aria-hidden="true" tabindex="-1"></a>        <span class="st">'Description'</span>: l.abstract,</span>
+<span id="cb46-18"><a href="#cb46-18" aria-hidden="true" tabindex="-1"></a>        <span class="st">'Bounding Box WGS84'</span>: <span class="bu">str</span>(l.boundingBoxWGS84).replace(<span class="st">'('</span>, <span class="st">''</span>).replace(<span class="st">')'</span>, <span class="st">''</span>)</span>
+<span id="cb46-19"><a href="#cb46-19" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb46-20"><a href="#cb46-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-21"><a href="#cb46-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Ajout à la list de résultats</span></span>
+<span id="cb46-22"><a href="#cb46-22" aria-hidden="true" tabindex="-1"></a>    resultat.append(d)</span>
+<span id="cb46-23"><a href="#cb46-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-24"><a href="#cb46-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Convertir notre liste de dictionnaires en </span></span>
+<span id="cb46-25"><a href="#cb46-25" aria-hidden="true" tabindex="-1"></a><span class="co"># un DataFrame pandas</span></span>
+<span id="cb46-26"><a href="#cb46-26" aria-hidden="true" tabindex="-1"></a>df_wfs <span class="op">=</span> pd.DataFrame(resultat)</span>
+<span id="cb46-27"><a href="#cb46-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-28"><a href="#cb46-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Export vers un fichier</span></span>
+<span id="cb46-29"><a href="#cb46-29" aria-hidden="true" tabindex="-1"></a>df_wfs.to_csv(<span class="st">'/tmp/wfs_geoportail_description.csv'</span>, index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Aperçu du fichier CSV exporté :</p>
+<div class="cell" data-execution_count="146">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>cat <span class="op">/</span>tmp<span class="op">/</span>wfs_geoportail_description.csv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Couche,Title,Description,Bounding Box WGS84
+ORTHOIMAGERY.ORTHOPHOTOS,BDTOPO_V3:batiment.title,BDTOPO V3 23.3 édition 2023,"-63.153333951602704, -21.389720340767205, 55.8367590264458, 51.3127196937117"
+ORTHOIMAGERY.ORTHOPHOTOS,BDTOPO_V3:troncon_de_route.title,BDTOPO V3 23.3 édition 2023,"-63.153333951602704, -21.389720340767205, 55.8367590264458, 51.3127196937117"
+ORTHOIMAGERY.ORTHOPHOTOS,CADASTRALPARCELS.PARCELLAIRE_EXPRESS:parcelle.title,Plan cadastral informatisé vecteur de la DGFIP édition 07-2023.,"-63.15331686629, -21.3897472604766, 55.8366858738437, 51.088897403453"</code></pre>
+</div>
+</div>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
