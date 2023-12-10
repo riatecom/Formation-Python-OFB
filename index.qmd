@@ -1,6 +1,8 @@
 ---
 title: "Formation Python pour géomaticiens 🐍🌏"
-author: "Matthieu Viry"
+author:
+  name: "Matthieu Viry"
+  email: "matthieu.viry@cnrs.fr"
 subtitle: "11 Décembre 2023"
 format:
   revealjs:
@@ -316,8 +318,7 @@ Il n'existe toutefois pas un seul standard pour consulter la documentation des d
 #| echo: true
 #| message: true
 #| cache: true
-import math # On importe le module math
-# Et deux fonctions du module statistics
+# On importe deux fonctions du module statistics
 from statistics import mean, stdev
 
 # Définition d'une fonction
@@ -1725,7 +1726,7 @@ with open('data/test.csv', 'w') as f:
 
 - Python est un **langage de programmation généraliste**, sa bibliothèque standard n'est pas dédiée à l'analyse de données.
 
-- Il existe de **nombreuses bibliothèques additionnelles** pour l'analyse de données (et il s'agit d'un écossystème très riche et vivant).
+- Il existe de **nombreuses bibliothèques additionnelles** pour l'analyse de données (et il s'agit d'un écosystème très riche et vivant).
 
 - La bibliothèque la plus utilisée pour l'analyse de données est [**pandas**](https://pandas.pydata.org/). Cette bibliothèque permet de manipuler des données tabulaires (des tableaux de données).
 
@@ -2080,6 +2081,13 @@ ax
 
 :::
 
+:::{.medium}
+
+<br /><br /><br />
+
+*Et/ou voir le [notebook correspondant](notebooks/geopandas-rasterio-demo.html)*
+
+:::
 
 ## Données raster
 
@@ -2229,7 +2237,6 @@ clipped = xds.rio.clip(gdf.geometry.values, gdf.crs, drop=False, invert=True)
 
 :::
 
-
 ## Analyse spatiale
 
 <img src="./images/logo-pysal.png" style="position: absolute; top: 5px; right: 20px; width: 120px; height: auto;"/>
@@ -2301,7 +2308,7 @@ clipped = xds.rio.clip(gdf.geometry.values, gdf.crs, drop=False, invert=True)
 
 :::{.medium}
 
-Un écossystème riche pour de nombreux d'autres usages.
+Un écosystème riche pour de nombreux autres usages.
 
 **_Machine learning_ et _Deep learning_** :
 
@@ -2467,7 +2474,7 @@ Elles mobilisent les bibliothèques Python le plus souvent utilisées pour l'ana
 
 - [Cours "Use Data for Earth and Environmental Science in Open Source Python" (en anglais)](https://www.earthdatascience.org/courses/use-data-open-source-python/)
 
-- [Livre gratuit "Geographic Data Science with Python"](https://geographicdata.science/book/intro.html)
+- [Livre gratuit "Geographic Data Science with Python" (en anglais)](https://geographicdata.science/book/intro.html)
 
 :::
 
@@ -2538,20 +2545,42 @@ Elles mobilisent les bibliothèques Python le plus souvent utilisées pour l'ana
 
 3) Exécutez le programme et vérifiez que le fichier `cities-new.csv` a bien été créé et qu'il contient le nouveau contenu.
 
+- *Pour aller plus loin* : importer la classe `date` du module `datetime` (`from datetime import date`)
+   et essayez d'utiliser sa méthode `today()` pour faire en sortes que le nom du fichier de sortie contienne la date de l'exécution du programme
+   (par exemple `cities-2021-01-01.csv`).
+
 :::
 
 :::{.column width="30%"}
 
 **Contenu du fichier `data.csv`** :
 
-<textarea style="width: 100%; font-size: 0.8em;" rows="5">
+```
 nom,coord1,coord2,value
 Paris,48.8566,2.3522,10
 Lyon,45.7640,4.8357,20
 Marseille,43.2964,5.3700,30
 Grenoble,45.1885,5.7245,40
-</textarea>
+```
 
+<br />
+
+:::{.small}
+**Modèle de programme Python à utiliser** :
+
+```python
+with open('cities.csv', 'r') as f:
+    # Lire le contenu du fichier
+    content = f.read()
+
+# Écrire ici la ou les instructions permettant
+# de modifier le contenu du fichier
+
+with open('cities-new.csv', 'w') as f:
+    # Écrire le nouveau contenu dans le fichier
+    f.write(content)
+```
+:::
 :::
 
 ::::
@@ -2762,17 +2791,13 @@ for feature in layer.getFeatures():
     ft = QgsFeature()
     # On calcule le buffer
     geom = QgsGeometry(feature.geometry())
-    # On converti la géométrie dans un système de coordonnées permettant de calculer des distances
-    geom.transform(QgsCoordinateTransform(layer.crs(), QgsCoordinateReferenceSystem("ESRI:53030"), QgsProject.instance()))
-    buffer_value = random.randint(10000, 200000)
+    buffer_value = random.randint(1, 20)
     buffer = geom.buffer(buffer_value, 5)
-    # On remet la géométrie dans le système de coordonnées de la couche
-    buffer.transform(QgsCoordinateTransform(QgsCoordinateReferenceSystem("ESRI:53030"), layer.crs(), QgsProject.instance()))
     # On ajoute la géométrie à l'entité
     ft.setGeometry(buffer)
     ft.setAttributes([buffer_value])
     # On ajoute l'entité à la couche mémoire
-    pr.addFeatures([ft])
+    pr.addFeature(ft)
 
 mem_layer.updateExtents()
     
@@ -2851,9 +2876,138 @@ QgsProject.instance().addMapLayer(result['OUTPUT'])
 
 ## Créer des algorithmes de traitement
 
+::::{.columns .small}
+
+:::{.column width="60%"}
+
+Il est possible de créer des algorithmes de traitement personnalisés sous forme d'un script Python.
+
+Ils seront ajoutés à la boite à outils de traitement et pourront être utilisés comme n'importe quel autre algorithme.
+
+:::
+
+:::{.column width="40%"}
+
+![](images/processingtoolbox.png)
+
+:::
+
+::::
+
+## Créer des algorithmes de traitement
+
+:::{.small}
+
+Ces algorithmes peuvent réutiliser d'autres algorithmes existants déjà dans la boite à outils géotraitement (cf. [exemple dans la documentation](https://docs.qgis.org/3.28/en/docs/user_manual/processing/scripts.html#the-alg-decorator))
+ou non (cf. exemple ci-dessous).
+
+
+```python
+from qgis import processing
+from qgis.processing import alg
+from qgis.core import (
+    QgsProject,
+    QgsVectorLayer,
+    QgsField,
+    QgsFeature,
+    QgsGeometry
+)
+from PyQt5.QtCore import QVariant
+import random
+
+@alg(name='bufferrandomdistance', label='Our custom buffer operation with random distance',
+     group='examplescripts', group_label='Example scripts')
+@alg.input(type=alg.SOURCE, name='INPUT', label='Input vector layer')
+@alg.input(type=alg.VECTOR_LAYER_DEST, name='OUTPUT', label='Buffer output')
+@alg.input(type=alg.INT, name='BUFFERDISTMIN', label='BUFFER MINIMUM DISTANCE',
+           default=1.0)
+@alg.input(type=alg.INT, name='BUFFERDISTMAX', label='BUFFER MAXIMUM DISTANCE',
+           default=100.0)
+@alg.output(type=alg.NUMBER, name='NUMBEROFFEATURES',
+            label='Number of features processed')
+def bufferrandomdistance(instance, parameters, context, feedback, inputs):
+    """
+    Description of the algorithm.
+    (If there is no comment here, you will get an error)
+    """
+    input_featuresource = instance.parameterAsSource(
+      parameters, 'INPUT', context)
+    numfeatures = input_featuresource.featureCount()
+    bufferdistmin = instance.parameterAsInt(
+      parameters, 'BUFFERDISTMIN', context)
+    bufferdistmax = instance.parameterAsInt(
+        parameters, 'BUFFERDISTMAX', context)
+
+    if feedback.isCanceled():
+        return {}
+
+    # On crée une couche mémoire vide
+    mem_layer = QgsVectorLayer(
+    f'Polygon?crs={input_featuresource.sourceCrs().authid()}',
+    'Buffer output',
+    'memory',
+    )
+    pr = mem_layer.dataProvider()
+    
+    # Spécification de deux champs
+    pr.addAttributes([
+        QgsField("Buffer_value", QVariant.Double),
+    ])
+    mem_layer.updateFields()
+    
+    for feature in input_featuresource.getFeatures():
+        ft = QgsFeature()
+        # On calcule le buffer
+        geom = QgsGeometry(feature.geometry())
+        buffer_value = random.randint(bufferdistmin, bufferdistmax)
+        buffer = geom.buffer(buffer_value, 5)
+        # On ajoute la géométrie à l'entité
+        ft.setGeometry(buffer)
+        ft.setAttributes([buffer_value])
+        # On ajoute l'entité à la couche mémoire
+        pr.addFeatures([ft])
+    
+    if feedback.isCanceled():
+        return {}
+
+    QgsProject.instance().addMapLayer(mem_layer)
+    
+    return {
+      'OUTPUT': mem_layer.id(),
+      'NUMBEROFFEATURES': numfeatures
+    }
+```
+:::
+
+
+## Créer un plugin QGIS
+
 :::{.medium}
 
-Il est possible de créer des algorithmes de traitement personnalisés en utilisant le module Python `processing`.
+Il est possible de créer des plugins QGIS en Python. Par rapport à la création d'algorithmes de traitement, les plugins :
+
+- permettent de créer des interfaces graphiques plus complexes (avec plusieurs fenêtres, des onglets, etc.),
+- permettent d'inclure une documentation complexe au format HTML,
+- permettent d'ajouter des données d'exemples,
+- permettent d'ajouter des fonctionnalités à QGIS qui ne sont pas des algorithmes de traitement (par exemple : ajouter une barre d'outils, ajouter un menu, etc.),
+- peuvent être partagés avec la communauté via le [QGIS Python Plugins Repository](https://plugins.qgis.org/).
+
+<br />
+
+:::{.midly-small}
+À l'inverse des algorithmes de traitement, vous dévelloperez un plugin QGIS dans un environnement de développement Python classique (VSCodium, Spyder, etc.) et non dans l'éditeur
+de code de QGIS.
+:::
+
+:::
+
+## Créer un plugin QGIS
+
+:::{.medium}
+
+Étude de cas : Le plugin **DistanceCartogram** permet de créer des cartogrammes de distance dans QGIS.
+
+![](./images/cartogram-train.png){.bordered}
 
 :::
 
@@ -2872,7 +3026,7 @@ Il est possible de créer des algorithmes de traitement personnalisés en utilis
 
 # Partie 4 - Mise en pratique
 
-__*Choisir une des 3 mise en situation ci-dessous proposées dans ce qui suit.*__
+__*Choisir une des 3 mises en situation proposées dans ce qui suit.*__
 
 ## Mise en situation 1
 
@@ -2938,7 +3092,7 @@ def get_utm_zone(feature, parent):
 - **Ouvrez un nouveau projet QGIS et ajoutez les [données d'exemple](data/data-qgis.zip)** _(vous pouvez utiliser un projet QGIS personnel si vous le souhaitez)_.
 - **Ouvrez la console Python de QGIS.**
 - **Testez l'ensemble des commandes présentées précédemment dans la console Python**. Vous pouvez d'abord copier ces morceaux de code
-  dans l'éditeur de texte de la console Python puis les exécuter en utilisant le bouton <img src="./images/python-console-run.png" style="display: inline-block; width: 0.8em; height: auto;"/> ou le raccourci clavier <kbd>Ctrl</kbd> + <kbd>Enter</kbd>.
+  dans l'éditeur de texte de la console Python puis les exécuter en utilisant le bouton ▶ ou le raccourci clavier <kbd>Ctrl</kbd> + <kbd>e</kbd>.
 
 - **Testez de nouveaux géotraitements**, au choix :
   * un ou plusieurs algorithmes de traitement existants (voir la liste des algorithmes disponibles dans la console Python),
@@ -2968,20 +3122,22 @@ def get_utm_zone(feature, parent):
 
 ## Corrections des exercices
 
+<br />
+
 :::{.medium}
 
 ### Partie 2
 
-- **Exercice 1** : [Correction](corrections/ex1.py)
-- **Exercice 2** : [Correction](corrections/ogc-web-services-correction.ipynb)
-- **Exercice 3** : [Correction](corrections/geopandas-rasterio-correction.ipynb)
+- **Exercice 1** : <a href="corrections/ex1.py" download>Correction</a>
+- **Exercice 2** : <a href="notebooks/ogc-web-services-solution.ipynb" download>Notebook</a> / [Version HTML](notebooks/ogc-web-services-solution.html)
+- **Exercice 3** : <a href="notebooks/geopandas-rasterio-solution.ipynb" download>Correction</a> / [Version HTML](notebooks/geopandas-rasterio-solution.html)
 
 <br />
 
 ### Partie 4
 
-- **Mise en situation 1** : [Correction](corrections/qgis-ex1.py)
-- **Mise en situation 2** : [Correction](corrections/qgis-ex2.py)
+- **Mise en situation 1** : <a href="corrections/qgis-ex1.py" download>Correction</a>
+- **Mise en situation 2** : <a href="corrections/qgis-ex2.py" download>Correction</a>
 
 :::
 
