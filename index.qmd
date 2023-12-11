@@ -2607,7 +2607,7 @@ Instructions :
 
 <br />
 
-:::{.medium}
+:::{.midly-small}
 
 Dans cet exercice, vous utiliserez un notebook Jupyter existant et contenant déjà des instructions Python pour **effectuer des géotraitements simples avec GeoPandas et Rasterio**.
 
@@ -2617,7 +2617,9 @@ L'utilisation d'un notebook Jupyter permet de tester facilement des instructions
 
 Instructions :
 
-- **Récupérez le notebook Jupyter [`geopandas-rasterio.ipynb`](notebooks/geopandas-rasterio.ipynb) et ouvrez-le dans VSCodium. Modifiez le selon les consignes que vous y trouverez.**
+- **Récupérer les données d'exemple [`data.zip`](data/data-notebook.zip) et décompresser cette archive.**
+
+- **Récupérez le notebook Jupyter [`geopandas-rasterio.ipynb`](notebooks/geopandas-rasterio.ipynb) et ouvrez-le dans VSCodium. Modifiez-le selon les consignes que vous y trouverez.** Vous devrez peut-être y modifier le chemin vers les données d'exemple.
 
 :::
 
