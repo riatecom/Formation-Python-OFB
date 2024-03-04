@@ -9,7 +9,7 @@
 
 ## Support :book:
 
-Voir la présentation : [https://riatelab.github.io/Formation-Python-OFB](https://riatelab.github.io/Formation-Python-OFB).
+Voir la présentation : [https://riatecom.github.io/Formation-Python-OFB/](https://riatecom.github.io/Formation-Python-OFB/).
 
 ## Pour compiler la présentation :computer:
 
